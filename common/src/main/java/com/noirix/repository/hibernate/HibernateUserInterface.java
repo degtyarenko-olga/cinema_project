@@ -1,6 +1,6 @@
 package com.noirix.repository.hibernate;
 
-import com.noirix.domain.hibernate.UsersHibernate;
+import com.noirix.domain.UsersHibernate;
 import com.noirix.repository.CRUDRepository;
 
 import java.util.List;

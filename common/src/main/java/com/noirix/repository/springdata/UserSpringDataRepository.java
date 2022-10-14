@@ -1,12 +1,13 @@
 package com.noirix.repository.springdata;
 
-import com.noirix.domain.hibernate.UsersHibernate;
+import com.noirix.domain.UsersHibernate;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-
+@Repository
 public interface UserSpringDataRepository extends JpaRepository<UsersHibernate, Long> {
    // List<UsersHibernate> findUsersHibernateByCredentials_Login(String login);
 
@@ -20,6 +21,8 @@ public interface UserSpringDataRepository extends JpaRepository<UsersHibernate, 
     List<UsersHibernate> findByHQLQuery();
 
     Optional<UsersHibernate> findUsersHibernateByCredentials_Login(String username);
+
+
 
 //
 //    @Query(value = "select * from cinema.users", nativeQuery = true)

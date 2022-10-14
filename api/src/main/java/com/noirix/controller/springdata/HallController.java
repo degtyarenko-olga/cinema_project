@@ -1,6 +1,7 @@
 package com.noirix.controller.springdata;
 
 import com.noirix.repository.springdata.HallSpringDataRepository;
+import com.noirix.service.HallService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +16,13 @@ import java.util.Collections;
 @RequestMapping("/rest/data/hall")
 public class HallController {
 
-     private final HallSpringDataRepository repository;
+     private final HallService service;
 
     @GetMapping
     public ResponseEntity<Object> findAllHall() {
 
         return new ResponseEntity<>(
-                Collections.singletonMap("hall", repository.findAllHall()),
+                Collections.singletonMap("hall", service.findAllHall()),
                 HttpStatus.OK
         );
     }

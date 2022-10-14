@@ -1,4 +1,4 @@
-package com.noirix.domain.hibernate;
+package com.noirix.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

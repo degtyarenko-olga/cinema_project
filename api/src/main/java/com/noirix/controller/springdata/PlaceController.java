@@ -1,6 +1,7 @@
 package com.noirix.controller.springdata;
 
 import com.noirix.repository.springdata.PlaceSpringDataRepository;
+import com.noirix.service.PlaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +16,10 @@ import java.util.Collections;
 @RequestMapping("/rest/data/place")
 public class PlaceController {
 
-    private final PlaceSpringDataRepository repository;
+    private final PlaceService service;
 
     @GetMapping("/all")
     public ResponseEntity<Object> findAllPlace(){
-        return new ResponseEntity<>(Collections.singletonMap("result",repository.findAllBy()), HttpStatus.OK);
+        return new ResponseEntity<>(Collections.singletonMap("result",service.findAllBy()), HttpStatus.OK);
     }
 }

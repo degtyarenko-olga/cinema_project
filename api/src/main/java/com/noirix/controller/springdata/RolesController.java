@@ -1,6 +1,7 @@
 package com.noirix.controller.springdata;
 
 import com.noirix.repository.springdata.RolesSpringDataRepository;
+import com.noirix.service.RolesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import java.util.Collections;
 @RequestMapping("/rest/data/roles")
 public class RolesController {
 
-    private final RolesSpringDataRepository repository;
+    private final RolesService service;
 
     @GetMapping
     public ResponseEntity<Object> findAllRolesWithCache() {
@@ -23,7 +24,7 @@ public class RolesController {
         System.out.println("-------------Start roles controller test ---------------");
 
         return new ResponseEntity<>(
-                Collections.singletonMap("result", repository.findAllCustom()),
+                Collections.singletonMap("result", service.findAllCustom()),
                 HttpStatus.OK
         );
     }

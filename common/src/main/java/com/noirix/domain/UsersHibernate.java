@@ -1,15 +1,15 @@
-package com.noirix.domain.hibernate;
+package com.noirix.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.sql.Timestamp;
-import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -29,7 +29,7 @@ public class UsersHibernate {
 
     @Column(name = "is_deleted")
     @JsonIgnore
-    private boolean isDeleted;
+    private Boolean isDeleted;
 
     @Column(name = "creation_date")
     @JsonIgnore
@@ -50,6 +50,8 @@ public class UsersHibernate {
     private Timestamp birth;
 
     @Column(name = "email")
+    @NotEmpty(message = "Email should not be empty")
+    @Email
     private String email;
 
     @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

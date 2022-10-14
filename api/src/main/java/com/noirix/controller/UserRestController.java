@@ -30,15 +30,15 @@ public class UserRestController {
     return new ResponseEntity<>(Collections.singletonMap("res", userRepository.findAll()),HttpStatus.OK);
       }
 
-  @GetMapping
-  @Secured("ROLE_ADMIN")
-  //@ResponseStatus(HttpStatus.OK)
-  public ResponseEntity<Object> findAllUsers() {
-
-    return new ResponseEntity<>(Collections.singletonMap("result", userRepository.findAll()), HttpStatus.OK);
-
-    //return Collections.singletonMap("result", userService.findAll());
-  }
+//  @GetMapping
+//  @Secured("ROLE_ADMIN")
+//  //@ResponseStatus(HttpStatus.OK)
+//  public ResponseEntity<Object> findAllUsers() {
+//
+//    return new ResponseEntity<>(Collections.singletonMap("result", userRepository.findAll()), HttpStatus.OK);
+//
+//    //return Collections.singletonMap("result", userService.findAll());
+//  }
 
 //  @GetMapping("/search")
 //  public ResponseEntity<Object> findAllUsersWithParams(@ModelAttribute UserSearchRequest userSearchRequest) {

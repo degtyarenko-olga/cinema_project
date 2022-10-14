@@ -1,6 +1,7 @@
 package com.noirix.controller.springdata;
 
 import com.noirix.repository.springdata.SessionSpringDataRepository;
+import com.noirix.service.SessionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,19 +16,19 @@ import java.util.Collections;
 @RequestMapping("/rest/data/session")
 public class SessionController {
 
-    private final SessionSpringDataRepository repository;
+    private final SessionService service;
 
     @GetMapping()
     public ResponseEntity<Object> findAllSession(){
         return new ResponseEntity<>(
-                Collections.singletonMap("session",repository.findAllSession()),
+                Collections.singletonMap("session",service.findAllSession()),
                 HttpStatus.OK);
     }
 
     @GetMapping("/all")
     public ResponseEntity<Object> findAllSessionByH(){
         return new ResponseEntity<>(
-                Collections.singletonMap("session",repository.findByHQLQueryNative()),
+                Collections.singletonMap("session",service.findByHQLQueryNative()),
                 HttpStatus.OK);
     }
 }

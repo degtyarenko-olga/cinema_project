@@ -1,6 +1,6 @@
 package com.noirix.repository.springdata;
 
-import com.noirix.domain.hibernate.RolesHibernate;
+import com.noirix.domain.RolesHibernate;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

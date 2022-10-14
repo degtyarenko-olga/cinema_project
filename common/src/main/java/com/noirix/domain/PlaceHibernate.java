@@ -1,8 +1,6 @@
-package com.noirix.domain.hibernate;
+package com.noirix.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -39,6 +37,7 @@ public class PlaceHibernate {
 
     @Column(name = "price")
     private double price;
+
 
 
 }

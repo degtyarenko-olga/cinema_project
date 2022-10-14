@@ -1,14 +1,12 @@
 package com.noirix.repository.hibernate;
 
-import com.noirix.domain.hibernate.UsersHibernate;
+import com.noirix.domain.UsersHibernate;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.util.List;
 import java.util.Optional;

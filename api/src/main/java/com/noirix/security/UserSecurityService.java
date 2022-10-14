@@ -1,7 +1,7 @@
 package com.noirix.security;
 
-import com.noirix.domain.hibernate.RolesHibernate;
-import com.noirix.domain.hibernate.UsersHibernate;
+import com.noirix.domain.RolesHibernate;
+import com.noirix.domain.UsersHibernate;
 import com.noirix.repository.springdata.RolesSpringDataRepository;
 import com.noirix.repository.springdata.UserSpringDataRepository;
 import lombok.RequiredArgsConstructor;

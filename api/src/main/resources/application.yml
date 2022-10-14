@@ -16,10 +16,10 @@ spring:
       maximum-pool-size: 10
       driver-class-name: org.postgresql.Driver
     username: postgres
-    password: 3346
+    password: postgres
     url: "jdbc:postgresql://localhost:5432/cinema"
 server:
-  port: 8080
+  port: 8081
 
 ---
 
