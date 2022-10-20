@@ -1,6 +1,5 @@
-package com.noirix.controller.requests;
+package com.noirix.controller.requests.user;
 
-import com.noirix.controller.requests.UserCreateRequest;
 import lombok.Data;
 
 @Data

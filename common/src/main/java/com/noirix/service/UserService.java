@@ -1,9 +1,10 @@
 package com.noirix.service;
 
 import com.noirix.domain.UsersHibernate;
-import com.noirix.repository.springdata.UserSpringDataRepository;
+import com.noirix.repository.UserSpringDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,14 +16,15 @@ public class UserService {
 
     private final UserSpringDataRepository repository;
 
+    private final BCryptPasswordEncoder passwordEncoder;
+
 
     public List<UsersHibernate> findAll() {
         return repository.findAll();
     }
 
-    public UsersHibernate findOne(Long id){
-        Optional<UsersHibernate> foundUser = repository.findById(id);
-        return foundUser.orElse(null);
+    public Optional<UsersHibernate> findOne(Long id){
+        return repository.findById(id);
     }
 
     public Object findAll(PageRequest of) {
@@ -34,6 +36,10 @@ public class UserService {
     }
 
     public Object findUsersHibernateByCredentials_Login(String login) {
-        return repository.findUsersHibernateByCredentials_Login(login);
+        return repository.findByCredentialsLogin(login);
+    }
+
+    public UsersHibernate save(UsersHibernate user) {
+        return repository.save(user);
     }
 }

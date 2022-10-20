@@ -1,9 +1,10 @@
 package com.noirix.security;
 
 import com.noirix.domain.RolesHibernate;
+import com.noirix.domain.SystemRoles;
 import com.noirix.domain.UsersHibernate;
-import com.noirix.repository.springdata.RolesSpringDataRepository;
-import com.noirix.repository.springdata.UserSpringDataRepository;
+import com.noirix.repository.RolesSpringDataRepository;
+import com.noirix.repository.UserSpringDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Configuration
 @RequiredArgsConstructor
@@ -25,7 +27,7 @@ public class UserSecurityService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
             /*Find user in DB*/
-            Optional<UsersHibernate> searchResult = userRepository.findUsersHibernateByCredentials_Login(username);
+            Optional<UsersHibernate> searchResult = userRepository.findByCredentialsLogin(username);
 
             if (searchResult.isPresent()) {
                 UsersHibernate user = searchResult.get();
@@ -37,11 +39,11 @@ public class UserSecurityService implements UserDetailsService {
                         user.getCredentials().getPassword(),
 //                        ["ROLE_USER", "ROLE_ADMIN"]
                         AuthorityUtils.commaSeparatedStringToAuthorityList(
-                                roleRepository.findById(user.getId())
+                                roleRepository.findByUserId(user.getId())
                                         .stream()
                                         .map(RolesHibernate::getRoleName)
-                                        //.map(SystemRoles::name)
-                                        .toString()
+                                        .map(SystemRoles::name)
+                                        .collect(Collectors.joining(","))
                         )
                 );
             } else {

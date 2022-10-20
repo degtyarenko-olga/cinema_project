@@ -1,4 +1,4 @@
-package com.noirix.controller.requests;
+package com.noirix.controller.requests.user;
 
 import lombok.Data;
 

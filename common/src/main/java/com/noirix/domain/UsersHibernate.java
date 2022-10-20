@@ -32,11 +32,9 @@ public class UsersHibernate {
     private Boolean isDeleted;
 
     @Column(name = "creation_date")
-    @JsonIgnore
     private Timestamp creationDate;
 
     @Column(name = "modification_date")
-    @JsonIgnore
     private Timestamp modificationDate;
 
     @Embedded

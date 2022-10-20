@@ -10,11 +10,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RequiredArgsConstructor
 @Configuration
@@ -26,21 +29,21 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final JwtTokenHelper tokenUtils;
 
-    private final NoOpPasswordEncoder noOpPasswordEncoder;
+     private final NoOpPasswordEncoder noOpPasswordEncoder;
 
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder
                 .userDetailsService(userProvider)
                 .passwordEncoder(noOpPasswordEncoder);
+               // .passwordEncoder(getPasswordEncoder());
     }
 
-//    @Bean
-//    public AuthenticationTokenFilter authenticationTokenFilterBean(AuthenticationManager authenticationManager) throws Exception {
-//        AuthenticationTokenFilter authenticationTokenFilter = new AuthenticationTokenFilter(tokenUtils, userDetailsService);
-//        authenticationTokenFilter.setAuthenticationManager(authenticationManager);
-//        return authenticationTokenFilter;
-//    }
+    @Bean
+    public PasswordEncoder getPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
 
     @Bean
     @Override
@@ -59,10 +62,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                /*For swagger access only*/
-//                .antMatchers("/v2/api-docs", "/configuration/ui/**", "/swagger-resources/**", "/configuration/security/**", "/swagger-ui.html", "/webjars/**").permitAll()
-//                .antMatchers("/actuator/**").permitAll()
-//                .antMatchers(HttpMethod.GET, "/swagger-ui.html#").permitAll()
+//                .antMatchers("/v3/api-docs/**", "/configuration/ui/**", "/swagger-resources/**", "/configuration/security/**", "/swagger-ui/**", "/webjars/**").permitAll()
+//                .antMatchers(HttpMethod.GET, "/swagger-ui/index").permitAll()
+                .antMatchers("/v2/api-docs/**", "/configuration/ui/**", "/swagger-resources/**", "/configuration/security/**", "/swagger-ui/**", "/webjars/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
+                .antMatchers("/actuator/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/guest/**").permitAll()
                 .antMatchers("/registration/**").permitAll()
@@ -73,15 +77,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated();
 
-        // Custom JWT based authentication
-//        httpSecurity
-//                .addFilterBefore(authenticationTokenFilterBean(authenticationManagerBean()), UsernamePasswordAuthenticationFilter.class);
+
     }
 
-    //For swagger access only
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        web.ignoring()
-//                .antMatchers("/v2/api-docs", "/configuration/ui/**", "/swagger-resources/**", "/configuration/security/**", "/swagger-ui.html", "/webjars/**");
-//    }
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .antMatchers("/v2/api-docs", "/configuration/ui/**", "/swagger-resources/**", "/configuration/security/**", "/swagger-ui.html", "/webjars/**");
+    }
 }

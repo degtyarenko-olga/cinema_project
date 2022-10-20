@@ -112,21 +112,21 @@ create unique index if not exists place_id_uindex
 
 create table if not exists cinema.ticket
 (
-    id               serial
+    id               bigserial
         constraint ticket_pk
             primary key,
-    date_of_purchase timestamp(6) not null,
-    movie_id         bigint
+    movie_id         bigserial
         constraint ticket_movie_id_fk
-            references movie
+            references cinema.movie
             on update cascade on delete cascade,
-    session_id       bigint
+    session_id       bigserial
         constraint ticket_session_id_fk
-            references session
+            references cinema.session
             on update cascade on delete cascade,
-    place_id         bigint
+    date_of_purchase timestamp not null,
+    place_id         bigserial
         constraint ticket_place_id_fk
-            references place
+            references cinema.place
             on update cascade on delete cascade
 );
 

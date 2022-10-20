@@ -1,4 +1,4 @@
-package com.noirix.repository.springdata;
+package com.noirix.repository;
 
 import com.noirix.domain.SessionHibernate;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -14,17 +14,6 @@ public class CustomAspect {
 
     private static final Logger log = Logger.getLogger(CustomAspect.class);
 
-//    @Before("aroundRepositoryPointcut()")
-//    public void logBefore(JoinPoint joinPoint) {
-//        log.info("Method " + joinPoint.getSignature().getName() + " start");
-//    }
-//
-//    @AfterReturning(pointcut = "aroundRepositoryPointcut()")
-//    public void doAccessCheck(JoinPoint joinPoint) {
-//        log.info("Method " + joinPoint.getSignature().getName() + " finished");
-//    }
-
-
     @Pointcut("execution(* com.noirix.repository.*.*.*(..))" )
     public void aroundRepositoryPointcut() {
     }

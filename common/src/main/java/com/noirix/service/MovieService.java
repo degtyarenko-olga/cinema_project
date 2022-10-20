@@ -1,6 +1,6 @@
 package com.noirix.service;
 
-import com.noirix.repository.springdata.MovieSpringDataRepository;
+import com.noirix.repository.MovieSpringDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

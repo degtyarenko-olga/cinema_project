@@ -32,9 +32,9 @@ public class MovieHibernate {
     @Column(name = "age_restrictions")
     private int ageRestrictions;
 
-//    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-//    //@JsonManagedReference
-//    @JsonBackReference
-//    private Set<TicketHibernate> ticket;
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    //@JsonManagedReference
+    @JsonBackReference
+    private Set<TicketHibernate> ticket;
 
 }

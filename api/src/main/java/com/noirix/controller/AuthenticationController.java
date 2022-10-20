@@ -10,10 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -25,12 +22,6 @@ public class AuthenticationController {
 
     private final UserDetailsService userProvider;
 
-    //    @ApiOperation(value = "Login user in system", notes = "Return Auth-Token with user login")
-//    @ApiResponses({
-//            @ApiResponse(code = 200, message = "Successful authorization"),
-//            @ApiResponse(code = 400, message = "Request error"),
-//            @ApiResponse(code = 500, message = "Server error")
-//    })
     @PostMapping
     public ResponseEntity<AuthResponse> loginUser(@RequestBody AuthRequest request) {
 
@@ -53,12 +44,4 @@ public class AuthenticationController {
         );
     }
 
-    //localhost:8080/authentication POST
-/*
-    {
-
-    "login": "login",
-    "password": "password"
-
-   }   -> new AuthRequest(login, password) */
 }

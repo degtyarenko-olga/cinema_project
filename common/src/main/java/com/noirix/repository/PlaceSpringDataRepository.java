@@ -1,4 +1,4 @@
-package com.noirix.repository.springdata;
+package com.noirix.repository;
 
 import com.noirix.domain.PlaceHibernate;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -34,10 +34,6 @@ public class TicketHibernate {
     @JsonManagedReference
     private SessionHibernate session;
 
-//    @ManyToOne
-//    @Column(name = "hall_id")
-//    private HallHibernate hall;
-
     @Column(name = "date_of_purchase")
     private Timestamp dateOfPurchase;
 

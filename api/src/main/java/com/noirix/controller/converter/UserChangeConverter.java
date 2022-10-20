@@ -1,28 +1,28 @@
 package com.noirix.controller.converter;
 
-import com.fasterxml.jackson.databind.util.Converter;
-import com.noirix.controller.requests.UserChangeRequest;
-import com.noirix.controller.requests.UserCreateRequest;
-import com.noirix.domain.Credentials;
+import com.noirix.controller.requests.user.UserChangeRequest;
 import com.noirix.domain.UsersHibernate;
-import com.noirix.repository.springdata.UserSpringDataRepository;
+import com.noirix.repository.UserSpringDataRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.ConfigurationPropertiesBinding;
 import org.springframework.stereotype.Component;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
+
 
 @Component
 @RequiredArgsConstructor
 public class UserChangeConverter extends UserBaseConverter<UserChangeRequest, UsersHibernate> {
 
-    private final UserSpringDataRepository repository;
+    private final UserSpringDataRepository service;
 
     @Override
     public UsersHibernate convert(UserChangeRequest source) {
 
-        Optional<UsersHibernate> user = repository.findById(source.getId());
+        Optional<UsersHibernate> user = service.findById(source.getId());
+
         return doConvert(user.get(), source);
+
     }
 }

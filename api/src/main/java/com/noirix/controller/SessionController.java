@@ -1,6 +1,5 @@
-package com.noirix.controller.springdata;
+package com.noirix.controller;
 
-import com.noirix.repository.springdata.SessionSpringDataRepository;
 import com.noirix.service.SessionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.noirix.controller.springdata;
+package com.noirix.controller;
 
 import com.noirix.service.MovieService;
 import lombok.RequiredArgsConstructor;

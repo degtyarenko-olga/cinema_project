@@ -1,8 +1,10 @@
 package com.noirix.controller.converter;
 
-import com.noirix.controller.requests.UserCreateRequest;
+import com.noirix.controller.requests.user.UserCreateRequest;
+import com.noirix.domain.Credentials;
 import com.noirix.domain.UsersHibernate;
 import org.springframework.core.convert.converter.Converter;
+
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -12,10 +14,17 @@ public abstract class UserBaseConverter<S, T> implements Converter<S, T> {
     public UsersHibernate doConvert(UsersHibernate userForUpdate, UserCreateRequest request) {
 
         userForUpdate.setBirth(request.getBirth());
-
-        /*System fields filling*/
-        userForUpdate.setModificationDate(new Timestamp(new Date().getTime()));
+        userForUpdate.setEmail(request.getEmail());
         userForUpdate.setIsDeleted(false);
+
+        Credentials credentials = new Credentials();
+        credentials.setLogin(request.getLogin());
+        credentials.setPassword(request.getPassword());
+
+        userForUpdate.setCredentials(credentials);
+
+        userForUpdate.setModificationDate(new Timestamp(new Date().getTime()));
+
 
         return userForUpdate;
     }

@@ -1,6 +1,6 @@
 package com.noirix.service;
 
-import com.noirix.repository.springdata.SessionSpringDataRepository;
+import com.noirix.repository.SessionSpringDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

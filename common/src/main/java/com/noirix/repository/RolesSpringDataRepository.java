@@ -1,4 +1,4 @@
-package com.noirix.repository.springdata;
+package com.noirix.repository;
 
 import com.noirix.domain.RolesHibernate;
 import org.springframework.cache.annotation.Cacheable;
@@ -14,4 +14,14 @@ public interface RolesSpringDataRepository extends JpaRepository<RolesHibernate,
     @Cacheable("roles")
     @Query(value = "select r from RolesHibernate r")
     List<RolesHibernate> findAllCustom();
+
+    List<RolesHibernate> findRolesHibernateById(Long userId);
+
+    @Query(value = "select * from cinema.roles " +
+            "inner join cinema.l_role_user " +
+            "on cinema.roles.id = cinema.l_role_user.role_id " +
+            "where cinema.l_role_user.user_id = :userId"
+            , nativeQuery = true)
+    List<RolesHibernate> findByUserId(Long userId);
+
 }
