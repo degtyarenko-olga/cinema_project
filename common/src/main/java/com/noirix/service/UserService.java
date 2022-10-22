@@ -9,6 +9,7 @@ import com.noirix.repository.UserSpringDataRepository;
 import com.noirix.service.request.UserUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

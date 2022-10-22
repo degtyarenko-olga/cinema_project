@@ -46,8 +46,8 @@ public class UsersHibernate {
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "login", column = @Column(name = "login")),
-            @AttributeOverride(name = "password", column = @Column(name = "password"))
+            @AttributeOverride(name = "login", column = @Column(name = "login",nullable = false)),
+            @AttributeOverride(name = "password", column = @Column(name = "password",nullable = false))
     })
     private Credentials credentials;
 

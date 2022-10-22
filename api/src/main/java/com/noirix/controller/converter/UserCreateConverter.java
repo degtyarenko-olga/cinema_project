@@ -4,6 +4,7 @@ import com.noirix.controller.requests.user.UserCreateRequest;
 import com.noirix.domain.Credentials;
 import com.noirix.domain.UsersHibernate;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +17,6 @@ public class UserCreateConverter extends UserBaseConverter<UserCreateRequest, Us
 
     private final PasswordEncoder passwordEncoder;
 
-
     @Override
     public UsersHibernate convert(UserCreateRequest source) {
 
@@ -25,7 +25,6 @@ public class UserCreateConverter extends UserBaseConverter<UserCreateRequest, Us
         Credentials credentials = new Credentials();
         credentials.setLogin(source.getLogin());
         credentials.setPassword(passwordEncoder.encode(source.getPassword()));
-        //credentials.setPassword(source.getPassword());
 
         usersHibernate.setCredentials(credentials);
 
@@ -34,3 +33,4 @@ public class UserCreateConverter extends UserBaseConverter<UserCreateRequest, Us
         return doConvert(usersHibernate, source);
     }
 }
+

@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -73,16 +74,16 @@ public class UserController {
 
         return new ResponseEntity<>(
                 Collections.singletonMap("USER", service.findById(user.getId())),
-                HttpStatus.OK
+                HttpStatus.CREATED
         );
     }
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Map<String, Object>> deleteUsersById(@PathVariable String id) {
-//
-//        long userId = Long.parseLong(id);
-//
-//    return new ResponseEntity<>(service.deleteById(userId),HttpStatus.OK);
-//    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteUsersById(@PathVariable String id) {
+
+        long userId = Long.parseLong(id);
+
+    return new ResponseEntity<>(service.delete(userId),HttpStatus.OK);
+    }
 
 
     @GetMapping("/{id}")
