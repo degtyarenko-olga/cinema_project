@@ -24,8 +24,8 @@ public class UserCreateConverter extends UserBaseConverter<UserCreateRequest, Us
 
         Credentials credentials = new Credentials();
         credentials.setLogin(source.getLogin());
-       // credentials.setPassword(passwordEncoder.encode(source.getPassword()));
-        credentials.setPassword(source.getPassword());
+        credentials.setPassword(passwordEncoder.encode(source.getPassword()));
+        //credentials.setPassword(source.getPassword());
 
         usersHibernate.setCredentials(credentials);
 
