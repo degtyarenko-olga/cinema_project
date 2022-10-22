@@ -1,14 +1,22 @@
 package com.noirix.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 import java.sql.Timestamp;
 import java.util.Set;
 
@@ -28,7 +36,6 @@ public class UsersHibernate {
     private Long id;
 
     @Column(name = "is_deleted")
-    @JsonIgnore
     private Boolean isDeleted;
 
     @Column(name = "creation_date")
@@ -48,11 +55,10 @@ public class UsersHibernate {
     private Timestamp birth;
 
     @Column(name = "email")
-    @NotEmpty(message = "Email should not be empty")
     @Email
     private String email;
 
-    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
     @JsonIgnoreProperties("users")
     private Set<RolesHibernate> roles;
 

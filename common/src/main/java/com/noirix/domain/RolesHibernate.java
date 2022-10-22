@@ -5,7 +5,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.springframework.cache.annotation.Cacheable;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.sql.Timestamp;
 import java.util.Set;
 
@@ -24,11 +34,9 @@ public class RolesHibernate {
     private SystemRoles roleName;
 
     @Column(name = "creation_date")
-    @JsonIgnore
     private Timestamp creationDate;
 
     @Column(name = "modification_date")
-    @JsonIgnore
     private Timestamp modificationDate;
 
     @ManyToMany

@@ -1,5 +1,6 @@
 package com.noirix.security;
 
+import com.noirix.security.filter.AuthenticationTokenFilter;
 import com.noirix.security.jwt.JwtTokenHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @RequiredArgsConstructor
 @Configuration
@@ -29,19 +31,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final JwtTokenHelper tokenUtils;
 
-     private final NoOpPasswordEncoder noOpPasswordEncoder;
+     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder
                 .userDetailsService(userProvider)
-                .passwordEncoder(noOpPasswordEncoder);
-               // .passwordEncoder(getPasswordEncoder());
-    }
-
-    @Bean
-    public PasswordEncoder getPasswordEncoder() {
-        return new BCryptPasswordEncoder();
+                .passwordEncoder(passwordEncoder);
     }
 
 
@@ -78,6 +74,15 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authenticated();
 
 
+    httpSecurity
+            .addFilterBefore(authenticationTokenFilterBean(authenticationManagerBean()), UsernamePasswordAuthenticationFilter .class);
+}
+
+    @Bean
+    public AuthenticationTokenFilter authenticationTokenFilterBean(AuthenticationManager authenticationManager) throws Exception {
+        AuthenticationTokenFilter authenticationTokenFilter = new AuthenticationTokenFilter(tokenUtils, userProvider);
+        authenticationTokenFilter.setAuthenticationManager(authenticationManager);
+        return authenticationTokenFilter;
     }
 
     @Override

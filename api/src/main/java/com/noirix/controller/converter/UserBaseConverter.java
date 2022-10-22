@@ -5,7 +5,6 @@ import com.noirix.domain.Credentials;
 import com.noirix.domain.UsersHibernate;
 import org.springframework.core.convert.converter.Converter;
 
-
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -16,12 +15,6 @@ public abstract class UserBaseConverter<S, T> implements Converter<S, T> {
         userForUpdate.setBirth(request.getBirth());
         userForUpdate.setEmail(request.getEmail());
         userForUpdate.setIsDeleted(false);
-
-        Credentials credentials = new Credentials();
-        credentials.setLogin(request.getLogin());
-        credentials.setPassword(request.getPassword());
-
-        userForUpdate.setCredentials(credentials);
 
         userForUpdate.setModificationDate(new Timestamp(new Date().getTime()));
 

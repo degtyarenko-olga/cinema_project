@@ -118,16 +118,16 @@ create table if not exists cinema.ticket
     movie_id         bigserial
         constraint ticket_movie_id_fk
             references cinema.movie
-            on update cascade on delete cascade,
+            on update cascade,
     session_id       bigserial
         constraint ticket_session_id_fk
             references cinema.session
-            on update cascade on delete cascade,
+            on update cascade,
     date_of_purchase timestamp not null,
     place_id         bigserial
         constraint ticket_place_id_fk
             references cinema.place
-            on update cascade on delete cascade
+            on update cascade
 );
 
 alter table cinema.ticket
@@ -144,11 +144,11 @@ create table if not exists cinema.l_role_user
     user_id bigint not null
         constraint l_role_user_users_id_fk
             references cinema.users
-            on update cascade on delete cascade,
+            on update cascade,
     role_id bigint not null
         constraint l_role_user_roles_id_fk
             references cinema.roles
-            on update cascade on delete cascade
+            on update cascade
 );
 
 alter table cinema.l_role_user

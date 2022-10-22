@@ -5,7 +5,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.Set;
 
 @Data
@@ -31,7 +38,7 @@ public class PlaceHibernate {
     @Column(name = "is_available")
     private boolean isAvailable;
 
-    @ManyToMany(mappedBy = "place", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "place", fetch = FetchType.EAGER)
     @JsonIgnoreProperties("place")
     private Set<HallHibernate> hall;
 

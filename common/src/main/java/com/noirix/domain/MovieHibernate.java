@@ -1,12 +1,16 @@
 package com.noirix.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.Set;
 
 @Data
@@ -32,7 +36,7 @@ public class MovieHibernate {
     @Column(name = "age_restrictions")
     private int ageRestrictions;
 
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER, orphanRemoval = true)
     //@JsonManagedReference
     @JsonBackReference
     private Set<TicketHibernate> ticket;

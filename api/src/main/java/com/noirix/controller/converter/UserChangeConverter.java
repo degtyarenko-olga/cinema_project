@@ -4,10 +4,8 @@ import com.noirix.controller.requests.user.UserChangeRequest;
 import com.noirix.domain.UsersHibernate;
 import com.noirix.repository.UserSpringDataRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.context.properties.ConfigurationPropertiesBinding;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 
