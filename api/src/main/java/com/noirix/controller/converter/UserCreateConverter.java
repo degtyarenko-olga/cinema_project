@@ -4,7 +4,6 @@ import com.noirix.controller.requests.user.UserCreateRequest;
 import com.noirix.domain.Credentials;
 import com.noirix.domain.UsersHibernate;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 

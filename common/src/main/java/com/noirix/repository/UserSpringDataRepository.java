@@ -18,4 +18,5 @@ public interface UserSpringDataRepository extends JpaRepository<UsersHibernate, 
     UsersHibernate deleteUsersHibernateById(Long id);
 
      UsersHibernate findUsersHibernateByIdAndAndIsDeletedFalse(Long id);
+
 }

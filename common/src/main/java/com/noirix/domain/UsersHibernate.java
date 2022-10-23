@@ -58,6 +58,7 @@ public class UsersHibernate {
     @Email
     private String email;
 
+
     @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
     @JsonIgnoreProperties("users")
     private Set<RolesHibernate> roles;

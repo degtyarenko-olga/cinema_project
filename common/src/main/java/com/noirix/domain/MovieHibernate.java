@@ -2,6 +2,7 @@ package com.noirix.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
+import org.springframework.cache.annotation.Cacheable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@Cacheable("movies")
 @Table(name = "movie")
 public class MovieHibernate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)

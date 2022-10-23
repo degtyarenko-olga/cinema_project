@@ -1,4 +1,4 @@
-create table if not exists cinema.users
+create table if not exists users
 (
     id                serial
         constraint users_pk
@@ -7,30 +7,30 @@ create table if not exists cinema.users
     is_deleted        boolean      default false                     not null,
     creation_date     timestamp(6) default CURRENT_TIMESTAMP(6)      not null,
     modification_date timestamp(6) default CURRENT_TIMESTAMP(6)      not null,
-    password          varchar(10)                                    not null,
+    password          varchar(100)                                    not null,
     birth             timestamp(6)                                   not null,
     email             varchar(255)                                   not null
 );
 
-alter table cinema.users
+alter table users
     owner to postgres;
 
 create unique index if not exists users_id_uindex
-    on cinema.users (id);
+    on users (id);
 
 create index if not exists users_user_name_index
-    on cinema.users (login);
+    on users (login);
 
 create index if not exists users_is_deleted_index
-    on cinema.users (is_deleted);
+    on users (is_deleted);
 
 create unique index if not exists users_password_uindex
-    on cinema.users (password);
+    on users (password);
 
 create unique index if not exists users_email_uindex
-    on cinema.users (email);
+    on users (email);
 
-create table if not exists cinema.roles
+create table if not exists roles
 (
     id                bigserial
         constraint roles_pk
@@ -40,13 +40,13 @@ create table if not exists cinema.roles
     modification_date timestamp(6)
 );
 
-alter table cinema.roles
+alter table roles
     owner to postgres;
 
 create unique index if not exists roles_id_uindex
-    on cinema.roles (id);
+    on roles (id);
 
-create table if not exists cinema.hall
+create table if not exists hall
 (
     id        serial
         constraint hall_pk
@@ -54,13 +54,13 @@ create table if not exists cinema.hall
     name_hall varchar(100) not null
 );
 
-alter table cinema.hall
+alter table hall
     owner to postgres;
 
 create unique index if not exists hall_id_uindex
-    on cinema.hall (id);
+    on hall (id);
 
-create table if not exists cinema.movie
+create table if not exists movie
 (
     id               serial
         constraint movie_pk
@@ -72,13 +72,13 @@ create table if not exists cinema.movie
     age_restrictions integer              not null
 );
 
-alter table cinema.movie
+alter table movie
     owner to postgres;
 
 create unique index if not exists movie_id_uindex
-    on cinema.movie (id);
+    on movie (id);
 
-create table if not exists cinema.session
+create table if not exists session
 (
     id             serial
         constraint session_pk
@@ -87,13 +87,13 @@ create table if not exists cinema.session
     end_of_session timestamp(6) not null
 );
 
-alter table cinema.session
+alter table session
     owner to postgres;
 
 create unique index if not exists session_id_uindex
-    on cinema.session (id);
+    on session (id);
 
-create table if not exists cinema.place
+create table if not exists place
 (
     id           serial
         constraint place_pk
@@ -104,79 +104,79 @@ create table if not exists cinema.place
     price        double precision default 0    not null
 );
 
-alter table cinema.place
+alter table place
     owner to postgres;
 
 create unique index if not exists place_id_uindex
-    on cinema.place (id);
+    on place (id);
 
-create table if not exists cinema.ticket
+create table if not exists ticket
 (
     id               bigserial
         constraint ticket_pk
             primary key,
     movie_id         bigserial
         constraint ticket_movie_id_fk
-            references cinema.movie
+            references movie
             on update cascade,
     session_id       bigserial
         constraint ticket_session_id_fk
-            references cinema.session
+            references session
             on update cascade,
     date_of_purchase timestamp not null,
     place_id         bigserial
         constraint ticket_place_id_fk
-            references cinema.place
+            references place
             on update cascade
 );
 
-alter table cinema.ticket
+alter table ticket
     owner to postgres;
 
 create unique index if not exists ticket_id_uindex
-    on cinema.ticket (id);
+    on ticket (id);
 
-create table if not exists cinema.l_role_user
+create table if not exists l_role_user
 (
     id      bigserial
         constraint l_role_user_pk
             primary key,
     user_id bigint not null
         constraint l_role_user_users_id_fk
-            references cinema.users
-            on update cascade,
+            references users
+            on update cascade on delete cascade,
     role_id bigint not null
         constraint l_role_user_roles_id_fk
-            references cinema.roles
-            on update cascade
+            references roles
+
 );
 
-alter table cinema.l_role_user
+alter table l_role_user
     owner to postgres;
 
 create unique index if not exists l_role_user_id_uindex
-    on cinema.l_role_user (id);
+    on l_role_user (id);
 
 create index if not exists l_role_user_user_id_role_id_index
-    on cinema.l_role_user (user_id, role_id);
+    on l_role_user (user_id, role_id);
 
-create table if not exists cinema.l_place_hall
+create table if not exists l_place_hall
 (
     id       bigserial
         constraint l_place_hall_pk
             primary key,
     hall_id  bigint not null
         constraint l_place_hall_hall_id_fk
-            references cinema.hall
+            references hall
             on update cascade on delete cascade,
     place_id bigint not null
         constraint l_place_hall_place_id_fk
-            references cinema.place
+            references place
             on update cascade on delete cascade
 );
 
-alter table cinema.l_place_hall
+alter table l_place_hall
     owner to postgres;
 
 create unique index if not exists l_place_hall_id_uindex
-    on cinema.l_place_hall (id);
+    on l_place_hall (id);

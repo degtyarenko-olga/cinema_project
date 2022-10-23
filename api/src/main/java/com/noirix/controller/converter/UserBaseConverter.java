@@ -1,7 +1,6 @@
 package com.noirix.controller.converter;
 
 import com.noirix.controller.requests.user.UserCreateRequest;
-import com.noirix.domain.Credentials;
 import com.noirix.domain.UsersHibernate;
 import org.springframework.core.convert.converter.Converter;
 

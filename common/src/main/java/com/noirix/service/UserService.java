@@ -6,14 +6,12 @@ import com.noirix.domain.UsersHibernate;
 import com.noirix.exception.UserNotFoundException;
 import com.noirix.repository.RolesSpringDataRepository;
 import com.noirix.repository.UserSpringDataRepository;
-import com.noirix.service.request.UserUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -45,11 +43,12 @@ public class UserService {
         return repository.findByHQLQuery();
     }
 
-
+    @Transactional
     public UsersHibernate save(UsersHibernate user) {
         return repository.save(user);
     }
 
+    @Transactional
     public Long delete(Long id) {
         repository.deleteById(id);
         return id;
@@ -59,7 +58,7 @@ public class UserService {
         return repository.findByCredentialsLogin(login);
     }
 
-
+    @Transactional
     public Object create(UsersHibernate user) {
 
         RolesHibernate roleUser = dataRepository.findRolesHibernateByRoleName(SystemRoles.ROLE_USER);

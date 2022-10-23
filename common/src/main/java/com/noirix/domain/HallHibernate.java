@@ -3,6 +3,7 @@ package com.noirix.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import org.springframework.cache.annotation.Cacheable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@Cacheable("hall")
 @Table(name = "hall")
 public class HallHibernate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)

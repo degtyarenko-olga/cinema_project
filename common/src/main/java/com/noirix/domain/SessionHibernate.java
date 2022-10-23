@@ -1,6 +1,7 @@
 package com.noirix.domain;
 
 import lombok.Data;
+import org.springframework.cache.annotation.Cacheable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import java.sql.Timestamp;
 
 @Data
 @Entity
+@Cacheable("session")
 @Table(name = "session")
 public class SessionHibernate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
