@@ -9,11 +9,12 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.Collections;
+import java.util.NoSuchElementException;
 
 @ControllerAdvice
 public class DefaultExceptionHandler {
 
-    @ExceptionHandler({NoSuchEntityException.class, EmptyResultDataAccessException.class})
+    @ExceptionHandler({NoSuchEntityException.class, EmptyResultDataAccessException.class, NoSuchElementException.class})
     public ResponseEntity<Object> handleEntityNotFountException(Exception e) {
 
         ErrorContainer error = ErrorContainer
@@ -48,12 +49,11 @@ public class DefaultExceptionHandler {
                 .builder()
                 .exceptionId(UUIDGenerator.generateUUID())
                 .errorCode(3)
-                .errorMessage("Error number format")
+                .errorMessage(e.getMessage())
                 .e(e.getClass().toString())
                 .build();
 
-        return new ResponseEntity<>(Collections.singletonMap("error", error), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(Collections.singletonMap("error", error), HttpStatus.BAD_REQUEST);
     }
-
 
 }

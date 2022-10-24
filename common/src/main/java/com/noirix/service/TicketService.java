@@ -11,10 +11,10 @@ public class TicketService {
     private final TicketSpringDataRepository repository;
 
     public Object findAllTickets() {
-        return repository.findAllTickets();
+        return repository.findByHQLQuery();
     }
 
-    public Object findTicketHibernatesById(Long id) {
-        return repository.findTicketHibernatesById(id);
+    public Object findById(Long id) {
+        return repository.findById(id);
     }
 }

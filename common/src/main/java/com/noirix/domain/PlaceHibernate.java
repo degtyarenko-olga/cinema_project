@@ -18,7 +18,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@Cacheable("place")
+//@Cacheable("place")
 @Table(name = "place")
 @EqualsAndHashCode(exclude = {
         "hall"

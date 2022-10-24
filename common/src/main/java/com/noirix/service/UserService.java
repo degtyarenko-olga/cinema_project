@@ -11,11 +11,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserService {
 
     private final UserSpringDataRepository repository;
@@ -27,12 +29,9 @@ public class UserService {
         return repository.findAll();
     }
 
+
     public UsersHibernate findById(Long id) {
-        if (repository.existsById(id)) {
-            return repository.findUsersHibernateByIdAndAndIsDeletedFalse(id);
-        } else {
-            throw new UserNotFoundException(id);
-        }
+       return repository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     public Object findAll(PageRequest of) {
@@ -41,6 +40,10 @@ public class UserService {
 
     public Object findByHQLQuery() {
         return repository.findByHQLQuery();
+    }
+
+    public Object findByHQLQueryId(Long id){
+        return repository.findUsersHibernateById(id);
     }
 
     @Transactional
@@ -55,7 +58,8 @@ public class UserService {
     }
 
     public Object findByCredentialsLogin(String login) {
-        return repository.findByCredentialsLogin(login);
+       // return repository.findByCredentialsLogin(login);
+        return repository.findUsersHibernateByCredentialsLogin(login).orElseThrow(EntityNotFoundException::new);
     }
 
     @Transactional

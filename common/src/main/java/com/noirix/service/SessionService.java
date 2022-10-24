@@ -14,7 +14,7 @@ public class SessionService {
         return repository.findAllSession();
     }
 
-    public Object findByHQLQueryNative() {
-        return repository.findByHQLQueryNative();
+    public Object findById(Long sessionId) {
+        return repository.findById(sessionId);
     }
 }

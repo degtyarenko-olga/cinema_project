@@ -18,7 +18,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@Cacheable("hall")
+//@Cacheable("hall")
 @Table(name = "hall")
 public class HallHibernate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)

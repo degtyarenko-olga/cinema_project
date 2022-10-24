@@ -1,8 +1,12 @@
 package com.noirix.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.AttributeOverride;
@@ -20,7 +24,10 @@ import javax.validation.constraints.Email;
 import java.sql.Timestamp;
 import java.util.Set;
 
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Entity
 @EqualsAndHashCode(exclude = {
         "roles"
