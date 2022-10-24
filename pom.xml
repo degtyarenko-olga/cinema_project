@@ -33,6 +33,7 @@
         <jwt.version>0.9.1</jwt.version>
         <flyway.version>9.3.0</flyway.version>
         <swagger.version>2.9.2</swagger.version>
+        <validator.version>1.7</validator.version>
     </properties>
 
     <dependencies>
@@ -190,6 +191,24 @@
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>${validator.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.0.13.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.el</artifactId>
+            <version>3.0.0</version>
         </dependency>
 
     </dependencies>

@@ -12,4 +12,6 @@ public interface TicketSpringDataRepository extends JpaRepository<TicketHibernat
 
     @Query(value = "select t from TicketHibernate t")
     List<TicketHibernate> findByHQLQuery();
+
+    TicketHibernate findTicketHibernateById(Long id);
 }

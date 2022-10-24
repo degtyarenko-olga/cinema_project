@@ -2,6 +2,7 @@ package com.noirix.controller;
 
 import com.noirix.controller.requests.user.UserCreateRequest;
 import com.noirix.domain.UsersHibernate;
+import com.noirix.repository.UserSpringDataRepository;
 import com.noirix.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -33,6 +34,8 @@ import java.util.Map;
 public class UsersController {
 
     private final UserService service;
+
+    private final UserSpringDataRepository repository;
 
     private final ConversionService converter;
 
@@ -118,6 +121,20 @@ public class UsersController {
         model.put("id", id);
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
+
+//    @Transactional
+//    @PutMapping
+//    public ResponseEntity<Object> update(@Valid @RequestBody UserChangeRequest updateRequest) {
+//
+//
+//        UsersHibernate user = converter.convert(updateRequest, UsersHibernate.class);
+//
+//        service.update(user);
+//
+//        return new ResponseEntity<>(
+//                Collections.singletonMap("USER", service.findById(user.getId())),
+//                HttpStatus.CREATED);
+//    }
 
 
 }

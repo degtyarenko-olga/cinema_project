@@ -1,8 +1,11 @@
 package com.noirix.service;
 
+import com.noirix.domain.TicketHibernate;
 import com.noirix.repository.TicketSpringDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.EntityNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -14,7 +17,7 @@ public class TicketService {
         return repository.findByHQLQuery();
     }
 
-    public Object findById(Long id) {
-        return repository.findById(id);
+    public TicketHibernate findById(Long id) {
+        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 }

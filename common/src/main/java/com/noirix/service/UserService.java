@@ -57,6 +57,7 @@ public class UserService {
         return id;
     }
 
+
     public Object findByCredentialsLogin(String login) {
        // return repository.findByCredentialsLogin(login);
         return repository.findUsersHibernateByCredentialsLogin(login).orElseThrow(EntityNotFoundException::new);
@@ -71,6 +72,14 @@ public class UserService {
         roleUser.getUsers().add(user);
 
         UsersHibernate usersHibernate = repository.save(user);
+        return usersHibernate;
+    }
+
+    @Transactional
+    public Object update(UsersHibernate user) {
+
+        UsersHibernate usersHibernate = repository.save(user);
+
         return usersHibernate;
     }
 
