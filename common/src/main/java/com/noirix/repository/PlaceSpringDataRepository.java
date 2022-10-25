@@ -12,4 +12,7 @@ public interface PlaceSpringDataRepository extends JpaRepository<PlaceHibernate,
 
     @Query(value = "select p from PlaceHibernate p")
     List<PlaceHibernate> findAllBy();
+
+
+    List<PlaceHibernate> findAllByRow(int row);
 }

@@ -13,4 +13,12 @@ public class HallService {
     public Object findAllHall() {
         return repository.findAllHall();
     }
+
+    public Object findById(Long id) {
+        return repository.findById(id);
+    }
+
+    public Object findHallByName(String name) {
+        return repository.findHallHibernateByNameHall(name);
+    }
 }

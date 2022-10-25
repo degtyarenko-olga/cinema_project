@@ -17,8 +17,5 @@ public interface UserSpringDataRepository extends JpaRepository<UsersHibernate, 
 
     Optional<UsersHibernate> findUsersHibernateByCredentialsLogin(String login);
 
-     UsersHibernate findUsersHibernateByIdAndAndIsDeletedFalse(Long id);
-
-     UsersHibernate findUsersHibernateById(Long id);
 
 }

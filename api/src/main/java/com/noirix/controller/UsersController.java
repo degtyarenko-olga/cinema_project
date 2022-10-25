@@ -1,8 +1,8 @@
 package com.noirix.controller;
 
+import com.noirix.controller.requests.user.UserChangeRequest;
 import com.noirix.controller.requests.user.UserCreateRequest;
 import com.noirix.domain.UsersHibernate;
-import com.noirix.repository.UserSpringDataRepository;
 import com.noirix.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,11 +35,7 @@ import java.util.Map;
 public class UsersController {
 
     private final UserService service;
-
-    private final UserSpringDataRepository repository;
-
     private final ConversionService converter;
-
 
     @Operation(summary = "Gets all users")
     @ApiResponses(value = {
@@ -53,7 +50,6 @@ public class UsersController {
         return new ResponseEntity<>(Collections.singletonMap("result",
                 service.findByHQLQuery()), HttpStatus.OK);
     }
-
 
     @Operation(summary = "Gets user by ID")
     @ApiResponses(value = {
@@ -70,7 +66,6 @@ public class UsersController {
         );
     }
 
-
     @Operation(summary = "Gets user by login")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the user", content =
@@ -84,7 +79,6 @@ public class UsersController {
         return new ResponseEntity<>(Collections.singletonMap("user",
                 service.findByCredentialsLogin(login)), HttpStatus.OK);
     }
-
 
     @Operation(summary = "Create new user")
     @ApiResponses(value = {
@@ -106,7 +100,6 @@ public class UsersController {
                 HttpStatus.CREATED);
     }
 
-
     @Operation(summary = "Delete user by ID",
             responses = {@ApiResponse(responseCode = "200", description = "User deleted",
                     content = @Content)
@@ -122,19 +115,19 @@ public class UsersController {
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
 
-//    @Transactional
-//    @PutMapping
-//    public ResponseEntity<Object> update(@Valid @RequestBody UserChangeRequest updateRequest) {
-//
-//
-//        UsersHibernate user = converter.convert(updateRequest, UsersHibernate.class);
-//
-//        service.update(user);
-//
-//        return new ResponseEntity<>(
-//                Collections.singletonMap("USER", service.findById(user.getId())),
-//                HttpStatus.CREATED);
-//    }
+    @Transactional
+    @PutMapping
+    public ResponseEntity<Object> update(@Valid @RequestBody UserChangeRequest updateRequest) {
+
+        service.findById(updateRequest.getId());
+
+        UsersHibernate user = converter.convert(updateRequest, UsersHibernate.class);
+
+
+        return new ResponseEntity<>(
+                Collections.singletonMap("USER", service.findById(user.getId())),
+                HttpStatus.OK);
+    }
 
 
 }

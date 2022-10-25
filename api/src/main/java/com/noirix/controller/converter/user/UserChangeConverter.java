@@ -1,8 +1,9 @@
-package com.noirix.controller.converter;
+package com.noirix.controller.converter.user;
 
 import com.noirix.controller.requests.user.UserChangeRequest;
 import com.noirix.domain.UsersHibernate;
 import com.noirix.repository.UserSpringDataRepository;
+import com.noirix.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,14 +14,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserChangeConverter extends UserBaseConverter<UserChangeRequest, UsersHibernate> {
 
-    private final UserSpringDataRepository service;
+    private final UserService service;
 
     @Override
     public UsersHibernate convert(UserChangeRequest source) {
 
-        Optional<UsersHibernate> user = service.findById(source.getId());
+        UsersHibernate user = service.findById(source.getId());
 
-        return doConvert(user.get(), source);
+        return doConvert(user, source);
 
     }
 }

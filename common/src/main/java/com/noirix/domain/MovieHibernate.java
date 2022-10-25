@@ -1,9 +1,11 @@
 package com.noirix.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import org.springframework.cache.annotation.Cacheable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,7 +18,7 @@ import java.util.Set;
 
 @Data
 @Entity
-//@Cacheable("movies")
+@Cacheable("movies")
 @Table(name = "movie")
 public class MovieHibernate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,9 +40,9 @@ public class MovieHibernate {
     @Column(name = "age_restrictions")
     private int ageRestrictions;
 
-    @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER, orphanRemoval = true)
-    //@JsonManagedReference
-    @JsonBackReference
-    private Set<TicketHibernate> ticket;
+//    @OneToMany(mappedBy = "movie",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JsonManagedReference
+//    //@JsonBackReference
+//    private Set<TicketHibernate> ticket;
 
 }

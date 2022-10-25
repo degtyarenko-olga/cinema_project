@@ -1,4 +1,4 @@
-package com.noirix.controller.converter;
+package com.noirix.controller.converter.user;
 
 import com.noirix.controller.requests.user.UserCreateRequest;
 import com.noirix.domain.Credentials;

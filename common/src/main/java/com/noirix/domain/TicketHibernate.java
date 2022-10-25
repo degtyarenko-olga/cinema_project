@@ -1,5 +1,6 @@
 package com.noirix.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,13 +33,12 @@ public class TicketHibernate {
 
     @ManyToOne
     @JoinColumn(name = "movie_id")
-//    @JsonBackReference
-    @JsonManagedReference
+    @JsonBackReference
     private MovieHibernate movie;
 
     @ManyToOne
     @JoinColumn(name = "session_id")
-    @JsonManagedReference
+    @JsonBackReference
     private SessionHibernate session;
 
     @Column(name = "date_of_purchase")
@@ -46,7 +46,7 @@ public class TicketHibernate {
 
     @ManyToOne
     @JoinColumn(name = "place_id")
-    @JsonManagedReference
+    @JsonBackReference
     private PlaceHibernate place;
 
 

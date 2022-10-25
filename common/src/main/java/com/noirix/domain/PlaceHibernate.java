@@ -1,11 +1,13 @@
 package com.noirix.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.springframework.cache.annotation.Cacheable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Set;
 
@@ -38,14 +41,19 @@ public class PlaceHibernate {
     private int row;
 
     @Column(name = "is_available")
-    private boolean isAvailable;
+    private Boolean isAvailable;
 
     @ManyToMany(mappedBy = "place", fetch = FetchType.EAGER)
     @JsonIgnoreProperties("place")
     private Set<HallHibernate> hall;
 
+//    @OneToMany(mappedBy = "place",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JsonManagedReference
+//    //@JsonBackReference
+//    private Set<TicketHibernate> ticket;
+
     @Column(name = "price")
-    private double price;
+    private Double price;
 
 
 

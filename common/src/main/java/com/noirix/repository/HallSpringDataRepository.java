@@ -11,4 +11,6 @@ public interface HallSpringDataRepository extends JpaRepository<HallHibernate, L
 
     @Query(value = "select h from HallHibernate h")
     List<HallHibernate> findAllHall();
+
+    HallHibernate findHallHibernateByNameHall(String name);
 }

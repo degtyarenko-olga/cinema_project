@@ -4,6 +4,7 @@ import com.noirix.domain.TicketHibernate;
 import com.noirix.repository.TicketSpringDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -19,5 +20,13 @@ public class TicketService {
 
     public TicketHibernate findById(Long id) {
         return repository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Transactional
+    public Long delete(Long id) {
+
+        repository.deleteById(id);
+
+        return id;
     }
 }

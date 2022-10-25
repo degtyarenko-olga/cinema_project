@@ -26,8 +26,7 @@ import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
 @Entity
 @EqualsAndHashCode(exclude = {
         "roles"

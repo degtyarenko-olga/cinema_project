@@ -18,7 +18,7 @@ import java.util.Set;
 
 @Data
 @Entity
-//@Cacheable("session")
+@Cacheable("session")
 @Table(name = "session")
 public class SessionHibernate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +31,7 @@ public class SessionHibernate {
     @Column(name = "end_of_session")
     private Timestamp endOfSession;
 
-//    @OneToMany(mappedBy = "session", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+//    @OneToMany(mappedBy = "session", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @JsonManagedReference
 //    private Set<TicketHibernate> ticket;
 

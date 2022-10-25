@@ -25,25 +25,12 @@ public class UserService {
     private final RolesSpringDataRepository dataRepository;
 
 
-    public List<UsersHibernate> findAll() {
-        return repository.findAll();
-    }
-
-
     public UsersHibernate findById(Long id) {
        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
-    public Object findAll(PageRequest of) {
-        return repository.findAll(of);
-    }
-
     public Object findByHQLQuery() {
         return repository.findByHQLQuery();
-    }
-
-    public Object findByHQLQueryId(Long id){
-        return repository.findUsersHibernateById(id);
     }
 
     @Transactional
@@ -59,8 +46,9 @@ public class UserService {
 
 
     public Object findByCredentialsLogin(String login) {
-       // return repository.findByCredentialsLogin(login);
-        return repository.findUsersHibernateByCredentialsLogin(login).orElseThrow(EntityNotFoundException::new);
+
+        return repository.findUsersHibernateByCredentialsLogin(login)
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     @Transactional
@@ -76,7 +64,7 @@ public class UserService {
     }
 
     @Transactional
-    public Object update(UsersHibernate user) {
+    public Object update(Long id,UsersHibernate user) {
 
         UsersHibernate usersHibernate = repository.save(user);
 

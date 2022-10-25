@@ -10,7 +10,6 @@ import javax.persistence.Embeddable;
 
 @Data
 @Embeddable
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Credentials {
