@@ -3,6 +3,8 @@ package com.noirix.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.springframework.cache.annotation.Cacheable;
 
 import javax.persistence.CascadeType;
@@ -20,6 +22,12 @@ import java.util.Set;
 @Entity
 @Cacheable("movies")
 @Table(name = "movie")
+@EqualsAndHashCode(exclude = {
+        "ticket"
+})
+@ToString(exclude = {
+        "ticket"
+})
 public class MovieHibernate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -40,9 +48,8 @@ public class MovieHibernate {
     @Column(name = "age_restrictions")
     private int ageRestrictions;
 
-//    @OneToMany(mappedBy = "movie",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
 //    @JsonManagedReference
-//    //@JsonBackReference
 //    private Set<TicketHibernate> ticket;
 
 }

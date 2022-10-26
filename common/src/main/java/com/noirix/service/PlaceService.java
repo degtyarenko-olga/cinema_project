@@ -4,6 +4,9 @@ import com.noirix.domain.PlaceHibernate;
 import com.noirix.repository.PlaceSpringDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -15,14 +18,26 @@ public class PlaceService {
         return repository.findAllBy();
     }
 
-    public Object findById(Long id) {
-        return repository.findById(id);
+    public PlaceHibernate findById(Long id) {
+        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
-    public Object findAllPlaceByRow(int row){
+    public Object findAllPlaceByRow(int row) {
         return repository.findAllByRow(row);
     }
 
 
+    @Transactional
+    public Long delete(Long id) {
+        repository.deleteById(id);
+        return id;
 
+    }
+
+    @Transactional
+    public PlaceHibernate create(PlaceHibernate place) {
+
+         return repository.save(place);
+
+    }
 }

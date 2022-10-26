@@ -30,7 +30,7 @@ public class UserService {
     }
 
     public Object findByHQLQuery() {
-        return repository.findByHQLQuery();
+        return repository.findAll();
     }
 
     @Transactional
@@ -45,14 +45,14 @@ public class UserService {
     }
 
 
-    public Object findByCredentialsLogin(String login) {
+    public UsersHibernate findByCredentialsLogin(String login) {
 
         return repository.findUsersHibernateByCredentialsLogin(login)
                 .orElseThrow(EntityNotFoundException::new);
     }
 
     @Transactional
-    public Object create(UsersHibernate user) {
+    public UsersHibernate create(UsersHibernate user) {
 
         RolesHibernate roleUser = dataRepository.findRolesHibernateByRoleName(SystemRoles.ROLE_USER);
 
@@ -64,7 +64,7 @@ public class UserService {
     }
 
     @Transactional
-    public Object update(Long id,UsersHibernate user) {
+    public UsersHibernate update(UsersHibernate user) {
 
         UsersHibernate usersHibernate = repository.save(user);
 

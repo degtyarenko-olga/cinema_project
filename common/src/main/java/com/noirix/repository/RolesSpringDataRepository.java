@@ -16,6 +16,8 @@ public interface RolesSpringDataRepository extends JpaRepository<RolesHibernate,
     @Query(value = "select r from RolesHibernate r")
     List<RolesHibernate> findAllCustom();
 
+    RolesHibernate findRolesHibernateByRoleName(String roleName);
+
     List<RolesHibernate> findRolesHibernateById(Long userId);
 
     RolesHibernate findRolesHibernateByRoleName(SystemRoles roles);

@@ -3,8 +3,11 @@ package com.noirix.controller;
 import com.noirix.controller.requests.user.UserChangeRequest;
 import com.noirix.controller.requests.user.UserCreateRequest;
 import com.noirix.domain.UsersHibernate;
+import com.noirix.security.util.PrincipalUtil;
 import com.noirix.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -25,9 +28,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -84,7 +89,7 @@ public class UsersController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "User created", content =
                     {@Content(mediaType = "application/json", array =
-                    @ArraySchema(schema = @Schema(implementation = UsersHibernate.class)))
+                    @ArraySchema(schema = @Schema(implementation = UserCreateRequest.class)))
                     })
     })
     @Transactional
@@ -115,18 +120,43 @@ public class UsersController {
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
 
+//    @Transactional
+//    @PutMapping("/{id}")
+//    public ResponseEntity<Object> update(@PathVariable Long id, @Valid @RequestBody UserChangeRequest updateRequest) {
+//        UsersHibernate hibernate = service.findById(id);
+//        UsersHibernate user = converter.convert(updateRequest, hibernate.getClass());
+//        return new ResponseEntity<>(
+//                Collections.singletonMap("USER", service.findById(user.getId())),
+//                HttpStatus.OK);
+//    }
+
+
+    @Operation(summary = "Update user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User updated", content =
+                    {@Content(mediaType = "application/json", array =
+                    @ArraySchema(schema = @Schema(implementation = UserChangeRequest.class)))
+                    })
+    })
     @Transactional
+    @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @PutMapping
-    public ResponseEntity<Object> update(@Valid @RequestBody UserChangeRequest updateRequest) {
+    public ResponseEntity<Object> updateUser(@Valid @RequestBody UserChangeRequest userChangeRequest,
+                                             Principal principal) {
 
-        service.findById(updateRequest.getId());
+        String username = PrincipalUtil.getUsername(principal);
+        UsersHibernate result = service.findByCredentialsLogin(username);
 
-        UsersHibernate user = converter.convert(updateRequest, UsersHibernate.class);
+        userChangeRequest.setId(result.getId());
+        UsersHibernate hibernateUser = converter.convert(userChangeRequest, UsersHibernate.class);
 
+        service.update(hibernateUser);
 
-        return new ResponseEntity<>(
-                Collections.singletonMap("USER", service.findById(user.getId())),
-                HttpStatus.OK);
+        Map<String, Object> model = new HashMap<>();
+        model.put("user", service.findById(hibernateUser.getId()));
+
+        return new ResponseEntity<>(model, HttpStatus.OK);
+
     }
 
 

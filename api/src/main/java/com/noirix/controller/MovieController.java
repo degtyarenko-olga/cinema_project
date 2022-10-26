@@ -2,8 +2,16 @@ package com.noirix.controller;
 
 import com.noirix.controller.requests.movie.MovieChangeRequest;
 import com.noirix.controller.requests.movie.MovieCreateRequest;
+import com.noirix.controller.requests.place.PlaceCreateRequest;
 import com.noirix.domain.MovieHibernate;
+import com.noirix.domain.PlaceHibernate;
 import com.noirix.service.MovieService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
@@ -32,6 +40,14 @@ public class MovieController {
 
     private final ConversionService converter;
 
+
+    @Operation(summary = "Gets all movies")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found movies", content =
+                    {@Content(mediaType = "application/json", array =
+                    @ArraySchema(schema = @Schema(implementation = MovieHibernate.class)))
+                    })
+    })
     @GetMapping
     public ResponseEntity<Object> findAllMovies() {
 
@@ -41,6 +57,14 @@ public class MovieController {
         );
     }
 
+
+    @Operation(summary = "Gets movie by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found movie", content =
+                    {@Content(mediaType = "application/json", array =
+                    @ArraySchema(schema = @Schema(implementation = MovieHibernate.class)))
+                    })
+    })
     @GetMapping("/find/{id}")
     public ResponseEntity<Object> findMovieById(@Valid @PathVariable("id") Long id){
 
@@ -48,6 +72,14 @@ public class MovieController {
                 service.findById(id)), HttpStatus.OK);
 
     }
+
+    @Operation(summary = "Gets movie by TITLE")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found movie", content =
+                    {@Content(mediaType = "application/json", array =
+                    @ArraySchema(schema = @Schema(implementation = MovieHibernate.class)))
+                    })
+    })
     @GetMapping("/title/{title}")
     public ResponseEntity<Object> findMoviesByTitle(@PathVariable("title")String title){
 
@@ -56,6 +88,14 @@ public class MovieController {
 
     }
 
+
+    @Operation(summary = "Gets movie by GENRE")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found movie", content =
+                    {@Content(mediaType = "application/json", array =
+                    @ArraySchema(schema = @Schema(implementation = MovieHibernate.class)))
+                    })
+    })
     @GetMapping("/genre/{genre}")
     public ResponseEntity<Object> findMoviesByGenre(@PathVariable("genre") String genre){
 
@@ -64,6 +104,14 @@ public class MovieController {
 
     }
 
+
+    @Operation(summary = "Create new movie")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Movie created", content =
+                    {@Content(mediaType = "application/json", array =
+                    @ArraySchema(schema = @Schema(implementation = MovieCreateRequest.class)))
+                    })
+    })
     @Transactional
     @PostMapping
     public ResponseEntity<Object> create(@Valid @RequestBody MovieCreateRequest createRequest) {
@@ -90,6 +138,11 @@ public class MovieController {
                 HttpStatus.CREATED);
     }
 
+
+    @Operation(summary = "Delete movie by ID",
+            responses = {@ApiResponse(responseCode = "200", description = "Movie deleted",
+                    content = @Content)
+            })
     @Transactional
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Object> deleteMovieById(@PathVariable Long id) {

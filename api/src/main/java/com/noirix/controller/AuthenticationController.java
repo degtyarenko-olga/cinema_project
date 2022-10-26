@@ -3,6 +3,10 @@ package com.noirix.controller;
 import com.noirix.controller.requests.AuthRequest;
 import com.noirix.controller.requests.AuthResponse;
 import com.noirix.security.jwt.JwtTokenHelper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
+@Tag(name = "Authentication controller")
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationManager authenticationManager;
@@ -25,6 +30,14 @@ public class AuthenticationController {
 
     private final UserDetailsService userProvider;
 
+
+    @Operation(summary = "User in system",
+            description = "Return Auth-Token with user login",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful authorization", content = @Content),
+                    @ApiResponse(responseCode = "400", description = "Request error", content = @Content),
+                    @ApiResponse(responseCode = "500", description = "Server error", content = @Content)
+            })
     @PostMapping
     public ResponseEntity<AuthResponse> loginUser(@RequestBody AuthRequest request) {
 

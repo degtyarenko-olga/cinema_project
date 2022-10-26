@@ -2,6 +2,8 @@ package com.noirix.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.springframework.cache.annotation.Cacheable;
 
 import javax.persistence.CascadeType;
@@ -20,6 +22,12 @@ import java.util.Set;
 @Entity
 @Cacheable("session")
 @Table(name = "session")
+@EqualsAndHashCode(exclude = {
+        "ticket"
+})
+@ToString(exclude = {
+        "ticket"
+})
 public class SessionHibernate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -31,7 +39,7 @@ public class SessionHibernate {
     @Column(name = "end_of_session")
     private Timestamp endOfSession;
 
-//    @OneToMany(mappedBy = "session", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @OneToMany(mappedBy = "session", fetch = FetchType.LAZY)
 //    @JsonManagedReference
 //    private Set<TicketHibernate> ticket;
 

@@ -21,7 +21,7 @@ import java.util.Set;
 
 @Data
 @Entity
-//@Cacheable("place")
+@Cacheable("place")
 @Table(name = "place")
 @EqualsAndHashCode(exclude = {
         "hall"
@@ -47,9 +47,8 @@ public class PlaceHibernate {
     @JsonIgnoreProperties("place")
     private Set<HallHibernate> hall;
 
-//    @OneToMany(mappedBy = "place",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
 //    @JsonManagedReference
-//    //@JsonBackReference
 //    private Set<TicketHibernate> ticket;
 
     @Column(name = "price")
