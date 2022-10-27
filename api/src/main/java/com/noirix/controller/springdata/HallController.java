@@ -1,4 +1,4 @@
-package com.noirix.controller;
+package com.noirix.controller.springdata;
 
 import com.noirix.controller.requests.hall.HallCreateRequest;
 import com.noirix.controller.requests.place.PlaceCreateRequest;
@@ -31,7 +31,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/rest/data/hall")
+@RequestMapping("/rest/hall")
 public class HallController {
 
      private final HallService service;

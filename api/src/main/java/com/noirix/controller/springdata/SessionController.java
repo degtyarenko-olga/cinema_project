@@ -1,4 +1,4 @@
-package com.noirix.controller;
+package com.noirix.controller.springdata;
 
 import com.noirix.controller.requests.session.SessionCreateRequest;
 import com.noirix.domain.SessionHibernate;
@@ -30,7 +30,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/rest/data/session")
+@RequestMapping("/rest/session")
 public class SessionController {
 
     private final SessionService service;

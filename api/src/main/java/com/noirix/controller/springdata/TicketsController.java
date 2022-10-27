@@ -1,4 +1,4 @@
-package com.noirix.controller;
+package com.noirix.controller.springdata;
 
 import com.noirix.controller.requests.ticket.TicketCreateRequest;
 import com.noirix.domain.TicketHibernate;
@@ -40,7 +40,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/rest/data/tickets")
+@RequestMapping("/rest/tickets")
 public class TicketsController {
 
     private final TicketService service;

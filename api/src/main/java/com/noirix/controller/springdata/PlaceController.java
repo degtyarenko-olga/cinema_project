@@ -1,4 +1,4 @@
-package com.noirix.controller;
+package com.noirix.controller.springdata;
 
 import com.noirix.controller.requests.place.PlaceCreateRequest;
 import com.noirix.controller.requests.user.UserCreateRequest;
@@ -32,7 +32,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/rest/data/place")
+@RequestMapping("/rest/place")
 public class PlaceController {
 
     private final PlaceService service;

@@ -1,4 +1,4 @@
-package com.noirix.controller;
+package com.noirix.controller.springdata;
 
 import com.noirix.controller.requests.movie.MovieChangeRequest;
 import com.noirix.controller.requests.movie.MovieCreateRequest;
@@ -33,7 +33,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/rest/data/movie")
+@RequestMapping("/rest/movie")
 public class MovieController {
 
     private final MovieService service;

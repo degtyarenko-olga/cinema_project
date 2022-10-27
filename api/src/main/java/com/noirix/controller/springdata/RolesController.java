@@ -1,4 +1,4 @@
-package com.noirix.controller;
+package com.noirix.controller.springdata;
 
 import com.noirix.controller.requests.roles.RolesCreateRequest;
 import com.noirix.controller.requests.user.UserCreateRequest;
@@ -28,7 +28,7 @@ import java.util.Collections;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/rest/data/roles")
+@RequestMapping("/admin/roles")
 public class RolesController {
 
     private final RolesService service;
