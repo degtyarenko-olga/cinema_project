@@ -33,12 +33,6 @@ public class RolesHibernate {
     @Enumerated(EnumType.STRING)
     private SystemRoles roleName;
 
-    @Column(name = "creation_date")
-    private Timestamp creationDate;
-
-    @Column(name = "modification_date")
-    private Timestamp modificationDate;
-
     @ManyToMany
     @JsonIgnore
     @JoinTable(name = "l_role_user",

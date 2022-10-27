@@ -1,5 +1,6 @@
 package com.noirix.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +20,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import java.sql.Timestamp;
@@ -68,5 +70,9 @@ public class UsersHibernate {
     @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
     @JsonIgnoreProperties("users")
     private Set<RolesHibernate> roles;
+//
+//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//    @JsonBackReference
+//    private Set<TicketHibernate> ticket;
 
 }

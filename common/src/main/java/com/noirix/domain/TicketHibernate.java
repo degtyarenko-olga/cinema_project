@@ -1,11 +1,11 @@
 package com.noirix.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,10 +20,10 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "ticket")
 @EqualsAndHashCode(exclude = {
-        "movie,session,place"
+        "movie,session,place,user"
 })
 @ToString(exclude = {
-        "movie,session,place"
+        "movie,session,place,user"
 })
 public class TicketHibernate {
 
@@ -32,22 +32,27 @@ public class TicketHibernate {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonManagedReference
+    private UsersHibernate user;
+
+    @ManyToOne
     @JoinColumn(name = "movie_id")
-    @JsonBackReference
+    @JsonManagedReference
     private MovieHibernate movie;
 
     @ManyToOne
     @JoinColumn(name = "session_id")
-    @JsonBackReference
+    @JsonManagedReference
     private SessionHibernate session;
+
+
+    @ManyToOne(optional=false, cascade= CascadeType.ALL)
+    @JoinColumn(name = "place_id")
+    @JsonManagedReference
+    private PlaceHibernate place;
 
     @Column(name = "date_of_purchase")
     private Timestamp dateOfPurchase;
-
-    @ManyToOne
-    @JoinColumn(name = "place_id")
-    @JsonBackReference
-    private PlaceHibernate place;
-
 
 }

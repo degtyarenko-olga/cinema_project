@@ -1,6 +1,7 @@
 package com.noirix.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.springframework.cache.annotation.Cacheable;
@@ -29,11 +30,14 @@ public class HallHibernate {
     private String nameHall;
 
     @ManyToMany
+    @JsonIgnore
     @JoinTable(name = "l_place_hall",
             joinColumns = @JoinColumn(name = "hall_id"),
             inverseJoinColumns = @JoinColumn(name = "place_id")
     )
     @JsonIgnoreProperties("hall")
     private Set<PlaceHibernate> place;
+
+
 
 }

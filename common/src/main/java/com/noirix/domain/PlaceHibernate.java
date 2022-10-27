@@ -1,5 +1,7 @@
 package com.noirix.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
@@ -47,13 +49,7 @@ public class PlaceHibernate {
     @JsonIgnoreProperties("place")
     private Set<HallHibernate> hall;
 
-//    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
-//    @JsonManagedReference
-//    private Set<TicketHibernate> ticket;
-
     @Column(name = "price")
     private Double price;
-
-
 
 }

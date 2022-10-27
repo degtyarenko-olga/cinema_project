@@ -32,7 +32,7 @@ public class RolesService {
     }
 
     @Transactional
-    public Object create(RolesHibernate role) {
+    public RolesHibernate create(RolesHibernate role) {
         return repository.save(role);
 
     }

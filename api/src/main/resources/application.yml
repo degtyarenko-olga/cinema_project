@@ -21,7 +21,7 @@ spring:
     url: "jdbc:postgresql://localhost:5432/cinema"
 
 server:
-  port: 8091
+  port: 8095
 
 ---
 

@@ -29,4 +29,10 @@ public class TicketService {
 
         return id;
     }
+
+    @Transactional
+    public TicketHibernate create(TicketHibernate ticket) {
+        return repository.save(ticket);
+
+    }
 }

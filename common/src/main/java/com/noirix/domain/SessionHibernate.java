@@ -1,5 +1,6 @@
 package com.noirix.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -39,8 +40,8 @@ public class SessionHibernate {
     @Column(name = "end_of_session")
     private Timestamp endOfSession;
 
-//    @OneToMany(mappedBy = "session", fetch = FetchType.LAZY)
-//    @JsonManagedReference
-//    private Set<TicketHibernate> ticket;
+    @OneToMany(mappedBy = "session", fetch = FetchType.LAZY)
+    @JsonBackReference
+    private Set<TicketHibernate> ticket;
 
 }

@@ -48,8 +48,8 @@ public class MovieHibernate {
     @Column(name = "age_restrictions")
     private int ageRestrictions;
 
-//    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
-//    @JsonManagedReference
-//    private Set<TicketHibernate> ticket;
+    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
+    @JsonBackReference
+    private Set<TicketHibernate> ticket;
 
 }
