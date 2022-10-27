@@ -44,48 +44,48 @@ public class UsersController {
     private final UserService service;
     private final ConversionService converter;
 
-    @Operation(summary = "Gets all users")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found the users", content =
-                    {@Content(mediaType = "application/json", array =
-                    @ArraySchema(schema = @Schema(implementation = UsersHibernate.class)))
-                    })
-    })
-    @GetMapping("/all")
-    public ResponseEntity<Object> findAllUsers() {
+//    @Operation(summary = "Gets all users")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "Found the users", content =
+//                    {@Content(mediaType = "application/json", array =
+//                    @ArraySchema(schema = @Schema(implementation = UsersHibernate.class)))
+//                    })
+//    })
+//    @GetMapping("/all")
+//    public ResponseEntity<Object> findAllUsers() {
+//
+//        return new ResponseEntity<>(Collections.singletonMap("result",
+//                service.findByHQLQuery()), HttpStatus.OK);
+//    }
 
-        return new ResponseEntity<>(Collections.singletonMap("result",
-                service.findByHQLQuery()), HttpStatus.OK);
-    }
-
-    @Operation(summary = "Gets user by ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found the user", content =
-                    {@Content(mediaType = "application/json", array =
-                    @ArraySchema(schema = @Schema(implementation = UsersHibernate.class)))
-                    })
-    })
-    @GetMapping("/find/{id}")
-    public ResponseEntity<Object> findUserById(@PathVariable("id") Long id) {
-
-        return new ResponseEntity<>(Collections.singletonMap("user", service.findById(id)),
-                HttpStatus.OK
-        );
-    }
-
-    @Operation(summary = "Gets user by login")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found the user", content =
-                    {@Content(mediaType = "application/json", array =
-                    @ArraySchema(schema = @Schema(implementation = UsersHibernate.class)))
-                    })
-    })
-    @GetMapping("/{login}")
-    public ResponseEntity<Object> findUserByCredentialsLogin(@PathVariable("login") String login) {
-
-        return new ResponseEntity<>(Collections.singletonMap("user",
-                service.findByCredentialsLogin(login)), HttpStatus.OK);
-    }
+//    @Operation(summary = "Gets user by ID")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "Found the user", content =
+//                    {@Content(mediaType = "application/json", array =
+//                    @ArraySchema(schema = @Schema(implementation = UsersHibernate.class)))
+//                    })
+//    })
+//    @GetMapping("/find/{id}")
+//    public ResponseEntity<Object> findUserById(@PathVariable("id") Long id) {
+//
+//        return new ResponseEntity<>(Collections.singletonMap("user", service.findById(id)),
+//                HttpStatus.OK
+//        );
+//    }
+//
+//    @Operation(summary = "Gets user by login")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "Found the user", content =
+//                    {@Content(mediaType = "application/json", array =
+//                    @ArraySchema(schema = @Schema(implementation = UsersHibernate.class)))
+//                    })
+//    })
+//    @GetMapping("/{login}")
+//    public ResponseEntity<Object> findUserByCredentialsLogin(@PathVariable("login") String login) {
+//
+//        return new ResponseEntity<>(Collections.singletonMap("user",
+//                service.findByCredentialsLogin(login)), HttpStatus.OK);
+//    }
 
     @Operation(summary = "Create new user")
     @ApiResponses(value = {
@@ -107,20 +107,20 @@ public class UsersController {
                 HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Delete user by ID",
-            responses = {@ApiResponse(responseCode = "200", description = "User deleted",
-                    content = @Content)
-            })
-    @Transactional
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> deleteUsersById(@PathVariable Long id) {
-
-        service.delete(id);
-
-        Map<String, Object> model = new HashMap<>();
-        model.put("id", id);
-        return new ResponseEntity<>(model, HttpStatus.OK);
-    }
+//    @Operation(summary = "Delete user by ID",
+//            responses = {@ApiResponse(responseCode = "200", description = "User deleted",
+//                    content = @Content)
+//            })
+//    @Transactional
+//    @DeleteMapping("/delete/{id}")
+//    public ResponseEntity<Object> deleteUsersById(@PathVariable Long id) {
+//
+//        service.delete(id);
+//
+//        Map<String, Object> model = new HashMap<>();
+//        model.put("id", id);
+//        return new ResponseEntity<>(model, HttpStatus.OK);
+//    }
 
 //    @Transactional
 //    @PutMapping("/{id}")

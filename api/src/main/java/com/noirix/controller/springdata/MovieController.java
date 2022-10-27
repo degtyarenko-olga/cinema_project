@@ -58,21 +58,6 @@ public class MovieController {
     }
 
 
-    @Operation(summary = "Gets movie by ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found movie", content =
-                    {@Content(mediaType = "application/json", array =
-                    @ArraySchema(schema = @Schema(implementation = MovieHibernate.class)))
-                    })
-    })
-    @GetMapping("/find/{id}")
-    public ResponseEntity<Object> findMovieById(@Valid @PathVariable("id") Long id){
-
-        return new ResponseEntity<>(Collections.singletonMap("result",
-                service.findById(id)), HttpStatus.OK);
-
-    }
-
     @Operation(summary = "Gets movie by TITLE")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found movie", content =
@@ -105,26 +90,6 @@ public class MovieController {
     }
 
 
-    @Operation(summary = "Create new movie")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Movie created", content =
-                    {@Content(mediaType = "application/json", array =
-                    @ArraySchema(schema = @Schema(implementation = MovieCreateRequest.class)))
-                    })
-    })
-    @Transactional
-    @PostMapping
-    public ResponseEntity<Object> create(@Valid @RequestBody MovieCreateRequest createRequest) {
-
-        MovieHibernate movie = converter.convert(createRequest, MovieHibernate.class);
-
-        service.create(movie);
-
-        return new ResponseEntity<>(
-                Collections.singletonMap("movie", service.findById(movie.getId())),
-                HttpStatus.CREATED);
-    }
-
     @Transactional
     @PutMapping
     public ResponseEntity<Object> update(@Valid @RequestBody MovieChangeRequest createRequest) {
@@ -138,19 +103,4 @@ public class MovieController {
                 HttpStatus.CREATED);
     }
 
-
-    @Operation(summary = "Delete movie by ID",
-            responses = {@ApiResponse(responseCode = "200", description = "Movie deleted",
-                    content = @Content)
-            })
-    @Transactional
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> deleteMovieById(@PathVariable Long id) {
-
-        service.delete(id);
-
-        Map<String, Object> model = new HashMap<>();
-        model.put("id", id);
-        return new ResponseEntity<>(model, HttpStatus.OK);
-    }
 }

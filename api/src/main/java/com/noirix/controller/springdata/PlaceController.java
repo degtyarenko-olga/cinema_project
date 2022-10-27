@@ -83,40 +83,5 @@ public class PlaceController {
                 service.findAllPlaceByRow(row)), HttpStatus.OK);
     }
 
-    @Operation(summary = "Delete place by ID",
-            responses = {@ApiResponse(responseCode = "200", description = "Place deleted",
-                    content = @Content)
-            })
-    @Transactional
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> deletePlaceById(@PathVariable Long id) {
-
-        service.delete(id);
-
-        Map<String, Object> model = new HashMap<>();
-        model.put("id", id);
-        return new ResponseEntity<>(model, HttpStatus.OK);
-    }
-
-
-    @Operation(summary = "Create new place")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Place created", content =
-                    {@Content(mediaType = "application/json", array =
-                    @ArraySchema(schema = @Schema(implementation = PlaceCreateRequest.class)))
-                    })
-    })
-    @Transactional
-    @PostMapping
-    public ResponseEntity<Object> create(@Valid @RequestBody PlaceCreateRequest createRequest) {
-
-        PlaceHibernate place = converter.convert(createRequest, PlaceHibernate.class);
-
-        service.create(place);
-
-        return new ResponseEntity<>(
-                Collections.singletonMap("place", service.findById(place.getId())),
-                HttpStatus.CREATED);
-    }
 
 }

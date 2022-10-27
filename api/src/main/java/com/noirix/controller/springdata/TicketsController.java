@@ -73,37 +73,6 @@ public class TicketsController {
     }
 
 
-    @Operation(summary = "Gets ticket by ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found ticket", content =
-                    {@Content(mediaType = "application/json", array =
-                    @ArraySchema(schema = @Schema(implementation = TicketHibernate.class)))
-                    })
-    })
-    @GetMapping("/find/{id}")
-    public ResponseEntity<Object> findTicketById(@Valid @PathVariable("id") Long id){
-
-        return new ResponseEntity<>(Collections.singletonMap("result",
-                service.findById(id)), HttpStatus.OK);
-
-    }
-
-
-    @Operation(summary = "Delete ticket by ID",
-            responses = {@ApiResponse(responseCode = "200", description = "Ticket deleted",
-                    content = @Content)
-            })
-    @Transactional
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> deleteTicketById(@PathVariable Long id) {
-
-        service.delete(id);
-
-        Map<String, Object> model = new HashMap<>();
-        model.put("id", id);
-        return new ResponseEntity<>(model, HttpStatus.OK);
-    }
-
 
     @Operation(summary = "Create new ticket")
     @ApiResponses(value = {

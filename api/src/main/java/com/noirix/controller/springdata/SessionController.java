@@ -53,57 +53,5 @@ public class SessionController {
     }
 
 
-    @Operation(summary = "Gets cinema session by ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found the session", content =
-                    {@Content(mediaType = "application/json", array =
-                    @ArraySchema(schema = @Schema(implementation = SessionHibernate.class)))
-                    })
-    })
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> findSessionById(@PathVariable String id) {
-        long sessionId = Long.parseLong(id);
-        return new ResponseEntity<>(
-                Collections.singletonMap("session", service.findById(sessionId)),
-                HttpStatus.OK
-        );
-    }
-
-
-    @Operation(summary = "Create new cinema session")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Session created", content =
-                    {@Content(mediaType = "application/json", array =
-                    @ArraySchema(schema = @Schema(implementation = SessionHibernate.class)))
-                    })
-    })
-    @Transactional
-    @PostMapping
-    public ResponseEntity<Object> create(@Valid @RequestBody SessionCreateRequest createRequest) {
-
-        SessionHibernate session = converter.convert(createRequest, SessionHibernate.class);
-
-        service.create(session);
-
-        return new ResponseEntity<>(
-                Collections.singletonMap("session", service.findById(session.getId())),
-                HttpStatus.CREATED);
-    }
-
-    @Operation(summary = "Delete session by ID",
-            responses = {@ApiResponse(responseCode = "200", description = "Session deleted",
-                    content = @Content)
-            })
-    @Transactional
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> deleteSessionById(@PathVariable Long id) {
-
-        service.delete(id);
-
-        Map<String, Object> model = new HashMap<>();
-        model.put("id", id);
-        return new ResponseEntity<>(model, HttpStatus.OK);
-    }
-
 
 }
