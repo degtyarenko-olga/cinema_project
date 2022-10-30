@@ -13,12 +13,11 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class PlaceServiceImpl implements PlaceService {
-
     private final PlaceSpringDataRepository repository;
 
     @Override
-    public List<Place> findAllBy() {
-        return repository.findAllBy();
+    public List<Place> findAll() {
+        return repository.findAll();
 
     }
 
@@ -41,7 +40,6 @@ public class PlaceServiceImpl implements PlaceService {
 
     }
 
-    @Transactional
     @Override
     public Place create(Place place) {
         return repository.save(place);
@@ -49,9 +47,9 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
-    @Transactional
     public Place update(Place place) {
-        return repository.save(place);
+        return create(place);
+
     }
 
 }

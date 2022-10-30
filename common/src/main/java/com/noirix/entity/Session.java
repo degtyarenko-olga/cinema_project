@@ -19,7 +19,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@Cacheable("session")
+@Cacheable("sessions")
 @Table(name = "session")
 @EqualsAndHashCode(exclude = {
         "ticket"

@@ -19,7 +19,6 @@ import java.util.Set;
 
 @Data
 @Entity
-@Cacheable("hall")
 @Table(name = "hall")
 public class Hall {
     @GeneratedValue(strategy = GenerationType.IDENTITY)

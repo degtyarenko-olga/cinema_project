@@ -6,7 +6,7 @@ import javax.validation.constraints.Email;
 import java.sql.Timestamp;
 
 @Data
-public class UserChangeRequest{
+public class UserChangeRequest {
 
     private Long id;
 

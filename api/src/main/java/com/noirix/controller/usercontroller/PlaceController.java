@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,8 +25,6 @@ import java.util.Collections;
 public class PlaceController {
     private final PlaceServiceImpl service;
 
-    private final ConversionService converter;
-
     @Operation(summary = "Gets all places")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found places", content =
@@ -37,7 +34,7 @@ public class PlaceController {
     })
     @GetMapping("/all")
     public ResponseEntity<Object> findAllPlace() {
-        return new ResponseEntity<>(Collections.singletonMap("result", service.findAllBy()),
+        return new ResponseEntity<>(Collections.singletonMap("result", service.findAll()),
                 HttpStatus.OK);
 
     }

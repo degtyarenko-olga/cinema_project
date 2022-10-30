@@ -8,15 +8,13 @@ import java.util.List;
 public interface UserService {
     User findById(Long id);
 
-    List<User> findByHQLQuery();
+    List<User> findAll();
 
     Long delete(Long id);
 
     User findByLogin(String login);
 
-    @Transactional
     User create(User user);
 
-    @Transactional
     User update(User user);
 }

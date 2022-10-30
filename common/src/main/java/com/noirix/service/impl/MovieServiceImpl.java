@@ -13,7 +13,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class MovieServiceImpl implements MovieService {
-
     private final MovieSpringDataRepository repository;
 
     @Override
@@ -41,10 +40,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    @Transactional
-    public Object create(Movie movie) {
-        Movie movieHibernate = repository.save(movie);
-        return movieHibernate;
+    public Movie create(Movie movie) {
+        return repository.save(movie);
 
     }
 
@@ -57,7 +54,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie update(Movie movie) {
-        return repository.save(movie);
+        return create(movie);
 
     }
 

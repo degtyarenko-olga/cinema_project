@@ -16,7 +16,7 @@ public class SessionChangeConverter implements Converter<SessionChangeRequest, S
 
     @Override
     public Session convert(SessionChangeRequest source) {
-        Session session =  service.findById(source.getId());
+        Session session = service.findById(source.getId());
         session.setEndOfSession(source.getEndOfSession());
         session.setSessionStart(source.getSessionStart());
         return session;

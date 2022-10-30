@@ -13,12 +13,11 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TicketServiceImpl implements TicketService {
-
     private final TicketSpringDataRepository repository;
 
     @Override
-    public List<Ticket> findAllTickets() {
-        return repository.findByHQLQuery();
+    public List<Ticket> findAll() {
+        return repository.findAll();
 
     }
 
@@ -35,7 +34,6 @@ public class TicketServiceImpl implements TicketService {
 
     }
 
-    @Transactional
     @Override
     public Ticket create(Ticket ticket) {
         return repository.save(ticket);
@@ -43,9 +41,14 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    @Transactional
     public Ticket update(Ticket ticket) {
         return create(ticket);
+
+    }
+
+    @Override
+    public List<Ticket> findTicketByUserId(Long id) {
+        return repository.findAllByUserId(id);
     }
 
 }

@@ -18,7 +18,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +32,7 @@ import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -44,8 +44,6 @@ public class TicketsController {
     private final PlaceServiceImpl placeServiceImpl;
     private final SessionServiceImpl sessionServiceImpl;
 
-    private final ConversionService converter;
-
     @Operation(summary = "Gets all tickets")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the tickets", content =
@@ -56,7 +54,27 @@ public class TicketsController {
     @GetMapping("/all")
     public ResponseEntity<Object> findAllTickets() {
         return new ResponseEntity<>(
-                Collections.singletonMap("tickets", service.findAllTickets()),
+                Collections.singletonMap("tickets", service.findAll()),
+                HttpStatus.OK);
+
+    }
+
+    @Operation(summary = "Gets all tickets by user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the tickets", content =
+                    {@Content(mediaType = "application/json", array =
+                    @ArraySchema(schema = @Schema(implementation = Ticket.class)))
+                    })
+    })
+    @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
+    @GetMapping("/user/tickets")
+    public ResponseEntity<Object> findAllTicketsByUser(Principal principal) {
+        String username = PrincipalUtil.getUsername(principal);
+        User result = userServiceImpl.findByLogin(username);
+        Long id = result.getId();
+        List<Ticket> ticketByUserId = service.findTicketByUserId(id);
+        return new ResponseEntity<>(
+                Collections.singletonMap("tickets", ticketByUserId),
                 HttpStatus.OK);
 
     }
@@ -72,7 +90,7 @@ public class TicketsController {
     @Transactional
     @PostMapping
     public ResponseEntity<Object> createTicket(@Valid @RequestBody TicketCreateRequest createRequest,
-                                         Principal principal) {
+                                               Principal principal) {
 
         String username = PrincipalUtil.getUsername(principal);
         User result = userServiceImpl.findByLogin(username);

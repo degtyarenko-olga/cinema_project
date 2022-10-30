@@ -20,7 +20,6 @@ import java.util.Set;
 
 @Data
 @Entity
-@Cacheable("roles")
 @Table(name = "roles")
 public class Roles {
 

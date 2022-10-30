@@ -13,7 +13,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class RolesServiceImpl implements RolesService {
-
     private final RolesSpringDataRepository repository;
 
     @Override
@@ -29,7 +28,6 @@ public class RolesServiceImpl implements RolesService {
     }
 
     @Override
-    @Transactional
     public Roles create(Roles role) {
         return repository.save(role);
 
@@ -37,7 +35,7 @@ public class RolesServiceImpl implements RolesService {
 
     @Override
     public Roles update(Roles role) {
-        return repository.save(role);
+        return create(role);
     }
 
 }

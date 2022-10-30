@@ -12,14 +12,6 @@ import java.util.List;
 @Repository
 public interface RolesSpringDataRepository extends JpaRepository<Roles, Long> {
 
-    @Cacheable("roles")
-    @Query(value = "select r from Roles r")
-    List<Roles> findAllCustom();
-
-    Roles findRolesHibernateByRoleName(String roleName);
-
-    List<Roles> findRolesHibernateById(Long userId);
-
     Roles findRolesHibernateByRoleName(SystemRoles roles);
 
     @Query(value = "select * from cinema.roles " +

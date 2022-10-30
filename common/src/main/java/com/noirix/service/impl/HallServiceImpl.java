@@ -13,7 +13,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class HallServiceImpl implements HallService {
-
     private final HallSpringDataRepository repository;
 
     @Override
@@ -35,7 +34,6 @@ public class HallServiceImpl implements HallService {
     }
 
     @Override
-    @Transactional
     public Hall create(Hall hall) {
         return repository.save(hall);
 
@@ -50,7 +48,7 @@ public class HallServiceImpl implements HallService {
 
     @Override
     public Hall update(Hall hall) {
-        return repository.save(hall);
+        return create(hall);
     }
 
 }

@@ -21,12 +21,6 @@ import com.noirix.service.PlaceService;
 import com.noirix.service.SessionService;
 import com.noirix.service.TicketService;
 import com.noirix.service.UserService;
-import com.noirix.service.impl.HallServiceImpl;
-import com.noirix.service.impl.MovieServiceImpl;
-import com.noirix.service.impl.PlaceServiceImpl;
-import com.noirix.service.impl.SessionServiceImpl;
-import com.noirix.service.impl.TicketServiceImpl;
-import com.noirix.service.impl.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -67,6 +61,7 @@ public class AdminController {
     private final TicketService ticketServiceImpl;
     private final PlaceService placeServiceImpl;
     private final HallService hallService;
+    private Long someId;
 
     @Operation(summary = "Gets all users")
     @ApiResponses(value = {
@@ -79,7 +74,7 @@ public class AdminController {
     @GetMapping("/find/user/all")
     public ResponseEntity<Object> findAllUsers() {
         return new ResponseEntity<>(Collections.singletonMap("result",
-                service.findByHQLQuery()), HttpStatus.OK);
+                service.findAll()), HttpStatus.OK);
 
     }
 
@@ -90,8 +85,9 @@ public class AdminController {
     @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @DeleteMapping("/delete/user/{id}")
-    public ResponseEntity<Object> deleteUsersById(@PathVariable Long id) {
-        service.delete(id);
+    public ResponseEntity<Object> deleteUsersById(@PathVariable String id) {
+        someId = Long.parseLong(id);
+        service.delete(someId);
         Map<String, Object> model = new HashMap<>();
         model.put("id", id);
         return new ResponseEntity<>(model, HttpStatus.OK);
@@ -107,8 +103,9 @@ public class AdminController {
     })
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @GetMapping("/find/user/id/{id}")
-    public ResponseEntity<Object> findUserById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(Collections.singletonMap("user", service.findById(id)),
+    public ResponseEntity<Object> findUserById(@PathVariable("id") String id) {
+        someId = Long.parseLong(id);
+        return new ResponseEntity<>(Collections.singletonMap("user", service.findById(someId)),
                 HttpStatus.OK);
 
     }
@@ -137,8 +134,9 @@ public class AdminController {
     })
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @GetMapping("/find/hall/{id}")
-    public ResponseEntity<Object> findHallById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(Collections.singletonMap("hall", hallService.findById(id)),
+    public ResponseEntity<Object> findHallById(@PathVariable("id") String id) {
+        someId = Long.parseLong(id);
+        return new ResponseEntity<>(Collections.singletonMap("hall", hallService.findById(someId)),
                 HttpStatus.OK);
 
     }
@@ -169,10 +167,11 @@ public class AdminController {
     @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @DeleteMapping("/delete/hall/{id}")
-    public ResponseEntity<Object> deleteHallById(@PathVariable Long id) {
-        hallService.delete(id);
+    public ResponseEntity<Object> deleteHallById(@PathVariable String id) {
+        someId = Long.parseLong(id);
+        hallService.delete(someId);
         Map<String, Object> model = new HashMap<>();
-        model.put("id", id);
+        model.put("id", someId);
         return new ResponseEntity<>(model, HttpStatus.OK);
 
     }
@@ -186,10 +185,10 @@ public class AdminController {
     })
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @GetMapping("/find/movie/{id}")
-    public ResponseEntity<Object> findMovieById(@Valid @PathVariable("id") Long id) {
-
+    public ResponseEntity<Object> findMovieById(@Valid @PathVariable("id") String id) {
+        someId = Long.parseLong(id);
         return new ResponseEntity<>(Collections.singletonMap("result",
-                movieServiceImpl.findById(id)), HttpStatus.OK);
+                movieServiceImpl.findById(someId)), HttpStatus.OK);
 
     }
 
@@ -219,10 +218,11 @@ public class AdminController {
     @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @DeleteMapping("/delete/movie/{id}")
-    public ResponseEntity<Object> deleteMovieById(@PathVariable Long id) {
-        movieServiceImpl.delete(id);
+    public ResponseEntity<Object> deleteMovieById(@PathVariable String id) {
+        someId = Long.parseLong(id);
+        movieServiceImpl.delete(someId);
         Map<String, Object> model = new HashMap<>();
-        model.put("id", id);
+        model.put("id", someId);
         return new ResponseEntity<>(model, HttpStatus.OK);
 
     }
@@ -236,9 +236,10 @@ public class AdminController {
     })
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @GetMapping("/find/place/{id}")
-    public ResponseEntity<Object> findPlaceById(@Valid @PathVariable("id") Long id) {
+    public ResponseEntity<Object> findPlaceById(@Valid @PathVariable("id") String id) {
+        someId = Long.parseLong(id);
         return new ResponseEntity<>(Collections.singletonMap("result",
-                placeServiceImpl.findById(id)), HttpStatus.OK);
+                placeServiceImpl.findById(someId)), HttpStatus.OK);
 
     }
 
@@ -249,10 +250,11 @@ public class AdminController {
     @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @DeleteMapping("/delete/place/{id}")
-    public ResponseEntity<Object> deletePlaceById(@PathVariable Long id) {
-        placeServiceImpl.delete(id);
+    public ResponseEntity<Object> deletePlaceById(@PathVariable String id) {
+        someId = Long.parseLong(id);
+        placeServiceImpl.delete(someId);
         Map<String, Object> model = new HashMap<>();
-        model.put("id", id);
+        model.put("id", someId);
         return new ResponseEntity<>(model, HttpStatus.OK);
 
     }
@@ -305,9 +307,9 @@ public class AdminController {
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @GetMapping("/find/session/{id}")
     public ResponseEntity<Object> findSessionById(@PathVariable String id) {
-        long sessionId = Long.parseLong(id);
+        someId = Long.parseLong(id);
         return new ResponseEntity<>(
-                Collections.singletonMap("session", sessionServiceImpl.findById(sessionId)),
+                Collections.singletonMap("session", sessionServiceImpl.findById(someId)),
                 HttpStatus.OK);
 
     }
@@ -357,10 +359,11 @@ public class AdminController {
     @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @DeleteMapping("/delete/session/{id}")
-    public ResponseEntity<Object> deleteSessionById(@PathVariable Long id) {
-        sessionServiceImpl.delete(id);
+    public ResponseEntity<Object> deleteSessionById(@PathVariable String id) {
+        someId = Long.parseLong(id);
+        sessionServiceImpl.delete(someId);
         Map<String, Object> model = new HashMap<>();
-        model.put("id", id);
+        model.put("id", someId);
         return new ResponseEntity<>(model, HttpStatus.OK);
 
     }
@@ -375,9 +378,9 @@ public class AdminController {
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @GetMapping("/find/ticket/{id}")
     public ResponseEntity<Object> findTicketById(@Valid @PathVariable("id") String id) {
-        long idTicket = Long.parseLong(id);
+        someId = Long.parseLong(id);
         return new ResponseEntity<>(Collections.singletonMap("result",
-                ticketServiceImpl.findById(idTicket)), HttpStatus.OK);
+                ticketServiceImpl.findById(someId)), HttpStatus.OK);
 
     }
 
@@ -388,10 +391,11 @@ public class AdminController {
     @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @DeleteMapping("/delete/ticket/{id}")
-    public ResponseEntity<Object> deleteTicketById(@PathVariable Long id) {
-        ticketServiceImpl.delete(id);
+    public ResponseEntity<Object> deleteTicketById(@PathVariable String id) {
+        someId = Long.parseLong(id);
+        ticketServiceImpl.delete(someId);
         Map<String, Object> model = new HashMap<>();
-        model.put("id", id);
+        model.put("id", someId);
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
 
@@ -424,10 +428,10 @@ public class AdminController {
     })
     @PutMapping("/update/hall")
     public ResponseEntity<Object> updateHall(@Valid @RequestBody HallChangeRequest changeRequest) {
-        Hall hall = converter.convert(changeRequest,Hall.class);
+        Hall hall = converter.convert(changeRequest, Hall.class);
         hallService.update(hall);
 
-        return new ResponseEntity<>(Collections.singletonMap("result",hallService.findById(hall.getId())),
+        return new ResponseEntity<>(Collections.singletonMap("result", hallService.findById(hall.getId())),
                 HttpStatus.OK);
 
     }
@@ -444,7 +448,7 @@ public class AdminController {
     @PutMapping("/update/ticket")
     public ResponseEntity<Object> createTicket(@Valid @RequestBody TicketChangeRequest changeRequest) {
 
-        Ticket ticket = converter.convert(changeRequest,Ticket.class);
+        Ticket ticket = converter.convert(changeRequest, Ticket.class);
 
         ticketServiceImpl.update(ticket);
 

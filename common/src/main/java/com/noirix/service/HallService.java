@@ -1,11 +1,13 @@
 package com.noirix.service;
 
 import com.noirix.entity.Hall;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 public interface HallService {
+
     List<Hall> findAllHall();
 
     Hall findById(Long id);
@@ -17,5 +19,6 @@ public interface HallService {
 
     Long delete(Long id);
 
+    @Transactional
     Hall update(Hall hall);
 }

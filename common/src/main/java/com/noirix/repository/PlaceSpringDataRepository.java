@@ -11,10 +11,6 @@ import java.util.List;
 @Repository
 public interface PlaceSpringDataRepository extends JpaRepository<Place, Long> {
 
-    @Cacheable("places")
-    @Query(value = "select p from Place p")
-    List<Place> findAllBy();
-
-
     List<Place> findAllByRow(int row);
+
 }

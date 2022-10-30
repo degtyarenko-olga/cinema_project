@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface PlaceService {
-    List<Place> findAllBy();
+    List<Place> findAll();
 
     Place findById(Long id);
 
@@ -17,5 +17,6 @@ public interface PlaceService {
     @Transactional
     Place create(Place place);
 
+    @Transactional
     Place update(Place place);
 }

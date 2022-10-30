@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findByHQLQuery() {
+    public List<User> findAll() {
         return repository.findAll();
 
     }
@@ -42,26 +42,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByLogin(String login) {
-        return repository.findByLogin(login)
-                .orElseThrow(EntityNotFoundException::new);
+        return repository.findByLogin(login).orElseThrow(EntityNotFoundException::new);
 
     }
 
-    @Transactional
     @Override
+    @Transactional
     public User create(User user) {
         Roles roleUser = dataRepository.findRolesHibernateByRoleName(SystemRoles.ROLE_USER);
 
         user.setRoles(Set.of(roleUser));
         roleUser.getUsers().add(user);
 
-        User usersHibernate = repository.save(user);
-        return usersHibernate;
+        return repository.save(user);
 
     }
 
-    @Transactional
     @Override
+    @Transactional
     public User update(User user) {
         return repository.save(user);
 

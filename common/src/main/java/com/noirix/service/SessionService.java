@@ -1,12 +1,14 @@
 package com.noirix.service;
 
 import com.noirix.entity.Session;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 public interface SessionService {
-    List<Session> findAllSession();
+    @Cacheable("sessions")
+    List<Session> findAll();
 
     Session findById(Long sessionId);
 
@@ -15,5 +17,6 @@ public interface SessionService {
 
     Long delete(Long id);
 
+    @Transactional
     Session update(Session session);
 }

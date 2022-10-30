@@ -13,12 +13,11 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class SessionServiceImpl implements SessionService {
-
     private final SessionSpringDataRepository repository;
 
     @Override
-    public List<Session> findAllSession() {
-        return repository.findAllSession();
+    public List<Session> findAll() {
+        return repository.findAll();
 
     }
 
@@ -28,7 +27,6 @@ public class SessionServiceImpl implements SessionService {
 
     }
 
-    @Transactional
     @Override
     public Session create(Session session) {
         return repository.save(session);
@@ -43,9 +41,9 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    @Transactional
     public Session update(Session session) {
-        return repository.save(session);
+        return create(session);
+
     }
 
 }
