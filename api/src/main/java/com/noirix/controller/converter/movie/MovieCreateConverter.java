@@ -1,27 +1,26 @@
 package com.noirix.controller.converter.movie;
 
-import com.noirix.controller.requests.movie.MovieChangeRequest;
-import com.noirix.controller.requests.movie.MovieCreateRequest;
-import com.noirix.domain.MovieHibernate;
+import com.noirix.controller.dto.movie.MovieCreateRequest;
+import com.noirix.entity.Movie;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class MovieCreateConverter implements Converter<MovieCreateRequest, MovieHibernate> {
+public class MovieCreateConverter implements Converter<MovieCreateRequest, Movie> {
 
     @Override
-    public MovieHibernate convert(MovieCreateRequest source) {
-
-        MovieHibernate movie = new MovieHibernate();
+    public Movie convert(MovieCreateRequest source) {
+        Movie movie = new Movie();
 
         movie.setDescription(source.getDescription());
         movie.setGenre(source.getGenre());
         movie.setAgeRestrictions(source.getAgeRestrictions());
         movie.setTitle(source.getTitle());
         movie.setAvailable(true);
-
         return movie;
+
     }
+
 }

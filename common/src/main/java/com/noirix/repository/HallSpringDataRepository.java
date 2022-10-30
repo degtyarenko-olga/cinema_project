@@ -1,6 +1,6 @@
 package com.noirix.repository;
 
-import com.noirix.domain.HallHibernate;
+import com.noirix.entity.Hall;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -8,13 +8,13 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public interface HallSpringDataRepository extends JpaRepository<HallHibernate, Long> {
+public interface HallSpringDataRepository extends JpaRepository<Hall, Long> {
 
-    @Query(value = "select h from HallHibernate h")
-    List<HallHibernate> findAllHall();
+    @Query(value = "select h from Hall h")
+    List<Hall> findAllHall();
 
     @Cacheable("hall")
-    List<HallHibernate> findAll();
+    List<Hall> findAll();
 
-    HallHibernate findHallHibernateByNameHall(String name);
+    Hall findHallHibernateByNameHall(String name);
 }

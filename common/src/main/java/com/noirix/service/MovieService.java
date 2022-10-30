@@ -1,55 +1,23 @@
 package com.noirix.service;
 
-import com.noirix.domain.MovieHibernate;
-import com.noirix.repository.MovieSpringDataRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.noirix.entity.Movie;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class MovieService {
+public interface MovieService {
+    List<Movie> findAll();
 
-    private final MovieSpringDataRepository repository;
+    List<Movie> findMovieHibernatesByTitle(String title);
 
-    public Object findAll() {
-        return repository.findAll();
-    }
+    List<Movie> findAllByGenre(String genre);
 
-    public Object findMovieHibernatesByTitle(String title) {
-        return repository.findMovieHibernatesByTitle(title);
-    }
-
-
-    public Object findAllByGenre(String genre) {
-        return repository.findMovieHibernatesByGenre(genre);
-    }
-
-    public MovieHibernate findById(Long id) {
-        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
-    }
+    Movie findById(Long id);
 
     @Transactional
-    public Object create(MovieHibernate movie) {
+    Object create(Movie movie);
 
-        MovieHibernate movieHibernate = repository.save(movie);
-        return movieHibernate;
+    Long delete(Long id);
 
-    }
-
-    @Transactional
-    public Object delete(Long id) {
-
-        repository.deleteById(id);
-
-        return id;
-
-    }
-
-    public Object update(MovieHibernate movie) {
-        return repository.save(movie);
-
-    }
+    Movie update(Movie movie);
 }

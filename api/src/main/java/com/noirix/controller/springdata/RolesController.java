@@ -1,10 +1,8 @@
 package com.noirix.controller.springdata;
 
-import com.noirix.controller.requests.roles.RolesCreateRequest;
-import com.noirix.controller.requests.user.UserCreateRequest;
-import com.noirix.domain.RolesHibernate;
-import com.noirix.domain.UsersHibernate;
-import com.noirix.service.RolesService;
+import com.noirix.controller.dto.roles.RolesCreateRequest;
+import com.noirix.entity.Roles;
+import com.noirix.service.impl.RolesServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -30,40 +28,36 @@ import java.util.Collections;
 @RequiredArgsConstructor
 @RequestMapping("/admin/roles")
 public class RolesController {
-
-    private final RolesService service;
-
+    private final RolesServiceImpl service;
     private final ConversionService converter;
 
     @Operation(summary = "Gets all roles")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found all roles", content =
                     {@Content(mediaType = "application/json", array =
-                    @ArraySchema(schema = @Schema(implementation = RolesHibernate.class)))
+                    @ArraySchema(schema = @Schema(implementation = Roles.class)))
                     })
     })
     @GetMapping("/all")
     public ResponseEntity<Object> findAllRoles() {
-
         return new ResponseEntity<>(
                 Collections.singletonMap("result", service.findAll()),
-                HttpStatus.OK
-        );
+                HttpStatus.OK);
+
     }
 
     @Operation(summary = "Gets roles by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the role", content =
                     {@Content(mediaType = "application/json", array =
-                    @ArraySchema(schema = @Schema(implementation = RolesHibernate.class)))
+                    @ArraySchema(schema = @Schema(implementation = Roles.class)))
                     })
     })
     @GetMapping("/find/{id}")
     public ResponseEntity<Object> findRolesById(@PathVariable("id") Long id) {
-
         return new ResponseEntity<>(Collections.singletonMap("role", service.findById(id)),
-                HttpStatus.OK
-        );
+                HttpStatus.OK);
+
     }
 
     @Operation(summary = "Create new Role")
@@ -76,14 +70,13 @@ public class RolesController {
     @Transactional
     @PostMapping
     public ResponseEntity<Object> create(@Valid @RequestBody RolesCreateRequest createRequest) {
-
-        RolesHibernate role = converter.convert(createRequest, RolesHibernate.class);
-
+        Roles role = converter.convert(createRequest, Roles.class);
         service.create(role);
 
         return new ResponseEntity<>(
                 Collections.singletonMap("role", service.findById(role.getId())),
                 HttpStatus.CREATED);
+
     }
 
 }

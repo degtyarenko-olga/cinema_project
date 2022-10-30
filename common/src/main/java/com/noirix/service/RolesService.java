@@ -1,39 +1,15 @@
 package com.noirix.service;
 
-import com.noirix.domain.RolesHibernate;
-import com.noirix.repository.RolesSpringDataRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.noirix.entity.Roles;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
-import java.util.Optional;
+import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class RolesService {
+public interface RolesService {
+    List<Roles> findAll();
 
-    private final RolesSpringDataRepository repository;
-
-    public Object findAll() {
-        return repository.findAll();
-    }
-
-    public Optional<RolesHibernate> findOne(long id) {
-       return repository.findById(id);
-    }
-
-    public RolesHibernate findById(Long id) {
-        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
-    }
-
-    public Object findRoleByName(String roleName) {
-        return repository.findRolesHibernateByRoleName(roleName);
-    }
+    Roles findById(Long id);
 
     @Transactional
-    public RolesHibernate create(RolesHibernate role) {
-        return repository.save(role);
-
-    }
+    Roles create(Roles role);
 }

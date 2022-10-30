@@ -1,8 +1,7 @@
 package com.noirix.controller.converter.roles;
 
-import com.noirix.controller.requests.roles.RolesChangeRequest;
-import com.noirix.domain.RolesHibernate;
-import com.noirix.domain.SystemRoles;
+import com.noirix.controller.dto.roles.RolesChangeRequest;
+import com.noirix.entity.Roles;
 import com.noirix.service.RolesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
@@ -10,14 +9,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class RolesChangeConverter implements Converter<RolesChangeRequest, RolesHibernate> {
-
+public class RolesChangeConverter implements Converter<RolesChangeRequest, Roles> {
     private RolesService service;
 
     @Override
-    public RolesHibernate convert(RolesChangeRequest source) {
+    public Roles convert(RolesChangeRequest source) {
+        return service.findById(source.getId());
 
-        RolesHibernate roles = service.findById(source.getId());
-        return roles;
     }
+
 }

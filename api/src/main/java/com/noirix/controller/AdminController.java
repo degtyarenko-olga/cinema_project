@@ -1,22 +1,21 @@
 package com.noirix.controller;
 
-import com.noirix.controller.requests.hall.HallCreateRequest;
-import com.noirix.controller.requests.movie.MovieCreateRequest;
-import com.noirix.controller.requests.place.PlaceCreateRequest;
-import com.noirix.controller.requests.session.SessionCreateRequest;
-import com.noirix.domain.HallHibernate;
-import com.noirix.domain.MovieHibernate;
-import com.noirix.domain.PlaceHibernate;
-import com.noirix.domain.SessionHibernate;
-import com.noirix.domain.TicketHibernate;
-import com.noirix.domain.UsersHibernate;
-import com.noirix.service.HallService;
-import com.noirix.service.MovieService;
-import com.noirix.service.PlaceService;
-import com.noirix.service.RolesService;
-import com.noirix.service.SessionService;
-import com.noirix.service.TicketService;
-import com.noirix.service.UserService;
+import com.noirix.controller.dto.hall.HallCreateRequest;
+import com.noirix.controller.dto.movie.MovieCreateRequest;
+import com.noirix.controller.dto.place.PlaceCreateRequest;
+import com.noirix.controller.dto.session.SessionCreateRequest;
+import com.noirix.entity.Hall;
+import com.noirix.entity.Movie;
+import com.noirix.entity.Place;
+import com.noirix.entity.Session;
+import com.noirix.entity.Ticket;
+import com.noirix.entity.User;
+import com.noirix.service.impl.HallServiceImpl;
+import com.noirix.service.impl.MovieServiceImpl;
+import com.noirix.service.impl.PlaceServiceImpl;
+import com.noirix.service.impl.SessionServiceImpl;
+import com.noirix.service.impl.TicketServiceImpl;
+import com.noirix.service.impl.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -49,35 +48,27 @@ import java.util.Map;
 @RequestMapping("/admin")
 @Tag(name = "ADMIN CONTROLLER")
 public class AdminController {
-
-    private final UserService service;
-
+    private final UserServiceImpl service;
     private final ConversionService converter;
-
-    private final MovieService movieService;
-
-    private final SessionService sessionService;
-
-    private final TicketService ticketService;
-
-    private final PlaceService placeService;
-
-    private final HallService hallService;
-
+    private final MovieServiceImpl movieServiceImpl;
+    private final SessionServiceImpl sessionServiceImpl;
+    private final TicketServiceImpl ticketServiceImpl;
+    private final PlaceServiceImpl placeServiceImpl;
+    private final HallServiceImpl hallService;
 
     @Operation(summary = "Gets all users")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the users", content =
                     {@Content(mediaType = "application/json", array =
-                    @ArraySchema(schema = @Schema(implementation = UsersHibernate.class)))
+                    @ArraySchema(schema = @Schema(implementation = User.class)))
                     })
     })
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @GetMapping("/find/user/all")
     public ResponseEntity<Object> findAllUsers() {
-
         return new ResponseEntity<>(Collections.singletonMap("result",
                 service.findByHQLQuery()), HttpStatus.OK);
+
     }
 
     @Operation(summary = "Delete user by ID",
@@ -88,59 +79,56 @@ public class AdminController {
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @DeleteMapping("/delete/user/{id}")
     public ResponseEntity<Object> deleteUsersById(@PathVariable Long id) {
-
         service.delete(id);
-
         Map<String, Object> model = new HashMap<>();
         model.put("id", id);
         return new ResponseEntity<>(model, HttpStatus.OK);
+
     }
 
     @Operation(summary = "Gets user by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the user", content =
                     {@Content(mediaType = "application/json", array =
-                    @ArraySchema(schema = @Schema(implementation = UsersHibernate.class)))
+                    @ArraySchema(schema = @Schema(implementation = User.class)))
                     })
     })
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @GetMapping("/find/user/id/{id}")
     public ResponseEntity<Object> findUserById(@PathVariable("id") Long id) {
-
         return new ResponseEntity<>(Collections.singletonMap("user", service.findById(id)),
-                HttpStatus.OK
-        );
+                HttpStatus.OK);
+
     }
 
     @Operation(summary = "Gets user by login")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the user", content =
                     {@Content(mediaType = "application/json", array =
-                    @ArraySchema(schema = @Schema(implementation = UsersHibernate.class)))
+                    @ArraySchema(schema = @Schema(implementation = User.class)))
                     })
     })
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @GetMapping("/find/user/login/{login}")
     public ResponseEntity<Object> findUserByCredentialsLogin(@PathVariable("login") String login) {
-
         return new ResponseEntity<>(Collections.singletonMap("user",
                 service.findByCredentialsLogin(login)), HttpStatus.OK);
+
     }
 
     @Operation(summary = "Gets hall by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found hall", content =
                     {@Content(mediaType = "application/json", array =
-                    @ArraySchema(schema = @Schema(implementation = HallHibernate.class)))
+                    @ArraySchema(schema = @Schema(implementation = Hall.class)))
                     })
     })
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @GetMapping("/find/hall/{id}")
     public ResponseEntity<Object> findHallById(@PathVariable("id") Long id) {
-
         return new ResponseEntity<>(Collections.singletonMap("hall", hallService.findById(id)),
-                HttpStatus.OK
-        );
+                HttpStatus.OK);
+
     }
 
     @Operation(summary = "Create new hall")
@@ -154,14 +142,12 @@ public class AdminController {
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @PostMapping("/create/hall")
     public ResponseEntity<Object> create(@Valid @RequestBody HallCreateRequest createRequest) {
-
-        HallHibernate hallHibernate = converter.convert(createRequest, HallHibernate.class);
-
-        hallService.create(hallHibernate);
-
+        Hall hall = converter.convert(createRequest, Hall.class);
+        hallService.create(hall);
         return new ResponseEntity<>(
-                Collections.singletonMap("hall", hallService.findById(hallHibernate.getId())),
+                Collections.singletonMap("hall", hallService.findById(hall.getId())),
                 HttpStatus.CREATED);
+
     }
 
     @Operation(summary = "Delete hall by ID",
@@ -172,27 +158,26 @@ public class AdminController {
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @DeleteMapping("/delete/hall/{id}")
     public ResponseEntity<Object> deleteHallById(@PathVariable Long id) {
-
         hallService.delete(id);
-
         Map<String, Object> model = new HashMap<>();
         model.put("id", id);
         return new ResponseEntity<>(model, HttpStatus.OK);
+
     }
 
     @Operation(summary = "Gets movie by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found movie", content =
                     {@Content(mediaType = "application/json", array =
-                    @ArraySchema(schema = @Schema(implementation = MovieHibernate.class)))
+                    @ArraySchema(schema = @Schema(implementation = Movie.class)))
                     })
     })
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @GetMapping("/find/movie/{id}")
-    public ResponseEntity<Object> findMovieById(@Valid @PathVariable("id") Long id){
+    public ResponseEntity<Object> findMovieById(@Valid @PathVariable("id") Long id) {
 
         return new ResponseEntity<>(Collections.singletonMap("result",
-                movieService.findById(id)), HttpStatus.OK);
+                movieServiceImpl.findById(id)), HttpStatus.OK);
 
     }
 
@@ -207,14 +192,12 @@ public class AdminController {
     @Transactional
     @PostMapping("/create/movie")
     public ResponseEntity<Object> create(@Valid @RequestBody MovieCreateRequest createRequest) {
-
-        MovieHibernate movie = converter.convert(createRequest, MovieHibernate.class);
-
-        movieService.create(movie);
-
+        Movie movie = converter.convert(createRequest, Movie.class);
+        movieServiceImpl.create(movie);
         return new ResponseEntity<>(
-                Collections.singletonMap("movie",movieService.findById(movie.getId())),
+                Collections.singletonMap("movie", movieServiceImpl.findById(movie.getId())),
                 HttpStatus.CREATED);
+
     }
 
     @Operation(summary = "Delete movie by ID",
@@ -225,27 +208,25 @@ public class AdminController {
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @DeleteMapping("/delete/movie/{id}")
     public ResponseEntity<Object> deleteMovieById(@PathVariable Long id) {
-
-        movieService.delete(id);
-
+        movieServiceImpl.delete(id);
         Map<String, Object> model = new HashMap<>();
         model.put("id", id);
         return new ResponseEntity<>(model, HttpStatus.OK);
+
     }
 
     @Operation(summary = "Gets place by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found place", content =
                     {@Content(mediaType = "application/json", array =
-                    @ArraySchema(schema = @Schema(implementation = PlaceHibernate.class)))
+                    @ArraySchema(schema = @Schema(implementation = Place.class)))
                     })
     })
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @GetMapping("/find/place/{id}")
-    public ResponseEntity<Object> findPlaceById(@Valid @PathVariable("id") Long id){
-
+    public ResponseEntity<Object> findPlaceById(@Valid @PathVariable("id") Long id) {
         return new ResponseEntity<>(Collections.singletonMap("result",
-                placeService.findById(id)), HttpStatus.OK);
+                placeServiceImpl.findById(id)), HttpStatus.OK);
 
     }
 
@@ -257,12 +238,11 @@ public class AdminController {
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @DeleteMapping("/delete/place/{id}")
     public ResponseEntity<Object> deletePlaceById(@PathVariable Long id) {
-
-        placeService.delete(id);
-
+        placeServiceImpl.delete(id);
         Map<String, Object> model = new HashMap<>();
         model.put("id", id);
         return new ResponseEntity<>(model, HttpStatus.OK);
+
     }
 
     @Operation(summary = "Create new place")
@@ -276,21 +256,19 @@ public class AdminController {
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @PostMapping("/create/place")
     public ResponseEntity<Object> create(@Valid @RequestBody PlaceCreateRequest createRequest) {
-
-        PlaceHibernate place = converter.convert(createRequest, PlaceHibernate.class);
-
-        placeService.create(place);
-
+        Place place = converter.convert(createRequest, Place.class);
+        placeServiceImpl.create(place);
         return new ResponseEntity<>(
-                Collections.singletonMap("place", placeService.findById(place.getId())),
+                Collections.singletonMap("place", placeServiceImpl.findById(place.getId())),
                 HttpStatus.CREATED);
+
     }
 
     @Operation(summary = "Gets cinema session by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the session", content =
                     {@Content(mediaType = "application/json", array =
-                    @ArraySchema(schema = @Schema(implementation = SessionHibernate.class)))
+                    @ArraySchema(schema = @Schema(implementation = Session.class)))
                     })
     })
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
@@ -298,30 +276,28 @@ public class AdminController {
     public ResponseEntity<Object> findSessionById(@PathVariable String id) {
         long sessionId = Long.parseLong(id);
         return new ResponseEntity<>(
-                Collections.singletonMap("session", sessionService.findById(sessionId)),
-                HttpStatus.OK
-        );
+                Collections.singletonMap("session", sessionServiceImpl.findById(sessionId)),
+                HttpStatus.OK);
+
     }
 
     @Operation(summary = "Create new cinema session")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Session created", content =
                     {@Content(mediaType = "application/json", array =
-                    @ArraySchema(schema = @Schema(implementation = SessionHibernate.class)))
+                    @ArraySchema(schema = @Schema(implementation = Session.class)))
                     })
     })
     @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @PostMapping("/create/session")
     public ResponseEntity<Object> create(@Valid @RequestBody SessionCreateRequest createRequest) {
-
-        SessionHibernate session = converter.convert(createRequest, SessionHibernate.class);
-
-        sessionService.create(session);
-
+        Session session = converter.convert(createRequest, Session.class);
+        sessionServiceImpl.create(session);
         return new ResponseEntity<>(
-                Collections.singletonMap("session", sessionService.findById(session.getId())),
+                Collections.singletonMap("session", sessionServiceImpl.findById(session.getId())),
                 HttpStatus.CREATED);
+
     }
 
     @Operation(summary = "Delete session by ID",
@@ -332,27 +308,26 @@ public class AdminController {
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @DeleteMapping("/delete/session/{id}")
     public ResponseEntity<Object> deleteSessionById(@PathVariable Long id) {
-
-        sessionService.delete(id);
-
+        sessionServiceImpl.delete(id);
         Map<String, Object> model = new HashMap<>();
         model.put("id", id);
         return new ResponseEntity<>(model, HttpStatus.OK);
+
     }
 
     @Operation(summary = "Gets ticket by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found ticket", content =
                     {@Content(mediaType = "application/json", array =
-                    @ArraySchema(schema = @Schema(implementation = TicketHibernate.class)))
+                    @ArraySchema(schema = @Schema(implementation = Ticket.class)))
                     })
     })
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @GetMapping("/find/ticket/{id}")
-    public ResponseEntity<Object> findTicketById(@Valid @PathVariable("id") String id){
+    public ResponseEntity<Object> findTicketById(@Valid @PathVariable("id") String id) {
         long idTicket = Long.parseLong(id);
         return new ResponseEntity<>(Collections.singletonMap("result",
-                ticketService.findById(idTicket)), HttpStatus.OK);
+                ticketServiceImpl.findById(idTicket)), HttpStatus.OK);
 
     }
 
@@ -364,17 +339,10 @@ public class AdminController {
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @DeleteMapping("/delete/ticket/{id}")
     public ResponseEntity<Object> deleteTicketById(@PathVariable Long id) {
-
-        ticketService.delete(id);
-
+        ticketServiceImpl.delete(id);
         Map<String, Object> model = new HashMap<>();
         model.put("id", id);
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
-
-
-
-
-
 
 }

@@ -1,14 +1,14 @@
 package com.noirix.controller.springdata;
 
-import com.noirix.controller.requests.ticket.TicketCreateRequest;
-import com.noirix.domain.TicketHibernate;
-import com.noirix.domain.UsersHibernate;
+import com.noirix.controller.dto.ticket.TicketCreateRequest;
+import com.noirix.entity.Ticket;
+import com.noirix.entity.User;
 import com.noirix.security.util.PrincipalUtil;
-import com.noirix.service.MovieService;
-import com.noirix.service.PlaceService;
-import com.noirix.service.SessionService;
-import com.noirix.service.TicketService;
-import com.noirix.service.UserService;
+import com.noirix.service.impl.MovieServiceImpl;
+import com.noirix.service.impl.PlaceServiceImpl;
+import com.noirix.service.impl.SessionServiceImpl;
+import com.noirix.service.impl.TicketServiceImpl;
+import com.noirix.service.impl.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -22,9 +22,7 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,44 +33,33 @@ import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/rest/tickets")
 public class TicketsController {
-
-    private final TicketService service;
-
-    private final UserService userService;
-
-    private final MovieService movieService;
-
-    private final PlaceService placeService;
-
-    private final SessionService sessionService;
+    private final TicketServiceImpl service;
+    private final UserServiceImpl userServiceImpl;
+    private final MovieServiceImpl movieServiceImpl;
+    private final PlaceServiceImpl placeServiceImpl;
+    private final SessionServiceImpl sessionServiceImpl;
 
     private final ConversionService converter;
-
 
     @Operation(summary = "Gets all tickets")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the tickets", content =
                     {@Content(mediaType = "application/json", array =
-                    @ArraySchema(schema = @Schema(implementation = TicketHibernate.class)))
+                    @ArraySchema(schema = @Schema(implementation = Ticket.class)))
                     })
     })
     @GetMapping("/all")
     public ResponseEntity<Object> findAllTickets() {
-
         return new ResponseEntity<>(
                 Collections.singletonMap("tickets", service.findAllTickets()),
-                HttpStatus.OK
-        );
+                HttpStatus.OK);
+
     }
-
-
 
     @Operation(summary = "Create new ticket")
     @ApiResponses(value = {
@@ -88,25 +75,24 @@ public class TicketsController {
                                          Principal principal) {
 
         String username = PrincipalUtil.getUsername(principal);
-        UsersHibernate result = userService.findByCredentialsLogin(username);
+        User result = userServiceImpl.findByCredentialsLogin(username);
 
         Long id = result.getId();
 
-        TicketHibernate ticket = new TicketHibernate();
+        Ticket ticket = new Ticket();
 
-        ticket.setUser((userService.findById(id)));
-        ticket.setMovie(movieService.findById(createRequest.getMovieId()));
+        ticket.setUser((userServiceImpl.findById(id)));
+        ticket.setMovie(movieServiceImpl.findById(createRequest.getMovieId()));
         ticket.setDateOfPurchase(new Timestamp(new Date().getTime()));
-        ticket.setPlace(placeService.findById(createRequest.getPlaceId()));
-        ticket.setSession(sessionService.findById(createRequest.getSessionId()));
+        ticket.setPlace(placeServiceImpl.findById(createRequest.getPlaceId()));
+        ticket.setSession(sessionServiceImpl.findById(createRequest.getSessionId()));
 
-       service.create(ticket);
+        service.create(ticket);
 
         return new ResponseEntity<>(
                 Collections.singletonMap("ticket", service.findById(ticket.getId())),
                 HttpStatus.CREATED);
+
     }
-
-
 
 }

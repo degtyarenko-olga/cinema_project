@@ -1,38 +1,17 @@
 package com.noirix.service;
 
-import com.noirix.domain.TicketHibernate;
-import com.noirix.repository.TicketSpringDataRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.noirix.entity.Ticket;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class TicketService {
+public interface TicketService {
+    List<Ticket> findAllTickets();
 
-    private final TicketSpringDataRepository repository;
+    Ticket findById(Long id);
 
-    public Object findAllTickets() {
-        return repository.findByHQLQuery();
-    }
-
-    public TicketHibernate findById(Long id) {
-        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
-    }
+    Long delete(Long id);
 
     @Transactional
-    public Long delete(Long id) {
-
-        repository.deleteById(id);
-
-        return id;
-    }
-
-    @Transactional
-    public TicketHibernate create(TicketHibernate ticket) {
-        return repository.save(ticket);
-
-    }
+    Ticket create(Ticket ticket);
 }

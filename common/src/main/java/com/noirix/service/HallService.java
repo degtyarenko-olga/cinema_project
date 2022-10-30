@@ -1,42 +1,19 @@
 package com.noirix.service;
 
-import com.noirix.domain.HallHibernate;
-import com.noirix.repository.HallSpringDataRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.noirix.entity.Hall;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class HallService {
+public interface HallService {
+    List<Hall> findAllHall();
 
-    private final HallSpringDataRepository repository;
+    Hall findById(Long id);
 
-    public Object findAllHall() {
-        return repository.findAll();
-    }
-
-    public HallHibernate findById(Long id) {
-        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
-    }
-
-    public Object findHallByName(String name) {
-        return repository.findHallHibernateByNameHall(name);
-    }
+    Hall findHallByName(String name);
 
     @Transactional
-    public HallHibernate create(HallHibernate hallHibernate) {
+    Hall create(Hall hall);
 
-        return repository.save(hallHibernate);
-
-    }
-
-    @Transactional
-    public Long delete(Long id) {
-        repository.deleteById(id);
-        return id;
-
-    }
+    Long delete(Long id);
 }

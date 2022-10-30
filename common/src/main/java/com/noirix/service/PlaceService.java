@@ -1,43 +1,19 @@
 package com.noirix.service;
 
-import com.noirix.domain.PlaceHibernate;
-import com.noirix.repository.PlaceSpringDataRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.noirix.entity.Place;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class PlaceService {
+public interface PlaceService {
+    List<Place> findAllBy();
 
-    private final PlaceSpringDataRepository repository;
+    Place findById(Long id);
 
-    public Object findAllBy() {
-        return repository.findAllBy();
-    }
+    List<Place> findAllPlaceByRow(int row);
 
-    public PlaceHibernate findById(Long id) {
-        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
-    }
-
-    public Object findAllPlaceByRow(int row) {
-        return repository.findAllByRow(row);
-    }
-
+    Long delete(Long id);
 
     @Transactional
-    public Long delete(Long id) {
-        repository.deleteById(id);
-        return id;
-
-    }
-
-    @Transactional
-    public PlaceHibernate create(PlaceHibernate place) {
-
-         return repository.save(place);
-
-    }
+    Place create(Place place);
 }

@@ -1,8 +1,8 @@
 package com.noirix.controller.converter.user;
 
-import com.noirix.controller.requests.user.UserCreateRequest;
-import com.noirix.domain.Credentials;
-import com.noirix.domain.UsersHibernate;
+import com.noirix.controller.dto.user.UserCreateRequest;
+import com.noirix.entity.Credentials;
+import com.noirix.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -12,24 +12,22 @@ import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
-public class UserCreateConverter extends UserBaseConverter<UserCreateRequest, UsersHibernate> {
-
+public class UserCreateConverter extends UserBaseConverter<UserCreateRequest, User> {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UsersHibernate convert(UserCreateRequest source) {
-
-        UsersHibernate usersHibernate = new UsersHibernate();
+    public User convert(UserCreateRequest source) {
+        User user = new User();
 
         Credentials credentials = new Credentials();
         credentials.setLogin(source.getLogin());
         credentials.setPassword(passwordEncoder.encode(source.getPassword()));
 
-        usersHibernate.setCredentials(credentials);
+        user.setCredentials(credentials);
 
-        usersHibernate.setCreationDate(new Timestamp(new Date().getTime()));
+        user.setCreationDate(new Timestamp(new Date().getTime()));
+        return doConvert(user, source);
 
-        return doConvert(usersHibernate, source);
     }
-}
 
+}

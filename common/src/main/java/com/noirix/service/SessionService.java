@@ -1,37 +1,17 @@
 package com.noirix.service;
 
-import com.noirix.domain.SessionHibernate;
-import com.noirix.repository.SessionSpringDataRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.noirix.entity.Session;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class SessionService {
+public interface SessionService {
+    List<Session> findAllSession();
 
-    private final SessionSpringDataRepository repository;
-
-    public Object findAllSession() {
-        return repository.findAllSession();
-    }
-
-    public SessionHibernate findById(Long sessionId) {
-        return repository.findById(sessionId).orElseThrow(EntityNotFoundException::new);
-    }
+    Session findById(Long sessionId);
 
     @Transactional
-    public Object create(SessionHibernate session) {
+    Session create(Session session);
 
-        return  repository.save(session);
-
-    }
-
-    @Transactional
-    public Long delete(Long id) {
-        repository.deleteById(id);
-        return id;
-    }
+    Long delete(Long id);
 }

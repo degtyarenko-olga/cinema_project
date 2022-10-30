@@ -11,14 +11,13 @@ import org.springframework.util.StopWatch;
 @Component
 @Aspect
 public class CustomAspect {
-
     private static final Logger log = Logger.getLogger(CustomAspect.class);
 
-    @Pointcut("execution(* com.noirix.repository.*.*.*(..))" )
+    @Pointcut("execution(* com.noirix.repository.*.*.*(..))")
     public void aroundRepositoryPointcut() {
     }
 
-    @Around("aroundRepositoryPointcut()" )
+    @Around("aroundRepositoryPointcut()")
     public Object logAroundMethods(ProceedingJoinPoint joinPoint) throws Throwable {
 
         StopWatch stopWatch = new StopWatch();
@@ -35,6 +34,7 @@ public class CustomAspect {
         log.info("Method " + joinPoint.getSignature().getName() + " finished : " + "time : " + stopWatch.getTotalTimeMillis());
 
         return proceed;
+
     }
 
 }

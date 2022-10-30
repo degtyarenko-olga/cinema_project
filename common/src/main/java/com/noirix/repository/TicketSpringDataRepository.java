@@ -1,18 +1,16 @@
 package com.noirix.repository;
 
-import com.noirix.domain.TicketHibernate;
-import com.noirix.domain.UsersHibernate;
-import org.springframework.cache.annotation.Cacheable;
+import com.noirix.entity.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public interface TicketSpringDataRepository extends JpaRepository<TicketHibernate,Long> {
+public interface TicketSpringDataRepository extends JpaRepository<Ticket,Long> {
 
-    @Query(value = "select t from TicketHibernate t")
-    List<TicketHibernate> findByHQLQuery();
+    @Query(value = "select t from Ticket t")
+    List<Ticket> findByHQLQuery();
 
-    TicketHibernate findTicketHibernateById(Long id);
+    Ticket findTicketHibernateById(Long id);
 }

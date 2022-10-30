@@ -1,8 +1,8 @@
 package com.noirix.security;
 
-import com.noirix.domain.RolesHibernate;
-import com.noirix.domain.SystemRoles;
-import com.noirix.domain.UsersHibernate;
+import com.noirix.entity.Roles;
+import com.noirix.entity.SystemRoles;
+import com.noirix.entity.User;
 import com.noirix.repository.RolesSpringDataRepository;
 import com.noirix.repository.UserSpringDataRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,10 +27,10 @@ public class UserSecurityService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
             /*Find user in DB*/
-            Optional<UsersHibernate> searchResult = userRepository.findByCredentialsLogin(username);
+            Optional<User> searchResult = userRepository.findByCredentialsLogin(username);
 
             if (searchResult.isPresent()) {
-                UsersHibernate user = searchResult.get();
+                User user = searchResult.get();
 
                 /*We are creating Spring Security User object*/
 
@@ -41,7 +41,7 @@ public class UserSecurityService implements UserDetailsService {
                         AuthorityUtils.commaSeparatedStringToAuthorityList(
                                 roleRepository.findByUserId(user.getId())
                                         .stream()
-                                        .map(RolesHibernate::getRoleName)
+                                        .map(Roles::getRoleName)
                                         .map(SystemRoles::name)
                                         .collect(Collectors.joining(","))
                         )

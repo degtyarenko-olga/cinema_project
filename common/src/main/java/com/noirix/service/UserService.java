@@ -1,75 +1,22 @@
 package com.noirix.service;
 
-import com.noirix.domain.RolesHibernate;
-import com.noirix.domain.SystemRoles;
-import com.noirix.domain.UsersHibernate;
-import com.noirix.exception.UserNotFoundException;
-import com.noirix.repository.RolesSpringDataRepository;
-import com.noirix.repository.UserSpringDataRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
+import com.noirix.entity.User;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Set;
 
-@Service
-@RequiredArgsConstructor
-@Transactional(readOnly = true)
-public class UserService {
+public interface UserService {
+    User findById(Long id);
 
-    private final UserSpringDataRepository repository;
+    List<User> findByHQLQuery();
 
-    private final RolesSpringDataRepository dataRepository;
+    Long delete(Long id);
 
-
-    public UsersHibernate findById(Long id) {
-       return repository.findById(id).orElseThrow(EntityNotFoundException::new);
-    }
-
-    public Object findByHQLQuery() {
-        return repository.findAll();
-    }
+    User findByCredentialsLogin(String login);
 
     @Transactional
-    public UsersHibernate save(UsersHibernate user) {
-        return repository.save(user);
-    }
+    User create(User user);
 
     @Transactional
-    public Long delete(Long id) {
-        repository.deleteById(id);
-        return id;
-    }
-
-
-    public UsersHibernate findByCredentialsLogin(String login) {
-
-        return repository.findUsersHibernateByCredentialsLogin(login)
-                .orElseThrow(EntityNotFoundException::new);
-    }
-
-    @Transactional
-    public UsersHibernate create(UsersHibernate user) {
-
-        RolesHibernate roleUser = dataRepository.findRolesHibernateByRoleName(SystemRoles.ROLE_USER);
-
-        user.setRoles(Set.of(roleUser));
-        roleUser.getUsers().add(user);
-
-        UsersHibernate usersHibernate = repository.save(user);
-        return usersHibernate;
-    }
-
-    @Transactional
-    public UsersHibernate update(UsersHibernate user) {
-
-        UsersHibernate usersHibernate = repository.save(user);
-
-        return usersHibernate;
-    }
-
-
+    User update(User user);
 }
