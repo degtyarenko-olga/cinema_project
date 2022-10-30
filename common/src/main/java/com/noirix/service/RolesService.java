@@ -12,4 +12,6 @@ public interface RolesService {
 
     @Transactional
     Roles create(Roles role);
+
+    Roles update(Roles role);
 }

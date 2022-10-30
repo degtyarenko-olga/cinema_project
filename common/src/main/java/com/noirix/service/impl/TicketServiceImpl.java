@@ -42,4 +42,10 @@ public class TicketServiceImpl implements TicketService {
 
     }
 
+    @Override
+    @Transactional
+    public Ticket update(Ticket ticket) {
+        return create(ticket);
+    }
+
 }

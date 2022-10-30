@@ -48,4 +48,9 @@ public class HallServiceImpl implements HallService {
 
     }
 
+    @Override
+    public Hall update(Hall hall) {
+        return repository.save(hall);
+    }
+
 }

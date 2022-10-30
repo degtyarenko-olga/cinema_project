@@ -41,7 +41,7 @@ public class Movie {
     private String genre;
 
     @Column(name = "is_available")
-    private boolean isAvailable;
+    private boolean isAvailable = true;
 
     @Column(name = "age_restrictions")
     private int ageRestrictions;

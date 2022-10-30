@@ -1,4 +1,4 @@
-package com.noirix.controller.springdata;
+package com.noirix.controller.usercontroller;
 
 import com.noirix.entity.Hall;
 import com.noirix.service.impl.HallServiceImpl;

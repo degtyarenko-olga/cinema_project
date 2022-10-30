@@ -1,9 +1,9 @@
 package com.noirix.controller.converter.user;
 
 import com.noirix.controller.dto.user.UserCreateRequest;
-import com.noirix.entity.Credentials;
 import com.noirix.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -12,21 +12,20 @@ import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
-public class UserCreateConverter extends UserBaseConverter<UserCreateRequest, User> {
+public class UserCreateConverter implements Converter<UserCreateRequest, User> {
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public User convert(UserCreateRequest source) {
         User user = new User();
-
-        Credentials credentials = new Credentials();
-        credentials.setLogin(source.getLogin());
-        credentials.setPassword(passwordEncoder.encode(source.getPassword()));
-
-        user.setCredentials(credentials);
-
+        user.setBirth(source.getBirth());
+        user.setEmail(source.getEmail());
+        user.setIsDeleted(false);
+        user.setLogin(source.getLogin());
+        user.setPassword(passwordEncoder.encode(source.getPassword()));
         user.setCreationDate(new Timestamp(new Date().getTime()));
-        return doConvert(user, source);
+        user.setModificationDate(new Timestamp(new Date().getTime()));
+        return user;
 
     }
 

@@ -1,4 +1,4 @@
-package com.noirix.controller.springdata;
+package com.noirix.controller.usercontroller;
 
 import com.noirix.controller.dto.ticket.TicketCreateRequest;
 import com.noirix.entity.Ticket;
@@ -71,12 +71,11 @@ public class TicketsController {
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @Transactional
     @PostMapping
-    public ResponseEntity<Object> create(@Valid @RequestBody TicketCreateRequest createRequest,
+    public ResponseEntity<Object> createTicket(@Valid @RequestBody TicketCreateRequest createRequest,
                                          Principal principal) {
 
         String username = PrincipalUtil.getUsername(principal);
-        User result = userServiceImpl.findByCredentialsLogin(username);
-
+        User result = userServiceImpl.findByLogin(username);
         Long id = result.getId();
 
         Ticket ticket = new Ticket();

@@ -16,4 +16,6 @@ public interface HallService {
     Hall create(Hall hall);
 
     Long delete(Long id);
+
+    Hall update(Hall hall);
 }

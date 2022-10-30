@@ -41,8 +41,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByCredentialsLogin(String login) {
-        return repository.findUsersHibernateByCredentialsLogin(login)
+    public User findByLogin(String login) {
+        return repository.findByLogin(login)
                 .orElseThrow(EntityNotFoundException::new);
 
     }
@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public User update(User user) {
-        return create(user);
+        return repository.save(user);
 
     }
 

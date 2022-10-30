@@ -12,7 +12,7 @@ public interface UserService {
 
     Long delete(Long id);
 
-    User findByCredentialsLogin(String login);
+    User findByLogin(String login);
 
     @Transactional
     User create(User user);

@@ -47,7 +47,7 @@ public class Ticket {
     private Session session;
 
 
-    @ManyToOne(optional=false, cascade= CascadeType.ALL)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "place_id")
     @JsonManagedReference
     private Place place;

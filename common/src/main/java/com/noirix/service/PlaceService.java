@@ -16,4 +16,6 @@ public interface PlaceService {
 
     @Transactional
     Place create(Place place);
+
+    Place update(Place place);
 }

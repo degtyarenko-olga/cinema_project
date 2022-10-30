@@ -3,20 +3,35 @@ package com.noirix.controller.converter.user;
 import com.noirix.controller.dto.user.UserChangeRequest;
 import com.noirix.entity.User;
 import com.noirix.service.UserService;
-import com.noirix.service.impl.UserServiceImpl;
-import lombok.RequiredArgsConstructor;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.sql.Timestamp;
+import java.util.Date;
 
 
 @Component
-@RequiredArgsConstructor
-public class UserChangeConverter extends UserBaseConverter<UserChangeRequest, User> {
+
+public class UserChangeConverter implements Converter<UserChangeRequest, User> {
     private final UserService service;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserChangeConverter(UserService service, PasswordEncoder passwordEncoder) {
+        this.service = service;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public User convert(UserChangeRequest source) {
         User user = service.findById(source.getId());
-        return doConvert(user, source);
+
+        user.setBirth(source.getBirth());
+        user.setEmail(source.getEmail());
+        user.setLogin(source.getLogin());
+        user.setPassword(passwordEncoder.encode(source.getPassword()));
+
+        return user;
 
     }
 

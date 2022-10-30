@@ -6,12 +6,11 @@ import javax.validation.constraints.Email;
 import java.sql.Timestamp;
 
 @Data
-public class UserChangeRequest extends UserCreateRequest {
+public class UserChangeRequest{
 
     private Long id;
 
     private String login;
-
 
     private String password;
 
@@ -19,7 +18,6 @@ public class UserChangeRequest extends UserCreateRequest {
     private String email;
 
     private Timestamp birth;
-
 
 
 }

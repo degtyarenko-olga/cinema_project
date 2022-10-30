@@ -9,14 +9,12 @@ import java.sql.Timestamp;
 @Data
 public class UserCreateRequest {
 
-
     private String login;
 
-
     private String password;
-
     @Email
     private String email;
 
     private Timestamp birth;
+
 }

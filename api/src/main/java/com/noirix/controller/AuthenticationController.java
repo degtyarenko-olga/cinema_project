@@ -37,8 +37,6 @@ public class AuthenticationController {
             })
     @PostMapping
     public ResponseEntity<AuthResponse> loginUser(@RequestBody AuthRequest request) {
-
-        /*Check login and password*/
         Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getLogin(),
@@ -47,7 +45,6 @@ public class AuthenticationController {
         );
         SecurityContextHolder.getContext().setAuthentication(authenticate);
 
-        /*Generate token with answer to user*/
         return ResponseEntity.ok(
                 AuthResponse
                         .builder()

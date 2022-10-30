@@ -14,4 +14,6 @@ public interface TicketService {
 
     @Transactional
     Ticket create(Ticket ticket);
+
+    Ticket update(Ticket ticket);
 }

@@ -1,10 +1,10 @@
-package com.noirix.controller;
+package com.noirix.controller.usercontroller;
 
 import com.noirix.controller.dto.user.UserChangeRequest;
 import com.noirix.controller.dto.user.UserCreateRequest;
 import com.noirix.entity.User;
 import com.noirix.security.util.PrincipalUtil;
-import com.noirix.service.impl.UserServiceImpl;
+import com.noirix.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,8 +38,9 @@ import java.util.Map;
 @RequestMapping("/rest/users")
 @Tag(name = "USER CONTROLLER")
 public class UsersController {
-    private final UserServiceImpl service;
+    private final UserService service;
     private final ConversionService converter;
+    private final PasswordEncoder passwordEncoder;
 
     @Operation(summary = "Create new user")
     @ApiResponses(value = {
@@ -58,47 +60,32 @@ public class UsersController {
 
     }
 
+    @Operation(summary = "Update user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User updated", content =
+                    {@Content(mediaType = "application/json", array =
+                    @ArraySchema(schema = @Schema(implementation = UserChangeRequest.class)))
+                    })
+    })
     @Transactional
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@PathVariable Long id, @Valid @RequestBody UserChangeRequest updateRequest) {
-        User hibernate = service.findById(id);
-        System.out.println("users find + " + hibernate);
-        User user = converter.convert(updateRequest, hibernate.getClass());
-        service.update(user);
-        System.out.println(user);
+    @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Object> updateUser(@PathVariable("id") Long id, @Valid @RequestBody UserChangeRequest userChangeRequest,
+                                             Principal principal) {
 
-        return new ResponseEntity<>(
-                Collections.singletonMap("USER", service.findById(user.getId())),
-                HttpStatus.OK);
+        String username = PrincipalUtil.getUsername(principal);
+        User result = service.findByLogin(username);
+
+        userChangeRequest.setId(result.getId());
+        User user = converter.convert(userChangeRequest, User.class);
+
+        User update = service.update(user);
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("user", service.findById(update.getId()));
+
+        return new ResponseEntity<>(model, HttpStatus.OK);
 
     }
-
-//    @Operation(summary = "Update user")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "User updated", content =
-//                    {@Content(mediaType = "application/json", array =
-//                    @ArraySchema(schema = @Schema(implementation = UserChangeRequest.class)))
-//                    })
-//    })
-//    @Transactional
-//    @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
-//    @PutMapping
-//    public ResponseEntity<Object> updateUser(@Valid @RequestBody UserChangeRequest userChangeRequest,
-//                                             Principal principal) {
-//
-//        String username = PrincipalUtil.getUsername(principal);
-//        User result = service.findByCredentialsLogin(username);
-//
-//        userChangeRequest.setId(result.getId());
-//        User hibernateUser = converter.convert(userChangeRequest, User.class);
-//
-//        service.update(hibernateUser);
-//
-//        Map<String, Object> model = new HashMap<>();
-//        model.put("user", service.findById(hibernateUser.getId()));
-//
-//        return new ResponseEntity<>(model, HttpStatus.OK);
-//
-//    }
 
 }

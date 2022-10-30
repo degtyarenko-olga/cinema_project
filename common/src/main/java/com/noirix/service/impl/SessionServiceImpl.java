@@ -42,4 +42,10 @@ public class SessionServiceImpl implements SessionService {
 
     }
 
+    @Override
+    @Transactional
+    public Session update(Session session) {
+        return repository.save(session);
+    }
+
 }

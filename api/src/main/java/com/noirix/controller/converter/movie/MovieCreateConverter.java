@@ -18,7 +18,6 @@ public class MovieCreateConverter implements Converter<MovieCreateRequest, Movie
         movie.setGenre(source.getGenre());
         movie.setAgeRestrictions(source.getAgeRestrictions());
         movie.setTitle(source.getTitle());
-        movie.setAvailable(true);
         return movie;
 
     }

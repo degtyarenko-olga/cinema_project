@@ -1,15 +1,26 @@
-package com.noirix.controller;
+package com.noirix.controller.admincontroller;
 
+import com.noirix.controller.dto.hall.HallChangeRequest;
 import com.noirix.controller.dto.hall.HallCreateRequest;
+import com.noirix.controller.dto.movie.MovieChangeRequest;
 import com.noirix.controller.dto.movie.MovieCreateRequest;
+import com.noirix.controller.dto.place.PlaceChangeRequest;
 import com.noirix.controller.dto.place.PlaceCreateRequest;
+import com.noirix.controller.dto.session.SessionChangeRequest;
 import com.noirix.controller.dto.session.SessionCreateRequest;
+import com.noirix.controller.dto.ticket.TicketChangeRequest;
 import com.noirix.entity.Hall;
 import com.noirix.entity.Movie;
 import com.noirix.entity.Place;
 import com.noirix.entity.Session;
 import com.noirix.entity.Ticket;
 import com.noirix.entity.User;
+import com.noirix.service.HallService;
+import com.noirix.service.MovieService;
+import com.noirix.service.PlaceService;
+import com.noirix.service.SessionService;
+import com.noirix.service.TicketService;
+import com.noirix.service.UserService;
 import com.noirix.service.impl.HallServiceImpl;
 import com.noirix.service.impl.MovieServiceImpl;
 import com.noirix.service.impl.PlaceServiceImpl;
@@ -34,6 +45,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,13 +60,13 @@ import java.util.Map;
 @RequestMapping("/admin")
 @Tag(name = "ADMIN CONTROLLER")
 public class AdminController {
-    private final UserServiceImpl service;
+    private final UserService service;
     private final ConversionService converter;
-    private final MovieServiceImpl movieServiceImpl;
-    private final SessionServiceImpl sessionServiceImpl;
-    private final TicketServiceImpl ticketServiceImpl;
-    private final PlaceServiceImpl placeServiceImpl;
-    private final HallServiceImpl hallService;
+    private final MovieService movieServiceImpl;
+    private final SessionService sessionServiceImpl;
+    private final TicketService ticketServiceImpl;
+    private final PlaceService placeServiceImpl;
+    private final HallService hallService;
 
     @Operation(summary = "Gets all users")
     @ApiResponses(value = {
@@ -110,9 +122,9 @@ public class AdminController {
     })
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @GetMapping("/find/user/login/{login}")
-    public ResponseEntity<Object> findUserByCredentialsLogin(@PathVariable("login") String login) {
+    public ResponseEntity<Object> findUserByLogin(@PathVariable("login") String login) {
         return new ResponseEntity<>(Collections.singletonMap("user",
-                service.findByCredentialsLogin(login)), HttpStatus.OK);
+                service.findByLogin(login)), HttpStatus.OK);
 
     }
 
@@ -141,7 +153,7 @@ public class AdminController {
     @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @PostMapping("/create/hall")
-    public ResponseEntity<Object> create(@Valid @RequestBody HallCreateRequest createRequest) {
+    public ResponseEntity<Object> createHall(@Valid @RequestBody HallCreateRequest createRequest) {
         Hall hall = converter.convert(createRequest, Hall.class);
         hallService.create(hall);
         return new ResponseEntity<>(
@@ -191,7 +203,7 @@ public class AdminController {
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @Transactional
     @PostMapping("/create/movie")
-    public ResponseEntity<Object> create(@Valid @RequestBody MovieCreateRequest createRequest) {
+    public ResponseEntity<Object> createMovie(@Valid @RequestBody MovieCreateRequest createRequest) {
         Movie movie = converter.convert(createRequest, Movie.class);
         movieServiceImpl.create(movie);
         return new ResponseEntity<>(
@@ -255,12 +267,31 @@ public class AdminController {
     @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @PostMapping("/create/place")
-    public ResponseEntity<Object> create(@Valid @RequestBody PlaceCreateRequest createRequest) {
+    public ResponseEntity<Object> createPlace(@Valid @RequestBody PlaceCreateRequest createRequest) {
         Place place = converter.convert(createRequest, Place.class);
         placeServiceImpl.create(place);
         return new ResponseEntity<>(
                 Collections.singletonMap("place", placeServiceImpl.findById(place.getId())),
                 HttpStatus.CREATED);
+
+    }
+
+    @Operation(summary = "Update place")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Place update", content =
+                    {@Content(mediaType = "application/json", array =
+                    @ArraySchema(schema = @Schema(implementation = PlaceCreateRequest.class)))
+                    })
+    })
+    @Transactional
+    @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
+    @PutMapping("/update/place")
+    public ResponseEntity<Object> updatePlace(@Valid @RequestBody PlaceChangeRequest changeRequest) {
+        Place place = converter.convert(changeRequest, Place.class);
+        placeServiceImpl.update(place);
+        return new ResponseEntity<>(
+                Collections.singletonMap("place", placeServiceImpl.findById(place.getId())),
+                HttpStatus.OK);
 
     }
 
@@ -291,12 +322,31 @@ public class AdminController {
     @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @PostMapping("/create/session")
-    public ResponseEntity<Object> create(@Valid @RequestBody SessionCreateRequest createRequest) {
+    public ResponseEntity<Object> createSession(@Valid @RequestBody SessionCreateRequest createRequest) {
         Session session = converter.convert(createRequest, Session.class);
         sessionServiceImpl.create(session);
         return new ResponseEntity<>(
                 Collections.singletonMap("session", sessionServiceImpl.findById(session.getId())),
                 HttpStatus.CREATED);
+
+    }
+
+    @Operation(summary = "Update cinema session")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Session update", content =
+                    {@Content(mediaType = "application/json", array =
+                    @ArraySchema(schema = @Schema(implementation = Session.class)))
+                    })
+    })
+    @Transactional
+    @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
+    @PutMapping("/update/session")
+    public ResponseEntity<Object> updateSession(@Valid @RequestBody SessionChangeRequest changeRequest) {
+        Session session = converter.convert(changeRequest, Session.class);
+        sessionServiceImpl.update(session);
+        return new ResponseEntity<>(
+                Collections.singletonMap("session", sessionServiceImpl.findById(session.getId())),
+                HttpStatus.OK);
 
     }
 
@@ -343,6 +393,65 @@ public class AdminController {
         Map<String, Object> model = new HashMap<>();
         model.put("id", id);
         return new ResponseEntity<>(model, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Update movie")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Movie update", content =
+                    {@Content(mediaType = "application/json", array =
+                    @ArraySchema(schema = @Schema(implementation = MovieChangeRequest.class)))
+                    })
+    })
+    @Transactional
+    @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
+    @PutMapping("/update/movie")
+    public ResponseEntity<Object> updateMovie(@Valid @RequestBody MovieChangeRequest createRequest) {
+        Movie movie = converter.convert(createRequest, Movie.class);
+        movieServiceImpl.update(movie);
+
+        return new ResponseEntity<>(
+                Collections.singletonMap("movie", movieServiceImpl.findById(movie.getId())),
+                HttpStatus.CREATED);
+
+    }
+
+    @Operation(summary = "Update hall")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Update hall", content =
+                    {@Content(mediaType = "application/json", array =
+                    @ArraySchema(schema = @Schema(implementation = HallChangeRequest.class)))
+                    })
+    })
+    @PutMapping("/update/hall")
+    public ResponseEntity<Object> updateHall(@Valid @RequestBody HallChangeRequest changeRequest) {
+        Hall hall = converter.convert(changeRequest,Hall.class);
+        hallService.update(hall);
+
+        return new ResponseEntity<>(Collections.singletonMap("result",hallService.findById(hall.getId())),
+                HttpStatus.OK);
+
+    }
+
+    @Operation(summary = "Update ticket")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ticket update", content =
+                    {@Content(mediaType = "application/json", array =
+                    @ArraySchema(schema = @Schema(implementation = TicketChangeRequest.class)))
+                    })
+    })
+    @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
+    @Transactional
+    @PutMapping("/update/ticket")
+    public ResponseEntity<Object> createTicket(@Valid @RequestBody TicketChangeRequest changeRequest) {
+
+        Ticket ticket = converter.convert(changeRequest,Ticket.class);
+
+        ticketServiceImpl.update(ticket);
+
+        return new ResponseEntity<>(
+                Collections.singletonMap("ticket", ticketServiceImpl.findById(ticket.getId())),
+                HttpStatus.CREATED);
+
     }
 
 }

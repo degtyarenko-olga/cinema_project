@@ -16,9 +16,8 @@ public interface UserSpringDataRepository extends JpaRepository<User, Long> {
 
     List<User> findAll();
 
-    Optional<User> findByCredentialsLogin(String login);
+    Optional<User> findByLogin(String login);
 
-    Optional<User> findUsersHibernateByCredentialsLogin(String login);
 
 
 }

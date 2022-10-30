@@ -35,4 +35,9 @@ public class RolesServiceImpl implements RolesService {
 
     }
 
+    @Override
+    public Roles update(Roles role) {
+        return repository.save(role);
+    }
+
 }

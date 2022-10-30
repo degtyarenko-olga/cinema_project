@@ -39,5 +39,4 @@ public class Hall {
     private Set<Place> place;
 
 
-
 }
