@@ -1,4 +1,4 @@
-package com.noirix.controller.usercontroller;
+package com.noirix.controller.controlleruser;
 
 import com.noirix.entity.Hall;
 import com.noirix.service.impl.HallServiceImpl;

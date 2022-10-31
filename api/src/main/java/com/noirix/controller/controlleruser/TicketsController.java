@@ -1,4 +1,4 @@
-package com.noirix.controller.usercontroller;
+package com.noirix.controller.controlleruser;
 
 import com.noirix.controller.dto.ticket.TicketCreateRequest;
 import com.noirix.entity.Ticket;

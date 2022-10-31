@@ -1,4 +1,4 @@
-package com.noirix.controller.admincontroller;
+package com.noirix.controller.controlleradmin;
 
 import com.noirix.controller.dto.hall.HallChangeRequest;
 import com.noirix.controller.dto.hall.HallCreateRequest;
@@ -52,7 +52,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin")
-@Tag(name = "ADMIN CONTROLLER")
+@Tag(name = "ADMIN controller")
 public class AdminController {
     private final UserService service;
     private final ConversionService converter;

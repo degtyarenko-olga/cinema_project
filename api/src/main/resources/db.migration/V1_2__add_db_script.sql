@@ -1,5 +1,5 @@
-INSERT INTO cinema.users (id, login, is_deleted, creation_date, modification_date, password, birth, email)
-VALUES (DEFAULT, 'Admin', false, '2022-09-19 22:32:17.000000', '2022-09-19 22:32:18.000000',
+INSERT INTO cinema.users (id, login, creation_date, modification_date, password, birth, email)
+VALUES (DEFAULT, 'Admin', '2022-09-19 22:32:17.000000', '2022-09-19 22:32:18.000000',
         '$2a$12$YVROa3LqxOiPeRmHykaWsusIea4N61277FOFJNpGkibwhbSR23w8W',
         '2022-09-19 22:32:23.000000', 'Admin1@gmail.com')
 ON CONFLICT DO NOTHING;

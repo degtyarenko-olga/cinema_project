@@ -4,7 +4,6 @@ create table cinema.users
         constraint users_pk
             primary key,
     login             varchar(20)  default 'name'::character varying not null,
-    is_deleted        boolean      default false                     not null,
     creation_date     timestamp(6) default CURRENT_TIMESTAMP(6)      not null,
     modification_date timestamp(6) default CURRENT_TIMESTAMP(6)      not null,
     password          varchar(100)                                   not null,
@@ -20,9 +19,6 @@ create unique index users_id_uindex
 
 create index users_user_name_index
     on cinema.users (login);
-
-create index users_is_deleted_index
-    on cinema.users (is_deleted);
 
 create unique index users_password_uindex
     on cinema.users (password);

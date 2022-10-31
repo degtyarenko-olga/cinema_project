@@ -37,9 +37,6 @@ public class User {
     @Id
     private Long id;
 
-    @Column(name = "is_deleted")
-    private Boolean isDeleted;
-
     @Column(name = "creation_date")
     private Timestamp creationDate;
 

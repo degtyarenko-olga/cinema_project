@@ -1,4 +1,4 @@
-package com.noirix.controller.usercontroller;
+package com.noirix.controller.controlleruser;
 
 import com.noirix.controller.dto.user.UserChangeRequest;
 import com.noirix.controller.dto.user.UserCreateRequest;
@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,28 +36,10 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/rest/users")
-@Tag(name = "USER CONTROLLER")
+@Tag(name = "USER controller")
 public class UsersController {
     private final UserService service;
     private final ConversionService converter;
-
-    @Operation(summary = "Create new user")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "User created", content =
-                    {@Content(mediaType = "application/json", array =
-                    @ArraySchema(schema = @Schema(implementation = UserCreateRequest.class)))
-                    })
-    })
-    @Transactional
-    @PostMapping
-    public ResponseEntity<Object> create(@Valid @RequestBody UserCreateRequest createRequest) {
-        User user = converter.convert(createRequest, User.class);
-        service.create(user);
-        return new ResponseEntity<>(
-                Collections.singletonMap("USER", service.findById(user.getId())),
-                HttpStatus.CREATED);
-
-    }
 
     @Operation(summary = "Update user")
     @ApiResponses(value = {

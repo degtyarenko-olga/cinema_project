@@ -20,7 +20,6 @@ public class UserCreateConverter implements Converter<UserCreateRequest, User> {
         User user = new User();
         user.setBirth(source.getBirth());
         user.setEmail(source.getEmail());
-        user.setIsDeleted(false);
         user.setLogin(source.getLogin());
         user.setPassword(passwordEncoder.encode(source.getPassword()));
         user.setCreationDate(new Timestamp(new Date().getTime()));

@@ -13,7 +13,6 @@ import java.util.Properties;
 
 @Configuration
 public class PersistenceProvidersConfiguration {
-
     @Autowired
     @Bean(name = "entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {

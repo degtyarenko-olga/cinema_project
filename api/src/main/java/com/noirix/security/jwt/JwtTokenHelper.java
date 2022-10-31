@@ -23,28 +23,18 @@ import static java.util.Calendar.MILLISECOND;
 @Component
 @RequiredArgsConstructor
 public class JwtTokenHelper {
-
-    /*Generate JWT Token and fields in token. Also add signature into 3-d part of token*/
     public static final String CREATE_VALUE = "created";
-
     public static final String ROLES = "roles";
-
     public static final SignatureAlgorithm ALGORITHM = SignatureAlgorithm.HS512;
-
     public static final String JWT = "JWT";
-
     private final JwtSecurityConfig jwtTokenConfig;
-
     private String generateToken(Map<String, Object> claims) {
 
         return Jwts
                 .builder()
-                /*Set headers with algo and token type info*/
                 .setHeader(generateJWTHeaders())
-                /*We create payload with user info, roles, expiration date of token*/
                 .setClaims(claims)
                 .setExpiration(generateExpirationDate())
-                /*Signature*/
                 .signWith(ALGORITHM, jwtTokenConfig.getSecret())
                 .compact();
     }

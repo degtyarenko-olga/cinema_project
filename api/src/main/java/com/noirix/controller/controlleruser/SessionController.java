@@ -1,4 +1,4 @@
-package com.noirix.controller.usercontroller;
+package com.noirix.controller.controlleruser;
 
 import com.noirix.entity.Session;
 import com.noirix.service.impl.SessionServiceImpl;
