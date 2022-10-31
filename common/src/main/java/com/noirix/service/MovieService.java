@@ -2,7 +2,6 @@ package com.noirix.service;
 
 import com.noirix.entity.Movie;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,11 +15,9 @@ public interface MovieService {
 
     Movie findById(Long id);
 
-    @Transactional
     Movie create(Movie movie);
 
     Long delete(Long id);
 
-    @Transactional
     Movie update(Movie movie);
 }

@@ -4,7 +4,6 @@ package com.noirix.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import org.springframework.cache.annotation.Cacheable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

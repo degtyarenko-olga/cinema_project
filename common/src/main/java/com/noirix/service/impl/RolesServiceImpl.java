@@ -5,7 +5,6 @@ import com.noirix.repository.RolesSpringDataRepository;
 import com.noirix.service.RolesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;

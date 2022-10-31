@@ -1,7 +1,6 @@
 package com.noirix.service;
 
 import com.noirix.entity.User;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

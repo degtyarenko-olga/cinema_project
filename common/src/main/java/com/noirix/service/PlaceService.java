@@ -1,7 +1,6 @@
 package com.noirix.service;
 
 import com.noirix.entity.Place;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,9 +13,7 @@ public interface PlaceService {
 
     Long delete(Long id);
 
-    @Transactional
     Place create(Place place);
 
-    @Transactional
     Place update(Place place);
 }

@@ -5,7 +5,6 @@ import com.noirix.repository.HallSpringDataRepository;
 import com.noirix.service.HallService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;

@@ -3,7 +3,6 @@ package com.noirix.controller.dto.user;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 
 
