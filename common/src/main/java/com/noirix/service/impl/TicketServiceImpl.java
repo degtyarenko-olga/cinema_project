@@ -4,6 +4,7 @@ import com.noirix.entity.Ticket;
 import com.noirix.repository.TicketSpringDataRepository;
 import com.noirix.service.TicketService;
 import lombok.RequiredArgsConstructor;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -12,6 +13,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TicketServiceImpl implements TicketService {
+
+    private static final Logger log = Logger.getLogger(TicketServiceImpl.class);
     private final TicketSpringDataRepository repository;
 
     @Override
@@ -35,13 +38,17 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public Ticket create(Ticket ticket) {
-        return repository.save(ticket);
+        Ticket save = repository.save(ticket);
+        log.info("Ticket create");
+        return save;
 
     }
 
     @Override
     public Ticket update(Ticket ticket) {
-        return create(ticket);
+        Ticket ticketCreate = create(ticket);
+        log.info("Ticket update");
+        return ticketCreate;
 
     }
 

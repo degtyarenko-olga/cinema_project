@@ -78,7 +78,7 @@ alter table cinema.movie
 create unique index movie_id_uindex
     on cinema.movie (id);
 
-create index movie_title_index
+create unique index movie_title_uindex
     on cinema.movie (title);
 
 create table cinema.session
@@ -149,7 +149,7 @@ create index ticket_movie_id_index
 create index ticket_session_id_index
     on cinema.ticket (session_id);
 
-create index ticket_place_id_index
+create unique index ticket_place_id_uindex
     on cinema.ticket (place_id);
 
 create index ticket_date_of_purchase_index

@@ -84,7 +84,7 @@ public class AdminController {
             })
     @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
-    @DeleteMapping("/delete/user/{id}")
+    @DeleteMapping("/user/{id}")
     public ResponseEntity<Object> deleteUsersById(@PathVariable String id) {
         someId = Long.parseLong(id);
         service.delete(someId);
@@ -150,7 +150,7 @@ public class AdminController {
     })
     @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
-    @PostMapping("/create/hall")
+    @PostMapping("/hall")
     public ResponseEntity<Object> createHall(@Valid @RequestBody HallCreateRequest createRequest) {
         Hall hall = converter.convert(createRequest, Hall.class);
         hallService.create(hall);
@@ -166,7 +166,7 @@ public class AdminController {
             })
     @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
-    @DeleteMapping("/delete/hall/{id}")
+    @DeleteMapping("/hall/{id}")
     public ResponseEntity<Object> deleteHallById(@PathVariable String id) {
         someId = Long.parseLong(id);
         hallService.delete(someId);
@@ -201,7 +201,7 @@ public class AdminController {
     })
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @Transactional
-    @PostMapping("/create/movie")
+    @PostMapping("/movie")
     public ResponseEntity<Object> createMovie(@Valid @RequestBody MovieCreateRequest createRequest) {
         Movie movie = converter.convert(createRequest, Movie.class);
         movieServiceImpl.create(movie);
@@ -217,7 +217,7 @@ public class AdminController {
             })
     @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
-    @DeleteMapping("/delete/movie/{id}")
+    @DeleteMapping("/movie/{id}")
     public ResponseEntity<Object> deleteMovieById(@PathVariable String id) {
         someId = Long.parseLong(id);
         movieServiceImpl.delete(someId);
@@ -249,7 +249,7 @@ public class AdminController {
             })
     @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
-    @DeleteMapping("/delete/place/{id}")
+    @DeleteMapping("/place/{id}")
     public ResponseEntity<Object> deletePlaceById(@PathVariable String id) {
         someId = Long.parseLong(id);
         placeServiceImpl.delete(someId);
@@ -268,7 +268,7 @@ public class AdminController {
     })
     @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
-    @PostMapping("/create/place")
+    @PostMapping("/place")
     public ResponseEntity<Object> createPlace(@Valid @RequestBody PlaceCreateRequest createRequest) {
         Place place = converter.convert(createRequest, Place.class);
         placeServiceImpl.create(place);
@@ -323,7 +323,7 @@ public class AdminController {
     })
     @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
-    @PostMapping("/create/session")
+    @PostMapping("/session")
     public ResponseEntity<Object> createSession(@Valid @RequestBody SessionCreateRequest createRequest) {
         Session session = converter.convert(createRequest, Session.class);
         sessionServiceImpl.create(session);
@@ -358,7 +358,7 @@ public class AdminController {
             })
     @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
-    @DeleteMapping("/delete/session/{id}")
+    @DeleteMapping("/session/{id}")
     public ResponseEntity<Object> deleteSessionById(@PathVariable String id) {
         someId = Long.parseLong(id);
         sessionServiceImpl.delete(someId);
@@ -390,7 +390,7 @@ public class AdminController {
             })
     @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
-    @DeleteMapping("/delete/ticket/{id}")
+    @DeleteMapping("/ticket/{id}")
     public ResponseEntity<Object> deleteTicketById(@PathVariable String id) {
         someId = Long.parseLong(id);
         ticketServiceImpl.delete(someId);
