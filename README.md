@@ -1,4 +1,4 @@
-# [Cinema App]()
+# Cinema App
 
 This project is a web application for cinema tickets booking.
 
