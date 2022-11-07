@@ -27,6 +27,10 @@ public class JwtTokenHelper {
     public static final String ROLES = "roles";
     public static final SignatureAlgorithm ALGORITHM = SignatureAlgorithm.HS512;
     public static final String JWT = "JWT";
+    public static final String TYP = "typ";
+    public static final String ALG = "alg";
+    public static final String ROLE_ = "ROLE_";
+    public static final String CREATED = "created";
     private final JwtSecurityConfig jwtTokenConfig;
     private String generateToken(Map<String, Object> claims) {
 
@@ -41,8 +45,8 @@ public class JwtTokenHelper {
 
     private Map<String, Object> generateJWTHeaders() {
         Map<String, Object> jwtHeaders = new LinkedHashMap<>();
-        jwtHeaders.put("typ", JWT);
-        jwtHeaders.put("alg", ALGORITHM.getValue());
+        jwtHeaders.put(TYP, JWT);
+        jwtHeaders.put(ALG, ALGORITHM.getValue());
 
         return jwtHeaders;
     }
@@ -98,7 +102,7 @@ public class JwtTokenHelper {
         return userDetails.getAuthorities().
                 stream()
                 .map(GrantedAuthority::getAuthority)
-                .map(s -> s.replace("ROLE_", ""))
+                .map(s -> s.replace(ROLE_, ""))
                 .map(String::toLowerCase)
                 .collect(Collectors.toList());
     }
@@ -113,7 +117,7 @@ public class JwtTokenHelper {
         String refreshedToken;
         try {
             final Claims claims = this.getClaimsFromToken(token);
-            claims.put("created", this.generateCurrentDate());
+            claims.put(CREATED, this.generateCurrentDate());
             refreshedToken = this.generateToken(claims);
         } catch (Exception e) {
             refreshedToken = null;

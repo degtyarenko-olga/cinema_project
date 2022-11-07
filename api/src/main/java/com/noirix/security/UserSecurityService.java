@@ -19,6 +19,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserSecurityService implements UserDetailsService {
 
+    public static final String NO_USER_FOUND_WITH_LOGIN_S = "No user found with login '%s'.";
+    public static final String USER_WITH_THIS_LOGIN_NOT_FOUND = "User with this login not found";
     private final UserSpringDataRepository userRepository;
 
     private final RolesSpringDataRepository roleRepository;
@@ -47,10 +49,10 @@ public class UserSecurityService implements UserDetailsService {
                         )
                 );
             } else {
-                throw new UsernameNotFoundException(String.format("No user found with login '%s'.", username));
+                throw new UsernameNotFoundException(String.format(NO_USER_FOUND_WITH_LOGIN_S, username));
             }
         } catch (Exception e) {
-            throw new UsernameNotFoundException("User with this login not found");
+            throw new UsernameNotFoundException(USER_WITH_THIS_LOGIN_NOT_FOUND);
         }
     }
 }

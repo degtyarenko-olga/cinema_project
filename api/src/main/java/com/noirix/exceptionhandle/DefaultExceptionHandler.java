@@ -14,18 +14,24 @@ import java.util.NoSuchElementException;
 @ControllerAdvice
 public class DefaultExceptionHandler {
 
+    public static final int ERROR_CODE = 2;
+    public static final int ERROR_CODE1 = 1;
+    public static final String GENERAL_ERROR = "General error";
+    public static final int ERROR_CODE2 = 3;
+    public static final String ERROR = "error";
+
     @ExceptionHandler({NoSuchEntityException.class, EmptyResultDataAccessException.class, NoSuchElementException.class})
     public ResponseEntity<Object> handleEntityNotFountException(Exception e) {
 
         ErrorContainer error = ErrorContainer
                 .builder()
                 .exceptionId(UUIDGenerator.generateUUID())
-                .errorCode(2)
+                .errorCode(ERROR_CODE)
                 .errorMessage(e.getMessage())
                 .e(e.getClass().toString())
                 .build();
 
-        return new ResponseEntity<>(Collections.singletonMap("error", error), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(Collections.singletonMap(ERROR, error), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(Exception.class)
@@ -34,12 +40,12 @@ public class DefaultExceptionHandler {
         ErrorContainer error = ErrorContainer
                 .builder()
                 .exceptionId(UUIDGenerator.generateUUID())
-                .errorCode(1)
-                .errorMessage("General error")
+                .errorCode(ERROR_CODE1)
+                .errorMessage(GENERAL_ERROR)
                 .e(e.getClass().toString())
                 .build();
 
-        return new ResponseEntity<>(Collections.singletonMap("error", error), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(Collections.singletonMap(ERROR, error), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(NumberFormatException.class)
@@ -48,12 +54,12 @@ public class DefaultExceptionHandler {
         ErrorContainer error = ErrorContainer
                 .builder()
                 .exceptionId(UUIDGenerator.generateUUID())
-                .errorCode(3)
+                .errorCode(ERROR_CODE2)
                 .errorMessage(e.getMessage())
                 .e(e.getClass().toString())
                 .build();
 
-        return new ResponseEntity<>(Collections.singletonMap("error", error), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(Collections.singletonMap(ERROR, error), HttpStatus.BAD_REQUEST);
     }
 
 }
