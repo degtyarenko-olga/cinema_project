@@ -18,7 +18,7 @@ public class PersistenceProvidersConfiguration {
     public static final String HIBERNATE_SHOW_SQL = "hibernate.show_sql";
     public static final String HIBERNATE_DEFAULT_SCHEMA = "hibernate.default_schema";
     public static final String CURRENT_SESSION_CONTEXT_CLASS = "current_session_context_class";
-    public static final String ORG_SPRINGFRAMEWORK_ORM_HIBERNATE_5_SPRING_SESSION_CONTEXT = "org.springframework.orm.hibernate5.SpringSessionContext";
+    public static final String SPRING_SESSION_CONTEXT = "org.springframework.orm.hibernate5.SpringSessionContext";
     public static final String TRUE = "true";
     public static final String CINEMA = "cinema";
 
@@ -41,7 +41,7 @@ public class PersistenceProvidersConfiguration {
 
         properties.put(HIBERNATE_SHOW_SQL, TRUE);
         properties.put(HIBERNATE_DEFAULT_SCHEMA, CINEMA);
-        properties.put(CURRENT_SESSION_CONTEXT_CLASS, ORG_SPRINGFRAMEWORK_ORM_HIBERNATE_5_SPRING_SESSION_CONTEXT);
+        properties.put(CURRENT_SESSION_CONTEXT_CLASS, SPRING_SESSION_CONTEXT);
         return properties;
     }
 }
