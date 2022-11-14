@@ -6,7 +6,7 @@ import org.springframework.cache.annotation.Cacheable;
 import java.util.List;
 
 public interface SessionService {
-    @Cacheable("sessions")
+
     List<Session> findAll();
 
     Session findById(Long sessionId);
@@ -16,4 +16,5 @@ public interface SessionService {
     Long delete(Long id);
 
     Session update(Session session);
+
 }

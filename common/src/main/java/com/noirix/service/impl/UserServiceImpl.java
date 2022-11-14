@@ -7,7 +7,6 @@ import com.noirix.repository.RolesSpringDataRepository;
 import com.noirix.repository.UserSpringDataRepository;
 import com.noirix.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,7 +53,6 @@ public class UserServiceImpl implements UserService {
 
         user.setRoles(Set.of(roleUser));
         roleUser.getUsers().add(user);
-
         return repository.save(user);
 
     }

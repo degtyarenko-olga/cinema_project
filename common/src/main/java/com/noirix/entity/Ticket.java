@@ -19,7 +19,6 @@ import java.sql.Timestamp;
 
 @Data
 @Entity
-@Cacheable("tickets")
 @Table(name = "ticket")
 @EqualsAndHashCode(exclude = {
         "movie,session,place,user"

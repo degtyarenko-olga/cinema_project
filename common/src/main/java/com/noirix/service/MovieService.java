@@ -6,7 +6,6 @@ import org.springframework.cache.annotation.Cacheable;
 import java.util.List;
 
 public interface MovieService {
-    @Cacheable("movies")
     List<Movie> findAll();
 
     List<Movie> findMovieHibernatesByTitle(String title);
@@ -20,4 +19,5 @@ public interface MovieService {
     Long delete(Long id);
 
     Movie update(Movie movie);
+
 }

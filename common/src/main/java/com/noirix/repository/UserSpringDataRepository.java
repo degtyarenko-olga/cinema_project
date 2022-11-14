@@ -14,5 +14,4 @@ public interface UserSpringDataRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByLogin(String login);
 
-
 }

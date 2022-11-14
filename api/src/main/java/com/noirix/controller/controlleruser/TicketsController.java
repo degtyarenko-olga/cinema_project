@@ -97,13 +97,11 @@ public class TicketsController {
         Long id = result.getId();
 
         Ticket ticket = new Ticket();
-
         ticket.setUser((userServiceImpl.findById(id)));
         ticket.setMovie(movieServiceImpl.findById(createRequest.getMovieId()));
         ticket.setDateOfPurchase(new Timestamp(new Date().getTime()));
         ticket.setPlace(placeServiceImpl.findById(createRequest.getPlaceId()));
         ticket.setSession(sessionServiceImpl.findById(createRequest.getSessionId()));
-
         service.create(ticket);
 
         return new ResponseEntity<>(
@@ -111,5 +109,4 @@ public class TicketsController {
                 HttpStatus.CREATED);
 
     }
-
 }

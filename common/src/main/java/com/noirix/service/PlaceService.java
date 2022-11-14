@@ -16,4 +16,5 @@ public interface PlaceService {
     Place create(Place place);
 
     Place update(Place place);
+
 }

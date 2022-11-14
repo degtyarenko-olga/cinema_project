@@ -75,14 +75,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public AuthenticationTokenFilter authenticationTokenFilterBean(AuthenticationManager authenticationManager) throws Exception {
+    public AuthenticationTokenFilter authenticationTokenFilterBean(AuthenticationManager authenticationManager){
         AuthenticationTokenFilter authenticationTokenFilter = new AuthenticationTokenFilter(tokenUtils, userProvider);
         authenticationTokenFilter.setAuthenticationManager(authenticationManager);
         return authenticationTokenFilter;
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web){
         web.ignoring()
                 .antMatchers(
                         "/v3/api-docs/**",

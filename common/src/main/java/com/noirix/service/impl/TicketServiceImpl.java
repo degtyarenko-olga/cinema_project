@@ -5,6 +5,7 @@ import com.noirix.repository.TicketSpringDataRepository;
 import com.noirix.service.TicketService;
 import lombok.RequiredArgsConstructor;
 import org.apache.log4j.Logger;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -18,6 +19,7 @@ public class TicketServiceImpl implements TicketService {
     private final TicketSpringDataRepository repository;
 
     @Override
+    @Cacheable("tickets")
     public List<Ticket> findAll() {
         return repository.findAll();
 
@@ -55,6 +57,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public List<Ticket> findTicketByUserId(Long id) {
         return repository.findAllByUserId(id);
+
     }
 
 }

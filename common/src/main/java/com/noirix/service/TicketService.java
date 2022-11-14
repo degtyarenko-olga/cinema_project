@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface TicketService {
 
-    @Cacheable("tickets")
     List<Ticket> findAll();
 
     Ticket findById(Long id);
@@ -19,4 +18,5 @@ public interface TicketService {
     Ticket update(Ticket ticket);
 
     List<Ticket> findTicketByUserId(Long id);
+
 }

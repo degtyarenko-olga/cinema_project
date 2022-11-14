@@ -18,7 +18,6 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,8 +45,8 @@ public class UsersController {
     })
     @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Object> updateUser(@PathVariable("id") Long id, @Valid @RequestBody UserChangeRequest userChangeRequest,
+    @PutMapping("/update/user")
+    public ResponseEntity<Object> updateUser(@Valid @RequestBody UserChangeRequest userChangeRequest,
                                              Principal principal) {
 
         String username = PrincipalUtil.getUsername(principal);

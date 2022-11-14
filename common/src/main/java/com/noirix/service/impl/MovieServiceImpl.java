@@ -4,6 +4,7 @@ import com.noirix.entity.Movie;
 import com.noirix.repository.MovieSpringDataRepository;
 import com.noirix.service.MovieService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -15,6 +16,7 @@ public class MovieServiceImpl implements MovieService {
     private final MovieSpringDataRepository repository;
 
     @Override
+    @Cacheable("movies")
     public List<Movie> findAll() {
         return repository.findAll();
 

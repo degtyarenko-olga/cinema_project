@@ -11,5 +11,4 @@ public interface TicketSpringDataRepository extends JpaRepository<Ticket, Long> 
 
     List<Ticket> findAllByUserId(Long id);
 
-
 }

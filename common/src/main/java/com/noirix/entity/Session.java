@@ -19,7 +19,6 @@ import java.util.Set;
 
 @Data
 @Entity
-@Cacheable("sessions")
 @Table(name = "session")
 @EqualsAndHashCode(exclude = {
         "ticket"

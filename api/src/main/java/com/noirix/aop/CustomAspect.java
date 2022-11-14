@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class CustomAspect {
     private static final Logger log = Logger.getLogger(CustomAspect.class);
 
-    @Pointcut("execution(* com.noirix.controller.*.*.*(..))")
+    @Pointcut("execution(* com.noirix.repository.*.*.*(..))")
     public void aroundRepositoryPointcut() {
     }
 

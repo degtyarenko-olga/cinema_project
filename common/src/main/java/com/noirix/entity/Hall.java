@@ -36,5 +36,4 @@ public class Hall {
     @JsonIgnoreProperties("hall")
     private Set<Place> place;
 
-
 }

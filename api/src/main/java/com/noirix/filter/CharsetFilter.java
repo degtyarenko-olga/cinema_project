@@ -16,7 +16,7 @@ public class CharsetFilter implements Filter {
     public static final String UTF_8 = "utf-8";
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig){
 
     }
 
