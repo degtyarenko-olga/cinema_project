@@ -12,4 +12,5 @@ public class JwtSecurityConfig {
     private String secret;
 
     private Integer expiration;
+
 }

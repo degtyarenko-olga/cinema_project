@@ -12,37 +12,32 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class HallServiceImpl implements HallService {
+
     private final HallSpringDataRepository repository;
 
     @Override
     public List<Hall> findAllHall() {
         return repository.findAll();
-
     }
 
     @Override
     public Hall findById(Long id) {
-        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
-
+        return repository.findById(id).orElse(new Hall());
     }
 
     @Override
     public Hall findHallByName(String name) {
-        return repository.findHallHibernateByNameHall(name);
-
+        return repository.findHallByNameHall(name).orElse(new Hall());
     }
 
     @Override
     public Hall create(Hall hall) {
         return repository.save(hall);
-
     }
 
     @Override
-    public Long delete(Long id) {
+    public void delete(Long id) {
         repository.deleteById(id);
-        return id;
-
     }
 
     @Override

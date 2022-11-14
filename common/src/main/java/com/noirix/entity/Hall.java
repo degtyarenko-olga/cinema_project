@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,6 +21,7 @@ import java.util.Set;
 @Entity
 @Table(name = "hall")
 public class Hall {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
@@ -27,7 +29,7 @@ public class Hall {
     @Column(name = "name_hall")
     private String nameHall;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnore
     @JoinTable(name = "l_place_hall",
             joinColumns = @JoinColumn(name = "hall_id"),

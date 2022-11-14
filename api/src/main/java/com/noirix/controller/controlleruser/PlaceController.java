@@ -1,7 +1,7 @@
 package com.noirix.controller.controlleruser;
 
 import com.noirix.entity.Place;
-import com.noirix.service.impl.PlaceServiceImpl;
+import com.noirix.service.PlaceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.Collections;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/rest/place")
 public class PlaceController {
-    private final PlaceServiceImpl service;
+
+    private final PlaceService service;
 
     @Operation(summary = "Gets all places")
     @ApiResponses(value = {
@@ -32,11 +32,9 @@ public class PlaceController {
                     @ArraySchema(schema = @Schema(implementation = Place.class)))
                     })
     })
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<Object> findAllPlace() {
-        return new ResponseEntity<>(Collections.singletonMap("result", service.findAll()),
-                HttpStatus.OK);
-
+        return new ResponseEntity<>(service.findAll(),HttpStatus.OK);
     }
 
     @Operation(summary = "Gets place by ID")
@@ -46,11 +44,9 @@ public class PlaceController {
                     @ArraySchema(schema = @Schema(implementation = Place.class)))
                     })
     })
-    @GetMapping("/find/{id}")
-    public ResponseEntity<Object> findPlaceById(@Valid @PathVariable("id") Long id) {
-        return new ResponseEntity<>(Collections.singletonMap("result",
-                service.findById(id)), HttpStatus.OK);
-
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> findPlaceById(@Valid @PathVariable Long id) {
+        return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
     }
 
     @Operation(summary = "Gets all places by Row")
@@ -62,9 +58,7 @@ public class PlaceController {
     })
     @GetMapping("/{row}")
     public ResponseEntity<Object> findPlaceByRow(@PathVariable("row") int row) {
-        return new ResponseEntity<>(Collections.singletonMap("result",
-                service.findAllPlaceByRow(row)), HttpStatus.OK);
-
+        return new ResponseEntity<>(service.findAllPlaceByRow(row), HttpStatus.OK);
     }
 
 }

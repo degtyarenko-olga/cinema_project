@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class CacheConfig {
+
     public static final String MOVIES = "movies";
     public static final String SESSIONS = "sessions";
     public static final String TICKETS = "tickets";
@@ -19,8 +20,7 @@ public class CacheConfig {
 
     @Bean
     public CacheManager cacheManager() {
-        CaffeineCacheManager cacheManager = new CaffeineCacheManager(
-                MOVIES, SESSIONS, TICKETS);
+        CaffeineCacheManager cacheManager = new CaffeineCacheManager(MOVIES, SESSIONS, TICKETS);
         cacheManager.setCaffeine(cacheProperties());
         return cacheManager;
     }
@@ -33,4 +33,5 @@ public class CacheConfig {
                 .weakKeys()
                 .recordStats();
     }
+
 }

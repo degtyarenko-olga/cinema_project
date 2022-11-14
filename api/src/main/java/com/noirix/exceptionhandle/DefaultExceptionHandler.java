@@ -13,6 +13,7 @@ import java.util.NoSuchElementException;
 
 @ControllerAdvice
 public class DefaultExceptionHandler {
+
     public static final int ERROR_CODE = 2;
     public static final int ERROR_CODE1 = 1;
     public static final String GENERAL_ERROR = "General error";

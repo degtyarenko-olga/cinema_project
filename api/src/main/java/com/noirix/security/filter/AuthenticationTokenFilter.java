@@ -19,6 +19,7 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFilter {
+
     private final JwtTokenHelper tokenUtils;
     private final UserDetailsService userDetailsService;
 
@@ -45,4 +46,5 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
 
         chain.doFilter(request, response);
     }
+
 }

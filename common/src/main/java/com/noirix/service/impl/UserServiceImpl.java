@@ -8,6 +8,7 @@ import com.noirix.repository.UserSpringDataRepository;
 import com.noirix.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
@@ -18,50 +19,43 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
+
     private final UserSpringDataRepository repository;
     private final RolesSpringDataRepository dataRepository;
 
     @Override
     public User findById(Long id) {
-        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
-
+        return repository.findById(id).orElse(new User());
     }
 
     @Override
     public List<User> findAll() {
         return repository.findAll();
-
     }
 
     @Override
-    public Long delete(Long id) {
+    public void delete(Long id) {
         repository.deleteById(id);
-        return id;
-
     }
 
     @Override
     public User findByLogin(String login) {
-        return repository.findByLogin(login).orElseThrow(EntityNotFoundException::new);
-
+        return repository.findByLogin(login).orElse(new User());
     }
 
     @Override
     @Transactional
     public User create(User user) {
-        Roles roleUser = dataRepository.findRolesHibernateByRoleName(SystemRoles.ROLE_USER);
-
+        Roles roleUser = dataRepository.findRolesByRoleName(SystemRoles.ROLE_USER).orElse(new Roles());
         user.setRoles(Set.of(roleUser));
         roleUser.getUsers().add(user);
         return repository.save(user);
-
     }
 
     @Override
     @Transactional
     public User update(User user) {
         return repository.save(user);
-
     }
 
 }

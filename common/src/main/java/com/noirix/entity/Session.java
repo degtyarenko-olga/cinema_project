@@ -27,6 +27,7 @@ import java.util.Set;
         "ticket"
 })
 public class Session {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;

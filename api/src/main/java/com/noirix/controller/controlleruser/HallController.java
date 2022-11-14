@@ -1,7 +1,7 @@
 package com.noirix.controller.controlleruser;
 
 import com.noirix.entity.Hall;
-import com.noirix.service.impl.HallServiceImpl;
+import com.noirix.service.HallService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -16,13 +16,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/rest/hall")
 public class HallController {
-    private final HallServiceImpl service;
+
+    private final HallService service;
 
     @Operation(summary = "Gets all halls")
     @ApiResponses(value = {
@@ -31,13 +30,9 @@ public class HallController {
                     @ArraySchema(schema = @Schema(implementation = Hall.class)))
                     })
     })
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<Object> findAllHall() {
-
-        return new ResponseEntity<>(
-                Collections.singletonMap("hall", service.findAllHall()),
-                HttpStatus.OK);
-
+        return new ResponseEntity<>(service.findAllHall(),HttpStatus.OK);
     }
 
     @Operation(summary = "Gets hall by Name")
@@ -47,11 +42,9 @@ public class HallController {
                     @ArraySchema(schema = @Schema(implementation = Hall.class)))
                     })
     })
-    @GetMapping("/name/{name}")
+    @GetMapping("/{name}")
     public ResponseEntity<Object> findHallByName(@PathVariable("name") String name) {
-        return new ResponseEntity<>(Collections.singletonMap("result",
-                service.findHallByName(name)), HttpStatus.OK);
-
+        return new ResponseEntity<>(service.findHallByName(name), HttpStatus.OK);
     }
 
 }

@@ -9,9 +9,9 @@ public interface PlaceService {
 
     Place findById(Long id);
 
-    List<Place> findAllPlaceByRow(int row);
+    List<Place> findAllPlaceByRow(Integer row);
 
-    Long delete(Long id);
+    void delete(Long id);
 
     Place create(Place place);
 

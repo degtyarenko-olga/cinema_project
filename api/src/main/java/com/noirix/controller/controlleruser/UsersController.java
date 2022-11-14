@@ -25,14 +25,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/rest/users")
 @Tag(name = "USER controller")
 public class UsersController {
+
     private final UserService service;
     private final ConversionService converter;
 
@@ -45,23 +44,14 @@ public class UsersController {
     })
     @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
-    @PutMapping("/update/user")
+    @PutMapping("/user")
     public ResponseEntity<Object> updateUser(@Valid @RequestBody UserChangeRequest userChangeRequest,
                                              Principal principal) {
-
         String username = PrincipalUtil.getUsername(principal);
         User result = service.findByLogin(username);
-
         userChangeRequest.setId(result.getId());
         User user = converter.convert(userChangeRequest, User.class);
-
-        User update = service.update(user);
-
-        Map<String, Object> model = new HashMap<>();
-        model.put("user", service.findById(update.getId()));
-
-        return new ResponseEntity<>(model, HttpStatus.OK);
-
+         return new ResponseEntity<>(service.update(user), HttpStatus.OK);
     }
 
 }

@@ -11,7 +11,7 @@ public interface TicketService {
 
     Ticket findById(Long id);
 
-    Long delete(Long id);
+    void delete(Long id);
 
     Ticket create(Ticket ticket);
 

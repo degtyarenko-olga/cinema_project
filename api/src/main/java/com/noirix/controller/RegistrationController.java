@@ -26,6 +26,7 @@ import java.util.Collections;
 @RequestMapping("/registration")
 @Tag(name = "Registration controller")
 public class RegistrationController {
+
     private final UserService service;
     private final ConversionService converter;
 
@@ -39,11 +40,7 @@ public class RegistrationController {
     @PostMapping
     public ResponseEntity<Object> registration(@Valid @RequestBody UserCreateRequest createRequest) {
         User user = converter.convert(createRequest, User.class);
-        service.create(user);
-        return new ResponseEntity<>(
-                Collections.singletonMap("USER", service.findById(user.getId())),
-                HttpStatus.CREATED);
-
+        return new ResponseEntity<>(service.create(user), HttpStatus.CREATED);
     }
 
 }

@@ -25,6 +25,7 @@ import java.util.Set;
         "hall"
 })
 public class Place {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
@@ -33,7 +34,7 @@ public class Place {
     private int place;
 
     @Column(name = "row")
-    private int row;
+    private Integer row;
 
     @Column(name = "is_available")
     private Boolean isAvailable;

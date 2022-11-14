@@ -23,6 +23,7 @@ import static java.util.Calendar.MILLISECOND;
 @Component
 @RequiredArgsConstructor
 public class JwtTokenHelper {
+
     public static final String CREATE_VALUE = "created";
     public static final String ROLES = "roles";
     public static final SignatureAlgorithm ALGORITHM = SignatureAlgorithm.HS512;
@@ -34,7 +35,6 @@ public class JwtTokenHelper {
     private final JwtSecurityConfig jwtTokenConfig;
 
     private String generateToken(Map<String, Object> claims) {
-
         return Jwts
                 .builder()
                 .setHeader(generateJWTHeaders())
@@ -48,7 +48,6 @@ public class JwtTokenHelper {
         Map<String, Object> jwtHeaders = new LinkedHashMap<>();
         jwtHeaders.put(TYP, JWT);
         jwtHeaders.put(ALG, ALGORITHM.getValue());
-
         return jwtHeaders;
     }
 
@@ -106,24 +105,6 @@ public class JwtTokenHelper {
                 .map(s -> s.replace(ROLE_, ""))
                 .map(String::toLowerCase)
                 .collect(Collectors.toList());
-    }
-
-    public Boolean canTokenBeRefreshed(String token, Date lastPasswordReset) {
-        final Date created = this.getCreatedDateFromToken(token);
-        return !(this.isCreatedBeforeLastPasswordReset(created, lastPasswordReset))
-                && !(this.isTokenExpired(token));
-    }
-
-    public String refreshToken(String token) {
-        String refreshedToken;
-        try {
-            final Claims claims = this.getClaimsFromToken(token);
-            claims.put(CREATED, this.generateCurrentDate());
-            refreshedToken = this.generateToken(claims);
-        } catch (Exception e) {
-            refreshedToken = null;
-        }
-        return refreshedToken;
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {

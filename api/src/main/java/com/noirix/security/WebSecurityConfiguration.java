@@ -24,6 +24,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+
     private final UserDetailsService userProvider;
     private final JwtTokenHelper tokenUtils;
     private final PasswordEncoder passwordEncoder;
@@ -34,7 +35,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .userDetailsService(userProvider)
                 .passwordEncoder(passwordEncoder);
     }
-
 
     @Bean
     @Override
@@ -65,8 +65,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").hasAnyRole("ADMIN", "MODERATOR")
                 .anyRequest()
                 .authenticated();
-
-
         httpSecurity
                 .addFilterBefore(authenticationTokenFilterBean(authenticationManagerBean()), UsernamePasswordAuthenticationFilter.class);
     }
@@ -90,4 +88,5 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/webjars/**",
                         "/swagger.json");
     }
+
 }

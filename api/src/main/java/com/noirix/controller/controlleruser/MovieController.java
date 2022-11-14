@@ -1,7 +1,7 @@
 package com.noirix.controller.controlleruser;
 
 import com.noirix.entity.Movie;
-import com.noirix.service.impl.MovieServiceImpl;
+import com.noirix.service.MovieService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -16,13 +16,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/rest/movie")
 public class MovieController {
-    private final MovieServiceImpl service;
+
+    private final MovieService service;
 
     @Operation(summary = "Gets all movies")
     @ApiResponses(value = {
@@ -33,11 +32,7 @@ public class MovieController {
     })
     @GetMapping
     public ResponseEntity<Object> findAllMovies() {
-
-        return new ResponseEntity<>(
-                Collections.singletonMap("movie", service.findAll()),
-                HttpStatus.OK);
-
+        return new ResponseEntity<>(service.findAll(),HttpStatus.OK);
     }
 
     @Operation(summary = "Gets movie by TITLE")
@@ -47,11 +42,9 @@ public class MovieController {
                     @ArraySchema(schema = @Schema(implementation = Movie.class)))
                     })
     })
-    @GetMapping("/title/{title}")
-    public ResponseEntity<Object> findMoviesByTitle(@PathVariable("title") String title) {
-        return new ResponseEntity<>(Collections.singletonMap("result",
-                service.findMovieHibernatesByTitle(title)), HttpStatus.OK);
-
+    @GetMapping("/{title}")
+    public ResponseEntity<Object> findMoviesByTitle(@PathVariable String title) {
+        return new ResponseEntity<>(service.findMovieByTitle(title), HttpStatus.OK);
     }
 
     @Operation(summary = "Gets movie by GENRE")
@@ -61,11 +54,9 @@ public class MovieController {
                     @ArraySchema(schema = @Schema(implementation = Movie.class)))
                     })
     })
-    @GetMapping("/genre/{genre}")
-    public ResponseEntity<Object> findMoviesByGenre(@PathVariable("genre") String genre) {
-        return new ResponseEntity<>(Collections.singletonMap("movie:",
-                service.findAllByGenre(genre)), HttpStatus.OK);
-
+    @GetMapping("/{genre}")
+    public ResponseEntity<Object> findMoviesByGenre(@PathVariable String genre) {
+        return new ResponseEntity<>(service.findAllByGenre(genre), HttpStatus.OK);
     }
 
 }

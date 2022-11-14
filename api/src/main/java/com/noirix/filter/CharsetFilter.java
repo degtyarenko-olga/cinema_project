@@ -11,6 +11,7 @@ import java.io.IOException;
 
 @WebFilter(filterName = "CharsetFilter")
 public class CharsetFilter implements Filter {
+
     public static final String IN_CHARSET_FILTER = "In charset filter!";
     public static final String UTF_8 = "utf-8";
 
@@ -31,9 +32,7 @@ public class CharsetFilter implements Filter {
         System.out.println(IN_CHARSET_FILTER);
         request.setCharacterEncoding(UTF_8);
         response.setCharacterEncoding(UTF_8);
-
         chain.doFilter(request, response);
-
     }
 
 }

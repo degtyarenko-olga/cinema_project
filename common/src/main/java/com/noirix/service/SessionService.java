@@ -13,7 +13,7 @@ public interface SessionService {
 
     Session create(Session session);
 
-    Long delete(Long id);
+    void delete(Long id);
 
     Session update(Session session);
 

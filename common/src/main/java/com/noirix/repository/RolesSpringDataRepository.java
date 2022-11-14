@@ -7,11 +7,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface RolesSpringDataRepository extends JpaRepository<Roles, Long> {
 
-    Roles findRolesHibernateByRoleName(SystemRoles roles);
+    @Override
+    Optional<Roles> findById(Long aLong);
+
+    Optional<Roles> findRolesByRoleName(SystemRoles roles);
 
     @Query(value = "select * from cinema.roles " +
             "inner join cinema.l_role_user " +

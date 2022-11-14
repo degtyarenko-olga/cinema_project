@@ -1,6 +1,7 @@
 package com.noirix.exception;
 
 public class NoSuchEntityException extends RuntimeException {
+
     private String customMessage;
     private Integer errorCode;
     private String exceptionId;
@@ -19,4 +20,5 @@ public class NoSuchEntityException extends RuntimeException {
                 ", exceptionId='" + exceptionId + '\'' +
                 "} " + super.toString();
     }
+
 }

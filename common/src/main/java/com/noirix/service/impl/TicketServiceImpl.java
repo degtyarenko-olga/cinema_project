@@ -27,15 +27,12 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public Ticket findById(Long id) {
-        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
-
+        return repository.findById(id).orElse(new Ticket());
     }
 
     @Override
-    public Long delete(Long id) {
+    public void delete(Long id) {
         repository.deleteById(id);
-        return id;
-
     }
 
     @Override
@@ -43,7 +40,6 @@ public class TicketServiceImpl implements TicketService {
         Ticket save = repository.save(ticket);
         log.info("Ticket create");
         return save;
-
     }
 
     @Override
@@ -51,13 +47,11 @@ public class TicketServiceImpl implements TicketService {
         Ticket ticketCreate = create(ticket);
         log.info("Ticket update");
         return ticketCreate;
-
     }
 
     @Override
     public List<Ticket> findTicketByUserId(Long id) {
         return repository.findAllByUserId(id);
-
     }
 
 }

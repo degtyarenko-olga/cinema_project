@@ -8,7 +8,7 @@ import java.util.List;
 public interface MovieService {
     List<Movie> findAll();
 
-    List<Movie> findMovieHibernatesByTitle(String title);
+    List<Movie> findMovieByTitle(String title);
 
     List<Movie> findAllByGenre(String genre);
 
@@ -16,7 +16,7 @@ public interface MovieService {
 
     Movie create(Movie movie);
 
-    Long delete(Long id);
+    void delete(Long id);
 
     Movie update(Movie movie);
 

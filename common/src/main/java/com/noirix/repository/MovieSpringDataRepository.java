@@ -9,8 +9,8 @@ import java.util.List;
 @Repository
 public interface MovieSpringDataRepository extends JpaRepository<Movie, Long> {
 
-    List<Movie> findMovieHibernatesByTitle(String title);
+    List<Movie> findMovieByTitle(String title);
 
-    List<Movie> findMovieHibernatesByGenre(String genre);
+    List<Movie> findMovieByGenre(String genre);
 
 }

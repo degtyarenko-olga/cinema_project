@@ -1,7 +1,7 @@
 package com.noirix.controller.controlleruser;
 
 import com.noirix.entity.Roles;
-import com.noirix.service.impl.RolesServiceImpl;
+import com.noirix.service.RolesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -18,13 +18,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin/roles")
 public class RolesController {
-    private final RolesServiceImpl service;
+
+    private final RolesService service;
 
     @Operation(summary = "Gets all roles")
     @ApiResponses(value = {
@@ -34,12 +33,9 @@ public class RolesController {
                     })
     })
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<Object> findAllRoles() {
-        return new ResponseEntity<>(
-                Collections.singletonMap("result", service.findAll()),
-                HttpStatus.OK);
-
+        return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
 
     @Operation(summary = "Gets roles by ID")
@@ -50,11 +46,9 @@ public class RolesController {
                     })
     })
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
-    @GetMapping("/find/{id}")
-    public ResponseEntity<Object> findRolesById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(Collections.singletonMap("role", service.findById(id)),
-                HttpStatus.OK);
-
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> findRolesById(@PathVariable Long id) {
+        return new ResponseEntity<> (service.findById(id),HttpStatus.OK);
     }
 
 }

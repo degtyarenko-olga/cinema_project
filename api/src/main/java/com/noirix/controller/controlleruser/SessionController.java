@@ -1,7 +1,7 @@
 package com.noirix.controller.controlleruser;
 
 import com.noirix.entity.Session;
-import com.noirix.service.impl.SessionServiceImpl;
+import com.noirix.service.SessionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -15,13 +15,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/rest/session")
 public class SessionController {
-    private final SessionServiceImpl service;
+
+    private final SessionService service;
 
     @Operation(summary = "Gets all cinema session")
     @ApiResponses(value = {
@@ -32,10 +31,7 @@ public class SessionController {
     })
     @GetMapping()
     public ResponseEntity<Object> findAllSession() {
-        return new ResponseEntity<>(
-                Collections.singletonMap("session", service.findAll()),
-                HttpStatus.OK);
-
+        return new ResponseEntity<>(service.findAll(),HttpStatus.OK);
     }
 
 }

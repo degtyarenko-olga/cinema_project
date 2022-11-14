@@ -4,11 +4,11 @@ import com.noirix.controller.dto.ticket.TicketCreateRequest;
 import com.noirix.entity.Ticket;
 import com.noirix.entity.User;
 import com.noirix.security.util.PrincipalUtil;
-import com.noirix.service.impl.MovieServiceImpl;
-import com.noirix.service.impl.PlaceServiceImpl;
-import com.noirix.service.impl.SessionServiceImpl;
-import com.noirix.service.impl.TicketServiceImpl;
-import com.noirix.service.impl.UserServiceImpl;
+import com.noirix.service.MovieService;
+import com.noirix.service.PlaceService;
+import com.noirix.service.SessionService;
+import com.noirix.service.TicketService;
+import com.noirix.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -30,19 +30,18 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.sql.Timestamp;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/rest/tickets")
 public class TicketsController {
-    private final TicketServiceImpl service;
-    private final UserServiceImpl userServiceImpl;
-    private final MovieServiceImpl movieServiceImpl;
-    private final PlaceServiceImpl placeServiceImpl;
-    private final SessionServiceImpl sessionServiceImpl;
+
+    private final TicketService service;
+    private final UserService userService;
+    private final MovieService movieService;
+    private final PlaceService placeService;
+    private final SessionService sessionService;
 
     @Operation(summary = "Gets all tickets")
     @ApiResponses(value = {
@@ -51,12 +50,9 @@ public class TicketsController {
                     @ArraySchema(schema = @Schema(implementation = Ticket.class)))
                     })
     })
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<Object> findAllTickets() {
-        return new ResponseEntity<>(
-                Collections.singletonMap("tickets", service.findAll()),
-                HttpStatus.OK);
-
+        return new ResponseEntity<>(service.findAll(),HttpStatus.OK);
     }
 
     @Operation(summary = "Gets all tickets by user")
@@ -67,16 +63,11 @@ public class TicketsController {
                     })
     })
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
-    @GetMapping("/user/tickets")
+    @GetMapping("/users")
     public ResponseEntity<Object> findAllTicketsByUser(Principal principal) {
         String username = PrincipalUtil.getUsername(principal);
-        User result = userServiceImpl.findByLogin(username);
-        Long id = result.getId();
-        List<Ticket> ticketByUserId = service.findTicketByUserId(id);
-        return new ResponseEntity<>(
-                Collections.singletonMap("tickets", ticketByUserId),
-                HttpStatus.OK);
-
+        User result = userService.findByLogin(username);
+        return new ResponseEntity<>(service.findTicketByUserId(result.getId()), HttpStatus.OK);
     }
 
     @Operation(summary = "Create new ticket")
@@ -89,24 +80,16 @@ public class TicketsController {
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @Transactional
     @PostMapping
-    public ResponseEntity<Object> createTicket(@Valid @RequestBody TicketCreateRequest createRequest,
-                                               Principal principal) {
-
+    public ResponseEntity<Object> createTicket(@Valid @RequestBody TicketCreateRequest createRequest, Principal principal) {
         String username = PrincipalUtil.getUsername(principal);
-        User result = userServiceImpl.findByLogin(username);
-        Long id = result.getId();
-
+        User result = userService.findByLogin(username);
         Ticket ticket = new Ticket();
-        ticket.setUser((userServiceImpl.findById(id)));
-        ticket.setMovie(movieServiceImpl.findById(createRequest.getMovieId()));
+        ticket.setUser((userService.findById(result.getId())));
+        ticket.setMovie(movieService.findById(createRequest.getMovieId()));
         ticket.setDateOfPurchase(new Timestamp(new Date().getTime()));
-        ticket.setPlace(placeServiceImpl.findById(createRequest.getPlaceId()));
-        ticket.setSession(sessionServiceImpl.findById(createRequest.getSessionId()));
-        service.create(ticket);
-
-        return new ResponseEntity<>(
-                Collections.singletonMap("ticket", service.findById(ticket.getId())),
-                HttpStatus.CREATED);
-
+        ticket.setPlace(placeService.findById(createRequest.getPlaceId()));
+        ticket.setSession(sessionService.findById(createRequest.getSessionId()));
+        return new ResponseEntity<>(service.create(ticket),HttpStatus.CREATED);
     }
+
 }

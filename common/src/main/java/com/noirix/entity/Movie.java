@@ -26,6 +26,7 @@ import java.util.Set;
         "ticket"
 })
 public class Movie {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
@@ -40,10 +41,10 @@ public class Movie {
     private String genre;
 
     @Column(name = "is_available")
-    private boolean isAvailable = true;
+    private Boolean isAvailable = true;
 
     @Column(name = "age_restrictions")
-    private int ageRestrictions;
+    private Integer ageRestrictions;
 
     @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
     @JsonBackReference
