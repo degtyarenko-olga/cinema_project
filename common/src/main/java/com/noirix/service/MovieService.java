@@ -1,7 +1,6 @@
 package com.noirix.service;
 
 import com.noirix.entity.Movie;
-import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
 
