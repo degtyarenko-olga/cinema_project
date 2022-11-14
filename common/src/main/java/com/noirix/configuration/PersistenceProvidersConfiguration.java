@@ -13,7 +13,6 @@ import java.util.Properties;
 
 @Configuration
 public class PersistenceProvidersConfiguration {
-
     public static final String COM_NOIRIX = "com.noirix";
     public static final String HIBERNATE_SHOW_SQL = "hibernate.show_sql";
     public static final String HIBERNATE_DEFAULT_SCHEMA = "hibernate.default_schema";

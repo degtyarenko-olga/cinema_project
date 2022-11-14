@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class OpenAPIConfig {
-
     public static final String CINEMA_API = "Cinema API";
     public static final String API_FOR_WORKING_WITH_CINEMA = "API for working with Cinema";
     public static final String VERSION = "2.0";

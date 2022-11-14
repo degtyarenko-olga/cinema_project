@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class CacheConfig {
-
     public static final String MOVIES = "movies";
     public static final String SESSIONS = "sessions";
     public static final String TICKETS = "tickets";

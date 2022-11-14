@@ -32,6 +32,7 @@ public class JwtTokenHelper {
     public static final String ROLE_ = "ROLE_";
     public static final String CREATED = "created";
     private final JwtSecurityConfig jwtTokenConfig;
+
     private String generateToken(Map<String, Object> claims) {
 
         return Jwts

@@ -11,7 +11,6 @@ import java.io.IOException;
 
 @WebFilter(filterName = "CharsetFilter")
 public class CharsetFilter implements Filter {
-
     public static final String IN_CHARSET_FILTER = "In charset filter!";
     public static final String UTF_8 = "utf-8";
 
