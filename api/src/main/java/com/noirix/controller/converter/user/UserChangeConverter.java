@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-
 public class UserChangeConverter implements Converter<UserChangeRequest, User> {
     private final UserService service;
     private final PasswordEncoder passwordEncoder;
@@ -29,7 +28,6 @@ public class UserChangeConverter implements Converter<UserChangeRequest, User> {
         user.setPassword(passwordEncoder.encode(source.getPassword()));
 
         return user;
-
     }
 
 }

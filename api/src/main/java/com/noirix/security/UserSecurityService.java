@@ -22,7 +22,6 @@ public class UserSecurityService implements UserDetailsService {
     public static final String NO_USER_FOUND_WITH_LOGIN_S = "No user found with login '%s'.";
     public static final String USER_WITH_THIS_LOGIN_NOT_FOUND = "User with this login not found";
     private final UserSpringDataRepository userRepository;
-
     private final RolesSpringDataRepository roleRepository;
 
     @Override
@@ -30,12 +29,9 @@ public class UserSecurityService implements UserDetailsService {
         try {
             /*Find user in DB*/
             Optional<User> searchResult = userRepository.findByLogin(username);
-
             if (searchResult.isPresent()) {
                 User user = searchResult.get();
-
                 /*We are creating Spring Security User object*/
-
                 return new org.springframework.security.core.userdetails.User(
                         user.getLogin(),
                         user.getPassword(),

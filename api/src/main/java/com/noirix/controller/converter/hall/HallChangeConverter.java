@@ -19,7 +19,6 @@ public class HallChangeConverter implements Converter<HallChangeRequest, Hall> {
         Hall hall = service.findById(source.getId());
         hall.setNameHall(source.getName());
         return hall;
-
     }
 
 }

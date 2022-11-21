@@ -20,7 +20,6 @@ public class SessionChangeConverter implements Converter<SessionChangeRequest, S
         session.setEndOfSession(source.getEndOfSession());
         session.setSessionStart(source.getSessionStart());
         return session;
-
     }
 
 }

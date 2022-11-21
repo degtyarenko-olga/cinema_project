@@ -1,8 +1,10 @@
 package com.noirix.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Column;
@@ -15,7 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
 @Entity
 @Table(name = "movie")
 @EqualsAndHashCode(exclude = {

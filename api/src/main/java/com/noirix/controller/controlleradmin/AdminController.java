@@ -34,7 +34,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -78,7 +77,6 @@ public class AdminController {
             responses = {@ApiResponse(responseCode = "200", description = "User deleted",
                     content = @Content)
             })
-    @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Object> deleteUsersById(@PathVariable Long id) {
@@ -132,7 +130,6 @@ public class AdminController {
                     @ArraySchema(schema = @Schema(implementation = HallCreateRequest.class)))
                     })
     })
-    @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @PostMapping("/hall")
     public ResponseEntity<Object> createHall(@Valid @RequestBody HallCreateRequest createRequest) {
@@ -144,7 +141,6 @@ public class AdminController {
             responses = {@ApiResponse(responseCode = "200", description = "Hall deleted",
                     content = @Content)
             })
-    @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @DeleteMapping("/halls/{id}")
     public ResponseEntity<Object> deleteHallById(@PathVariable Long id) {
@@ -173,7 +169,6 @@ public class AdminController {
                     })
     })
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
-    @Transactional
     @PostMapping("/movie")
     public ResponseEntity<Object> createMovie(@Valid @RequestBody MovieCreateRequest createRequest) {
         Movie movie = converter.convert(createRequest, Movie.class);
@@ -184,7 +179,6 @@ public class AdminController {
             responses = {@ApiResponse(responseCode = "200", description = "Movie deleted",
                     content = @Content)
             })
-    @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @DeleteMapping("/movies/{id}")
     public ResponseEntity<Object> deleteMovieById(@PathVariable Long id) {
@@ -209,7 +203,6 @@ public class AdminController {
             responses = {@ApiResponse(responseCode = "200", description = "Place deleted",
                     content = @Content)
             })
-    @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @DeleteMapping("/places/{id}")
     public ResponseEntity<Object> deletePlaceById(@PathVariable Long id) {
@@ -224,7 +217,6 @@ public class AdminController {
                     @ArraySchema(schema = @Schema(implementation = PlaceCreateRequest.class)))
                     })
     })
-    @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @PostMapping("/place")
     public ResponseEntity<Object> createPlace(@Valid @RequestBody PlaceCreateRequest createRequest) {
@@ -239,7 +231,6 @@ public class AdminController {
                     @ArraySchema(schema = @Schema(implementation = PlaceCreateRequest.class)))
                     })
     })
-    @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @PutMapping("/place")
     public ResponseEntity<Object> updatePlace(@Valid @RequestBody PlaceChangeRequest changeRequest) {
@@ -267,7 +258,6 @@ public class AdminController {
                     @ArraySchema(schema = @Schema(implementation = Session.class)))
                     })
     })
-    @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @PostMapping("/session")
     public ResponseEntity<Object> createSession(@Valid @RequestBody SessionCreateRequest createRequest) {
@@ -282,7 +272,6 @@ public class AdminController {
                     @ArraySchema(schema = @Schema(implementation = Session.class)))
                     })
     })
-    @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @PutMapping("/session")
     public ResponseEntity<Object> updateSession(@Valid @RequestBody SessionChangeRequest changeRequest) {
@@ -294,7 +283,6 @@ public class AdminController {
             responses = {@ApiResponse(responseCode = "200", description = "Session deleted",
                     content = @Content)
             })
-    @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @DeleteMapping("/sessions/{id}")
     public ResponseEntity<Object> deleteSessionById(@PathVariable Long id) {
@@ -319,7 +307,6 @@ public class AdminController {
             responses = {@ApiResponse(responseCode = "200", description = "Ticket deleted",
                     content = @Content)
             })
-    @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @DeleteMapping("/tickets/{id}")
     public ResponseEntity<Object> deleteTicketById(@PathVariable Long id) {
@@ -334,7 +321,6 @@ public class AdminController {
                     @ArraySchema(schema = @Schema(implementation = MovieChangeRequest.class)))
                     })
     })
-    @Transactional
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
     @PutMapping("/movie")
     public ResponseEntity<Object> updateMovie(@Valid @RequestBody MovieChangeRequest createRequest) {
@@ -363,7 +349,6 @@ public class AdminController {
                     })
     })
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
-    @Transactional
     @PutMapping("/tickets")
     public ResponseEntity<Object> createTicket(@Valid @RequestBody TicketChangeRequest changeRequest) {
         Ticket ticket = converter.convert(changeRequest, Ticket.class);

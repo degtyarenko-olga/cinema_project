@@ -22,7 +22,6 @@ public class MovieChangeConverter implements Converter<MovieChangeRequest, Movie
         movie.setAgeRestrictions(source.getAgeRestrictions());
         movie.setTitle(source.getTitle());
         return movie;
-
     }
 
 }

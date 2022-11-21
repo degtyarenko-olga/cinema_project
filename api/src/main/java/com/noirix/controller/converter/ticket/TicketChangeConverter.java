@@ -30,7 +30,6 @@ public class TicketChangeConverter implements Converter<TicketChangeRequest, Tic
         ticket.setPlace(placeServiceImpl.findById(source.getPlaceId()));
         ticket.setSession(sessionServiceImpl.findById(source.getSessionId()));
         return ticket;
-
     }
 
 }

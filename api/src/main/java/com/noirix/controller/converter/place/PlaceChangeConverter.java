@@ -22,7 +22,6 @@ public class PlaceChangeConverter implements Converter<PlaceChangeRequest, Place
         place.setRow(source.getRow());
         place.setPrice(source.getPrice());
         return place;
-
     }
 
 }

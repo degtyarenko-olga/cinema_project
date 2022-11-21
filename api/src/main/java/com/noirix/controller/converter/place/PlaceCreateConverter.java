@@ -2,12 +2,10 @@ package com.noirix.controller.converter.place;
 
 import com.noirix.controller.dto.place.PlaceCreateRequest;
 import com.noirix.entity.Place;
-import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class PlaceCreateConverter implements Converter<PlaceCreateRequest, Place> {
 
     @Override
@@ -19,7 +17,6 @@ public class PlaceCreateConverter implements Converter<PlaceCreateRequest, Place
         place.setRow(source.getRow());
         place.setPrice(source.getPrice());
         return place;
-
     }
 
 }

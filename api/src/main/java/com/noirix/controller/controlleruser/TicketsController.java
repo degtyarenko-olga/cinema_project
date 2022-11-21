@@ -20,7 +20,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -78,7 +77,6 @@ public class TicketsController {
                     })
     })
     @Parameter(in = ParameterIn.HEADER, name = "X-Auth-Token", required = true)
-    @Transactional
     @PostMapping
     public ResponseEntity<Object> createTicket(@Valid @RequestBody TicketCreateRequest createRequest, Principal principal) {
         String username = PrincipalUtil.getUsername(principal);

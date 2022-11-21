@@ -21,7 +21,6 @@ public class TicketServiceImpl implements TicketService {
     @Cacheable("tickets")
     public List<Ticket> findAll() {
         return repository.findAll();
-
     }
 
     @Override

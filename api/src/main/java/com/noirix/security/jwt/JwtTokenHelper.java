@@ -31,7 +31,6 @@ public class JwtTokenHelper {
     public static final String TYP = "typ";
     public static final String ALG = "alg";
     public static final String ROLE_ = "ROLE_";
-    public static final String CREATED = "created";
     private final JwtSecurityConfig jwtTokenConfig;
 
     private String generateToken(Map<String, Object> claims) {
@@ -55,14 +54,6 @@ public class JwtTokenHelper {
         return getClaimsFromToken(token).getSubject();
     }
 
-    public Date getCreatedDateFromToken(String token) {
-        return (Date) getClaimsFromToken(token).get(CREATE_VALUE);
-    }
-
-    public Date getExpirationDateFromToken(String token) {
-        return getClaimsFromToken(token).getExpiration();
-    }
-
     private Claims getClaimsFromToken(String token) {
         return Jwts
                 .parser()
@@ -79,15 +70,6 @@ public class JwtTokenHelper {
         Calendar calendar = Calendar.getInstance();
         calendar.add(MILLISECOND, jwtTokenConfig.getExpiration());
         return calendar.getTime();
-    }
-
-    private Boolean isTokenExpired(String token) {
-        final Date expiration = this.getExpirationDateFromToken(token);
-        return expiration.before(this.generateCurrentDate());
-    }
-
-    private Boolean isCreatedBeforeLastPasswordReset(Date created, Date lastPasswordReset) {
-        return (lastPasswordReset != null && created.before(lastPasswordReset));
     }
 
     public String generateToken(UserDetails userDetails) {

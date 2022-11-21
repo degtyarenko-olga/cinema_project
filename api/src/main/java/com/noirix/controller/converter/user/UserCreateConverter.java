@@ -25,7 +25,6 @@ public class UserCreateConverter implements Converter<UserCreateRequest, User> {
         user.setCreationDate(new Timestamp(new Date().getTime()));
         user.setModificationDate(new Timestamp(new Date().getTime()));
         return user;
-
     }
 
 }

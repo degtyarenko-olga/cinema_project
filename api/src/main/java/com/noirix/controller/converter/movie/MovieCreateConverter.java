@@ -2,12 +2,10 @@ package com.noirix.controller.converter.movie;
 
 import com.noirix.controller.dto.movie.MovieCreateRequest;
 import com.noirix.entity.Movie;
-import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class MovieCreateConverter implements Converter<MovieCreateRequest, Movie> {
 
     @Override
@@ -19,7 +17,6 @@ public class MovieCreateConverter implements Converter<MovieCreateRequest, Movie
         movie.setAgeRestrictions(source.getAgeRestrictions());
         movie.setTitle(source.getTitle());
         return movie;
-
     }
 
 }
