@@ -5,11 +5,13 @@ import com.noirix.repository.RolesSpringDataRepository;
 import com.noirix.service.RolesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class RolesServiceImpl implements RolesService {
 
     private final RolesSpringDataRepository repository;
@@ -25,11 +27,13 @@ public class RolesServiceImpl implements RolesService {
     }
 
     @Override
+    @Transactional
     public Roles create(Roles role) {
         return repository.save(role);
     }
 
     @Override
+    @Transactional
     public Roles update(Roles role) {
         return create(role);
     }

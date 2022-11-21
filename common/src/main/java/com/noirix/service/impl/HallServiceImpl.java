@@ -5,11 +5,13 @@ import com.noirix.repository.HallSpringDataRepository;
 import com.noirix.service.HallService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class HallServiceImpl implements HallService {
 
     private final HallSpringDataRepository repository;
@@ -30,16 +32,19 @@ public class HallServiceImpl implements HallService {
     }
 
     @Override
+    @Transactional
     public Hall create(Hall hall) {
         return repository.save(hall);
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         repository.deleteById(id);
     }
 
     @Override
+    @Transactional
     public Hall update(Hall hall) {
         return create(hall);
     }

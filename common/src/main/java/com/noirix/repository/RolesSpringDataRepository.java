@@ -12,7 +12,6 @@ import java.util.Optional;
 @Repository
 public interface RolesSpringDataRepository extends JpaRepository<Roles, Long> {
 
-    @Override
     Optional<Roles> findById(Long aLong);
 
     Optional<Roles> findRolesByRoleName(SystemRoles roles);

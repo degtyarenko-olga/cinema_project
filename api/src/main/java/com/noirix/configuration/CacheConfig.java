@@ -1,6 +1,7 @@
 package com.noirix.configuration;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.context.annotation.Bean;
@@ -11,25 +12,31 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class CacheConfig {
 
-    public static final String MOVIES = "movies";
-    public static final String SESSIONS = "sessions";
-    public static final String TICKETS = "tickets";
-    public static final int INITIAL_CAPACITY = 10;
-    public static final int MAXIMUM_SIZE = 100;
-    public static final int DURATION = 10;
+    @Value("${cache.config.movies}")
+    private String movies;
+    @Value("${cache.config.sessions}")
+    private String sessions;
+    @Value("${cache.config.tickets}")
+    private String tickets;
+    @Value("${cache.config.initialCapacity}")
+    private int initialCapacity;
+    @Value("${cache.config.maximumSize}")
+    private int maximumSize;
+    @Value("${cache.config.duration}")
+    private int duration;
 
     @Bean
     public CacheManager cacheManager() {
-        CaffeineCacheManager cacheManager = new CaffeineCacheManager(MOVIES, SESSIONS, TICKETS);
+        CaffeineCacheManager cacheManager = new CaffeineCacheManager(movies, sessions, tickets);
         cacheManager.setCaffeine(cacheProperties());
         return cacheManager;
     }
 
     public Caffeine<Object, Object> cacheProperties() {
         return Caffeine.newBuilder()
-                .initialCapacity(INITIAL_CAPACITY)
-                .maximumSize(MAXIMUM_SIZE)
-                .expireAfterAccess(DURATION, TimeUnit.SECONDS)
+                .initialCapacity(initialCapacity)
+                .maximumSize(maximumSize)
+                .expireAfterAccess(duration, TimeUnit.SECONDS)
                 .weakKeys()
                 .recordStats();
     }

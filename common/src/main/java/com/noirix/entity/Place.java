@@ -35,7 +35,7 @@ public class Place {
     private Long id;
 
     @Column(name = "place")
-    private int place;
+    private Integer place;
 
     @Column(name = "row")
     private Integer row;

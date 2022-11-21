@@ -25,9 +25,6 @@ import java.util.Set;
 @EqualsAndHashCode(exclude = {
         "ticket"
 })
-@ToString(exclude = {
-        "ticket"
-})
 public class Movie {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,6 +48,7 @@ public class Movie {
 
     @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
     @JsonBackReference
+    @ToString.Exclude
     private Set<Ticket> ticket;
 
 }

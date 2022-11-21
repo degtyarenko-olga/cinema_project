@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +34,6 @@ public class RegistrationController {
             @ApiResponse(responseCode = "409", description = "User not registered", content = @Content),
             @ApiResponse(responseCode = "500", description = "User not registered, Illegal Arguments", content = @Content)
     })
-    @Transactional
     @PostMapping
     public ResponseEntity<Object> registration(@Valid @RequestBody UserCreateRequest createRequest) {
         User user = converter.convert(createRequest, User.class);

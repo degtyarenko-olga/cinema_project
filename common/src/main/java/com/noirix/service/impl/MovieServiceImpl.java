@@ -6,11 +6,13 @@ import com.noirix.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MovieServiceImpl implements MovieService {
 
     private final MovieSpringDataRepository repository;
@@ -37,16 +39,19 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
+    @Transactional
     public Movie create(Movie movie) {
         return repository.save(movie);
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         repository.deleteById(id);
     }
 
     @Override
+    @Transactional
     public Movie update(Movie movie) {
         return create(movie);
     }
