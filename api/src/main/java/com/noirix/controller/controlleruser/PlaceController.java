@@ -57,7 +57,7 @@ public class PlaceController {
                     })
     })
     @GetMapping("/{row}")
-    public ResponseEntity<Object> findPlaceByRow(@PathVariable("row") int row) {
+    public ResponseEntity<Object> findPlaceByRow(@PathVariable Integer row) {
         return new ResponseEntity<>(service.findAllPlaceByRow(row), HttpStatus.OK);
     }
 

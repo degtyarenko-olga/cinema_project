@@ -30,9 +30,9 @@ jwt:
   expiration: 600000
 
 ---
-cache.config.movies: "movies"
-cache.config.sessions: "sessions"
-cache.config.tickets: "tickets"
+cache.config.movies: movies
+cache.config.sessions: sessions
+cache.config.tickets: tickets
 cache.config.initialCapacity: 10
 cache.config.maximumSize: 100
 cache.config.duration: 10

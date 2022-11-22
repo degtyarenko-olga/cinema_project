@@ -43,7 +43,7 @@ public class HallController {
                     })
     })
     @GetMapping("/{name}")
-    public ResponseEntity<Object> findHallByName(@PathVariable("name") String name) {
+    public ResponseEntity<Object> findHallByName(@PathVariable String name) {
         return new ResponseEntity<>(service.findHallByName(name), HttpStatus.OK);
     }
 
